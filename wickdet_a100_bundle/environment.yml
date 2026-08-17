@@ -1,0 +1,20 @@
+name: wickdet-a100
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - pyyaml
+  - tqdm
+  - pytorch
+  - pytorch-cuda=12.1
+  - pip:
+      - diffusers
+      - transformers
+      - accelerate

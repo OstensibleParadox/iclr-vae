@@ -1,0 +1,10 @@
+torch
+numpy
+pandas
+scipy
+matplotlib
+pyyaml
+tqdm
+diffusers
+transformers
+accelerate
