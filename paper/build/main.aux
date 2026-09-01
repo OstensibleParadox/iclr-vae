@@ -2,20 +2,147 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\citation{kingma2014autoencoding}
-\bibdata{references}
-\bibcite{kingma2014autoencoding}{{1}{2014}{{Kingma \& Welling}}{{Kingma and Welling}}}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{sec:introduction}{{1}{1}{Introduction}{section.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{1}{section.2}\protected@file@percent }
-\newlabel{sec:related-work}{{2}{1}{Related Work}{section.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Method and Theory}{1}{section.3}\protected@file@percent }
-\newlabel{sec:method}{{3}{1}{Method and Theory}{section.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{1}{section.4}\protected@file@percent }
-\newlabel{sec:experiments}{{4}{1}{Experiments}{section.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{1}{section.5}\protected@file@percent }
-\newlabel{sec:conclusion}{{5}{1}{Conclusion}{section.5}{}}
+\newlabel{sec:introduction@cref}{{[section][1][]1}{[1][1][]1}{}{}{}}
+\newlabel{eq:relative-covariance-perturbation}{{1}{1}{Introduction}{equation.1}{}}
+\newlabel{eq:relative-covariance-perturbation@cref}{{[equation][1][]1}{[1][1][]1}{}{}{}}
+\newlabel{eq:gaussian-residue-intro}{{2}{1}{Introduction}{equation.2}{}}
+\newlabel{eq:gaussian-residue-intro@cref}{{[equation][2][]2}{[1][1][]1}{}{}{}}
+\newlabel{eq:t2-intro}{{3}{2}{Introduction}{equation.3}{}}
+\newlabel{eq:t2-intro@cref}{{[equation][3][]3}{[1][1][]2}{}{}{}}
+\newlabel{eq:renormalized-objective-intro}{{4}{2}{Introduction}{equation.4}{}}
+\newlabel{eq:renormalized-objective-intro@cref}{{[equation][4][]4}{[1][2][]2}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Gaussian Noise Under Refinement}{2}{section.2}\protected@file@percent }
+\newlabel{sec:problem}{{2}{2}{Gaussian Noise Under Refinement}{section.2}{}}
+\newlabel{sec:problem@cref}{{[section][2][]2}{[1][2][]2}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Resolution-indexed perturbations}{2}{subsection.2.1}\protected@file@percent }
+\citation{bogachev1998gaussian}
+\newlabel{eq:finite-gaussian-kl}{{6}{3}{Resolution-indexed perturbations}{equation.6}{}}
+\newlabel{eq:finite-gaussian-kl@cref}{{[equation][6][]6}{[1][2][]3}{}{}{}}
+\newlabel{eq:precision-covariance-map}{{7}{3}{Resolution-indexed perturbations}{equation.7}{}}
+\newlabel{eq:precision-covariance-map@cref}{{[equation][7][]7}{[1][3][]3}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}How nominally small noise becomes large}{3}{subsection.2.2}\protected@file@percent }
+\newlabel{eq:identity-direction}{{8}{3}{How nominally small noise becomes large}{equation.8}{}}
+\newlabel{eq:identity-direction@cref}{{[equation][8][]8}{[1][3][]3}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}The correct stability object}{3}{subsection.2.3}\protected@file@percent }
+\newlabel{eq:t2-definition}{{9}{3}{The correct stability object}{equation.9}{}}
+\newlabel{eq:t2-definition@cref}{{[equation][9][]9}{[1][3][]3}{}{}{}}
+\newlabel{eq:det2-finite-cutoff}{{10}{3}{The correct stability object}{equation.10}{}}
+\newlabel{eq:det2-finite-cutoff@cref}{{[equation][10][]10}{[1][3][]3}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Schatten-Filtered Noise}{3}{section.3}\protected@file@percent }
+\newlabel{sec:method-theory}{{3}{3}{Schatten-Filtered Noise}{section.3}{}}
+\newlabel{sec:method-theory@cref}{{[section][3][]3}{[1][3][]3}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}A noise-layer interface and ideal-aware gate}{3}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:noise-layer-interface}{{11}{3}{A noise-layer interface and ideal-aware gate}{equation.11}{}}
+\newlabel{eq:noise-layer-interface@cref}{{[equation][11][]11}{[1][3][]3}{}{}{}}
+\newlabel{eq:s2-budget-gate}{{12}{4}{A noise-layer interface and ideal-aware gate}{equation.12}{}}
+\newlabel{eq:s2-budget-gate@cref}{{[equation][12][]12}{[1][3][]4}{}{}{}}
+\newlabel{eq:schatten-gate}{{13}{4}{A noise-layer interface and ideal-aware gate}{equation.13}{}}
+\newlabel{eq:schatten-gate@cref}{{[equation][13][]13}{[1][4][]4}{}{}{}}
+\newlabel{eq:envelope-gate}{{14}{4}{A noise-layer interface and ideal-aware gate}{equation.14}{}}
+\newlabel{eq:envelope-gate@cref}{{[equation][14][]14}{[1][4][]4}{}{}{}}
+\newlabel{eq:renormalized-objective}{{15}{4}{A noise-layer interface and ideal-aware gate}{equation.15}{}}
+\newlabel{eq:renormalized-objective@cref}{{[equation][15][]15}{[1][4][]4}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}The sharp Hilbert--Schmidt threshold}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{thm:s2-stability}{{3.1}{4}{Refinement stability of Gaussian noise}{theorem.3.1}{}}
+\newlabel{thm:s2-stability@cref}{{[theorem][1][3]3.1}{[1][4][]4}{}{}{}}
+\newlabel{eq:kl-t2-equivalence}{{16}{4}{Refinement stability of Gaussian noise}{equation.16}{}}
+\newlabel{eq:kl-t2-equivalence@cref}{{[equation][16][]16}{[1][4][]4}{}{}{}}
+\newlabel{eq:log-density-variance}{{17}{4}{Refinement stability of Gaussian noise}{equation.17}{}}
+\newlabel{eq:log-density-variance@cref}{{[equation][17][]17}{[1][4][]4}{}{}{}}
+\newlabel{eq:compatible-cutoff-convergence}{{19}{4}{The sharp Hilbert--Schmidt threshold}{equation.19}{}}
+\newlabel{eq:compatible-cutoff-convergence@cref}{{[equation][19][]19}{[1][4][]4}{}{}{}}
+\citation{hutchinson1989stochastic}
+\newlabel{cor:power-law}{{3.2}{5}{Power-law phase transition}{theorem.3.2}{}}
+\newlabel{cor:power-law@cref}{{[theorem][2][3]3.2}{[1][4][]5}{}{}{}}
+\newlabel{eq:power-law-phase-transition}{{20}{5}{Power-law phase transition}{equation.20}{}}
+\newlabel{eq:power-law-phase-transition@cref}{{[equation][20][]20}{[1][4][]5}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Matrix-free diagnosis and renormalization}{5}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:matrix-free-t2}{{21}{5}{Matrix-free diagnosis and renormalization}{equation.21}{}}
+\newlabel{eq:matrix-free-t2@cref}{{[equation][21][]21}{[1][5][]5}{}{}{}}
+\newlabel{eq:det2-series}{{22}{5}{Matrix-free diagnosis and renormalization}{equation.22}{}}
+\newlabel{eq:det2-series@cref}{{[equation][22][]22}{[1][5][]5}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{What $T_2$ does and does not predict.}{5}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Encoders as a falsifiable filtering hypothesis}{5}{subsection.3.4}\protected@file@percent }
+\newlabel{eq:encoder-pushforward}{{23}{5}{Encoders as a falsifiable filtering hypothesis}{equation.23}{}}
+\newlabel{eq:encoder-pushforward@cref}{{[equation][23][]23}{[1][5][]5}{}{}{}}
+\newlabel{eq:encoder-s4-identity}{{24}{5}{Encoders as a falsifiable filtering hypothesis}{equation.24}{}}
+\newlabel{eq:encoder-s4-identity@cref}{{[equation][24][]24}{[1][5][]5}{}{}{}}
+\newlabel{eq:diffusion-relative-covariance}{{25}{5}{Encoders as a falsifiable filtering hypothesis}{equation.25}{}}
+\newlabel{eq:diffusion-relative-covariance@cref}{{[equation][25][]25}{[1][5][]5}{}{}{}}
+\newlabel{eq:vp-diffusion-relative-covariance}{{26}{5}{Encoders as a falsifiable filtering hypothesis}{equation.26}{}}
+\newlabel{eq:vp-diffusion-relative-covariance@cref}{{[equation][26][]26}{[1][5][]5}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments as Claim Tests}{6}{section.4}\protected@file@percent }
+\newlabel{sec:experiments}{{4}{6}{Experiments as Claim Tests}{section.4}{}}
+\newlabel{sec:experiments@cref}{{[section][4][]4}{[1][5][]6}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}The threshold predicts objective and estimator fluctuations}{6}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:exp-threshold}{{4.1}{6}{The threshold predicts objective and estimator fluctuations}{subsection.4.1}{}}
+\newlabel{sec:exp-threshold@cref}{{[subsection][1][4]4.1}{[1][6][]6}{}{}{}}
+\newlabel{eq:finite-wick-identity}{{27}{6}{The threshold predicts objective and estimator fluctuations}{equation.27}{}}
+\newlabel{eq:finite-wick-identity@cref}{{[equation][27][]27}{[1][6][]6}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Same frequency appearance, different continuum fate}{6}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:exp-matched-spectrum}{{4.2}{6}{Same frequency appearance, different continuum fate}{subsection.4.2}{}}
+\newlabel{sec:exp-matched-spectrum@cref}{{[subsection][2][4]4.2}{[1][6][]6}{}{}{}}
+\newlabel{eq:matched-spectrum-pair}{{29}{6}{Same frequency appearance, different continuum fate}{equation.29}{}}
+\newlabel{eq:matched-spectrum-pair@cref}{{[equation][29][]29}{[1][6][]6}{}{}{}}
+\newlabel{eq:matched-spectrum-observables}{{30}{6}{Same frequency appearance, different continuum fate}{equation.30}{}}
+\newlabel{eq:matched-spectrum-observables@cref}{{[equation][30][]30}{[1][6][]6}{}{}{}}
+\newlabel{eq:matched-spectrum-t2}{{31}{6}{Same frequency appearance, different continuum fate}{equation.31}{}}
+\newlabel{eq:matched-spectrum-t2@cref}{{[equation][31][]31}{[1][6][]6}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Frequency matching does not control operator-ideal accumulation.} The two families have identical radial Fourier diagonals, trace, and operator norm, but different hidden eigenvalue multiplicities. At $d=1{,}048{,}576$, the stable family has $T_2=0.7193$, while the unstable family reaches $368.64$, a $512.5\times $ separation inherited by the exact Gaussian residue and centered quadratic variance. All curves are closed-form; explicit DFT matrices verify the identities at small $d$.}}{7}{figure.1}\protected@file@percent }
+\newlabel{fig:frequency-matched}{{1}{7}{\textbf {Frequency matching does not control operator-ideal accumulation.} The two families have identical radial Fourier diagonals, trace, and operator norm, but different hidden eigenvalue multiplicities. At $d=1{,}048{,}576$, the stable family has $\Ttwo =0.7193$, while the unstable family reaches $368.64$, a $512.5\times $ separation inherited by the exact Gaussian residue and centered quadratic variance. All curves are closed-form; explicit DFT matrices verify the identities at small $d$}{figure.1}{}}
+\newlabel{fig:frequency-matched@cref}{{[figure][1][]1}{[1][6][]7}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Resolution-consistent operator learning}{7}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:exp-operator}{{4.3}{7}{Resolution-consistent operator learning}{subsection.4.3}{}}
+\newlabel{sec:exp-operator@cref}{{[subsection][3][4]4.3}{[1][6][]7}{}{}{}}
+\newlabel{eq:physical-s2-gate}{{32}{7}{Resolution-consistent operator learning}{equation.32}{}}
+\newlabel{eq:physical-s2-gate@cref}{{[equation][32][]32}{[1][6][]7}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Latent encoders expose an implicit filtering requirement}{7}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:exp-encoder}{{4.4}{7}{Latent encoders expose an implicit filtering requirement}{subsection.4.4}{}}
+\newlabel{sec:exp-encoder@cref}{{[subsection][4][4]4.4}{[1][7][]7}{}{}{}}
+\citation{srivastava2014dropout}
+\citation{ho2020denoising}
+\citation{rombach2022high}
+\citation{kerrigan2023diffusion,seidman2023variational}
+\citation{cinquin2025well}
+\citation{li2021fourier}
+\citation{bogachev1998gaussian,minh2022kullback}
+\citation{miyato2018spectral}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Related Work}{8}{section.5}\protected@file@percent }
+\newlabel{sec:related-work}{{5}{8}{Related Work}{section.5}{}}
+\newlabel{sec:related-work@cref}{{[section][5][]5}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Noise injection and diffusion.}{8}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Function-space probabilistic learning.}{8}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Neural operators and discretization.}{8}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Gaussian operator geometry.}{8}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Spectral regularization.}{8}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{8}{section.6}\protected@file@percent }
+\newlabel{sec:conclusion}{{6}{8}{Conclusion}{section.6}{}}
+\newlabel{sec:conclusion@cref}{{[section][6][]6}{[1][8][]8}{}{}{}}
+\bibdata{references}
+\bibcite{bogachev1998gaussian}{{1}{1998}{{Bogachev}}{{}}}
+\bibcite{cinquin2025well}{{2}{2025}{{Cinquin \& Bamler}}{{Cinquin and Bamler}}}
+\bibcite{ho2020denoising}{{3}{2020}{{Ho et~al.}}{{Ho, Jain, and Abbeel}}}
+\bibcite{hutchinson1989stochastic}{{4}{1989}{{Hutchinson}}{{}}}
+\bibcite{kerrigan2023diffusion}{{5}{2023}{{Kerrigan et~al.}}{{Kerrigan, Ley, and Smyth}}}
+\bibcite{li2021fourier}{{6}{2021}{{Li et~al.}}{{Li, Kovachki, Azizzadenesheli, Liu, Bhattacharya, Stuart, and Anandkumar}}}
+\bibcite{minh2022kullback}{{7}{2022}{{Minh}}{{}}}
+\bibcite{miyato2018spectral}{{8}{2018}{{Miyato et~al.}}{{Miyato, Kataoka, Koyama, and Yoshida}}}
+\bibcite{rombach2022high}{{9}{2022}{{Rombach et~al.}}{{Rombach, Blattmann, Lorenz, Esser, and Ommer}}}
+\bibcite{seidman2023variational}{{10}{2023}{{Seidman et~al.}}{{Seidman, Kissas, Pappas, and Perdikaris}}}
+\bibcite{srivastava2014dropout}{{11}{2014}{{Srivastava et~al.}}{{Srivastava, Hinton, Krizhevsky, Sutskever, and Salakhutdinov}}}
 \bibstyle{iclr2027_conference}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Material}{2}{appendix.A}\protected@file@percent }
-\newlabel{app:additional-material}{{A}{2}{Additional Material}{appendix.A}{}}
-\gdef \@abspage@last{2}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proof of the Stability Theorem}{10}{appendix.A}\protected@file@percent }
+\newlabel{app:proofs}{{A}{10}{Proof of the Stability Theorem}{appendix.A}{}}
+\newlabel{app:proofs@cref}{{[section][1][]A}{[1][9][]10}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Matrix-Free Estimators}{10}{appendix.B}\protected@file@percent }
+\newlabel{app:estimators}{{B}{10}{Matrix-Free Estimators}{appendix.B}{}}
+\newlabel{app:estimators@cref}{{[section][2][]B}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Frequency-Matched Controls}{10}{appendix.C}\protected@file@percent }
+\newlabel{app:frequency-controls}{{C}{10}{Frequency-Matched Controls}{appendix.C}{}}
+\newlabel{app:frequency-controls@cref}{{[section][3][]C}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Additional Experimental Details}{11}{appendix.D}\protected@file@percent }
+\newlabel{app:experimental-details}{{D}{11}{Additional Experimental Details}{appendix.D}{}}
+\newlabel{app:experimental-details@cref}{{[section][4][]D}{[1][10][]11}{}{}{}}
+\gdef \@abspage@last{11}

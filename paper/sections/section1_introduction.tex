@@ -1,5 +1,100 @@
 \section{Introduction}
 \label{sec:introduction}
 
-TODO: Introduce the problem, state the main claim, summarize the contributions,
-and give a roadmap.
+Gaussian noise is routinely used as a scalar control knob: choose a variance,
+inject a perturbation, and tune its strength against predictive or generative
+performance. This picture underlies feature-space regularization, stochastic
+latent representations, neural operators, and diffusion models. It is reliable
+at a fixed dimension, where every covariance matrix and Gaussian objective is
+well defined. It becomes misleading when dimension represents resolution.
+Refinement introduces additional modes, and a perturbation with unchanged
+nominal strength can accumulate spectral mass in every newly resolved
+direction. The same hyperparameter then ceases to describe the same geometric
+intervention. A penalty intended to measure meaningful signal--noise geometry
+can instead be dominated by the discretization cutoff, while its gradients
+can transmit the same resolution dependence through the parameter-sensitivity
+spectrum.
+
+We make this failure precise through the relative covariance perturbation. Let
+$C_N$ be a reference covariance at resolution $N$, let $C_N+\Delta C_N$ be its
+perturbed counterpart, and define
+\begin{equation}
+  K_N = C_N^{-1/2}\Delta C_N C_N^{-1/2}.
+  \label{eq:relative-covariance-perturbation}
+\end{equation}
+For $I+K_N\succ0$, the Gaussian covariance residue has the spectral form
+\begin{equation}
+  \mathcal L_N
+  = \frac12\sum_{j\leq n_N}
+    \left[\lambda_j(K_N)-\log\!\left(1+\lambda_j(K_N)\right)\right].
+  \label{eq:gaussian-residue-intro}
+\end{equation}
+Because $\lambda-\log(1+\lambda)=\lambda^2/2+O(\lambda^3)$ near zero,
+the unresolved tail is governed by squared spectral mass. This exposes the
+finite-dimensional blind spot: every finite matrix belongs to every Schatten
+class, so membership at one $N$ says nothing about refinement. The relevant
+quantity is the dimension-uniform diagnostic
+\begin{equation}
+  \Ttwo(N) := \hsnorm{K_N}^{2},
+  \qquad
+  \sup_N \Ttwo(N) < \infty.
+  \label{eq:t2-intro}
+\end{equation}
+
+This criterion leads directly to \emph{Schatten-filtered noise}. We apply a
+spectral gate $K_N\mapsto K_N^{(\tau)}=\Phi_\tau(K_N)$ whose attenuation is
+chosen to place the relative perturbation in a prescribed operator-ideal
+regime uniformly over resolution. In the trace-class regime $\Schatten{1}$,
+ordinary trace and log-determinant expressions remain available. In the larger
+regime $\Schatten{2}\setminus\Schatten{1}$, those terms need not exist
+separately, but their finite combination is captured by the
+Carleman--Fredholm determinant,
+\begin{equation}
+  \mathcal L_N^{\mathrm{ren}}
+  = -\frac12\log\det\nolimits_2(I+K_N).
+  \label{eq:renormalized-objective-intro}
+\end{equation}
+Outside $\Schatten{2}$, the renormalized tail itself is not cutoff stable, so
+filtering must alter the perturbation spectrum rather than merely rewrite the
+objective. The method is therefore ideal-aware rather than simply
+frequency-aware: it controls accumulated relative covariance geometry after
+whitening, including anisotropy and spectral multiplicity.
+
+Our main result identifies $\Schatten{2}$ as the sharp stability boundary.
+Under dimension-independent positivity and spectral bounds, $\Ttwo(N)$ is
+equivalent up to fixed constants to the Gaussian covariance residue, and it
+exactly determines the variance of the centered sample log-density ratio.
+Consequently, bounded $\Ttwo(N)$ yields an objective uniformly controlled
+under refinement, whereas diverging $\Ttwo(N)$ forces unbounded cutoff growth.
+For spectra
+$s_j(K)\asymp j^{-\alpha}$, this gives a three-phase law: bounded behavior for
+$\alpha>1/2$, logarithmic growth at $\alpha=1/2$, and polynomial growth for
+$\alpha<1/2$.
+
+Diffusion supplies the representation-level question. Latent diffusion should
+not be viewed merely as computational compression: an encoder maps input
+perturbations and defines the reference covariance relative to which downstream
+Gaussian noise acts. Rather than presuming that compression supplies sufficient
+regularity, we ask whether learned encoders control both relative covariance
+families under refinement. Whitened Jacobian spectra, raw $\Schatten{2}$ mass,
+and pixel-space, isometric, and learned-encoder controls make this hypothesis
+falsifiable. Schatten filtering enforces the hidden requirement explicitly
+instead of relying on representation compression to provide it implicitly.
+
+Our contributions are:
+\begin{itemize}
+  \item \textbf{A sharp continuum-stability criterion.} We formulate Gaussian
+  noise injection as a resolution-indexed relative covariance problem and
+  identify Schatten-$2$ control as the cutoff-stability threshold, including
+  the bounded, logarithmically critical, and polynomial power-law regimes.
+
+  \item \textbf{An operator-ideal-aware noise mechanism.} We introduce
+  Schatten-filtered noise together with the appropriate $\det_2$ objective in
+  the Hilbert--Schmidt but non-trace-class regime. Its criterion targets
+  cumulative covariance geometry rather than coordinate frequency alone.
+
+  \item \textbf{Multi-scale tests connecting theory to learning.} Controlled
+  spectra test the sharp boundary, operator-learning tasks test noise-scale
+  transfer under grid refinement, and a Jacobian pushforward diagnostic asks
+  whether latent encoders control tail $\Schatten{2}$ mass.
+\end{itemize}

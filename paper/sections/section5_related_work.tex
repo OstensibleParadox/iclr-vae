@@ -1,0 +1,50 @@
+\section{Related Work}
+\label{sec:related-work}
+
+\paragraph{Noise injection and diffusion.}
+Dropout established stochastic feature perturbation as a general-purpose
+regularizer~\citep{srivastava2014dropout}, while diffusion models make repeated
+Gaussian perturbation the central learning mechanism~\citep{ho2020denoising}.
+Latent diffusion moves this process into an autoencoded representation to
+reduce computation while retaining perceptually important information
+\citep{rombach2022high}. Our question is orthogonal to the nominal noise
+schedule: whether its \emph{relative covariance family} remains uniformly
+controlled as representation resolution grows, and whether the encoder or an
+explicit gate supplies that control.
+
+\paragraph{Function-space probabilistic learning.}
+Function-space diffusion and variational neural operators formulate generative
+learning directly on infinite-dimensional spaces
+\citep{kerrigan2023diffusion,seidman2023variational}; recent work also develops
+well-defined regularized variational objectives for function-space Bayesian
+inference~\citep{cinquin2025well}. We study a complementary object: the
+resolution trajectory of finite noise-injection objectives, and a computable
+criterion that determines whether a nominal perturbation remains the same
+geometric intervention under refinement.
+
+\paragraph{Neural operators and discretization.}
+Fourier neural operators are designed to share parameters across
+discretizations~\citep{li2021fourier}. That property does not by itself make a
+stochastic training intervention discretization independent: a normalized
+Fourier mask may add new noise mass whenever the grid exposes new modes. We use
+operator learning as the controlled test bed in which the underlying function,
+physical modes, and task remain fixed while only the cutoff changes.
+
+\paragraph{Gaussian operator geometry.}
+Gaussian equivalence theory and Hilbert--Carleman determinants identify
+Hilbert--Schmidt perturbations as the natural domain for comparing
+infinite-dimensional Gaussian measures
+\citep{bogachev1998gaussian,minh2022kullback}. We use this machinery as an
+explanation and turn it into a learning-facing theorem, matrix-free diagnostic,
+and spectral gate. The protagonist is resolution-dependent training
+instability rather than measure theory itself.
+
+\paragraph{Spectral regularization.}
+Spectral normalization controls a largest singular value
+\citep{miyato2018spectral}; low-pass and low-rank methods constrain coordinate
+frequency or finite rank. None of these summaries alone determines cumulative
+square summability of a whitened relative covariance. Schatten-filtered noise
+targets that quantity uniformly across discretizations. The matched-frequency
+construction in \cref{sec:exp-matched-spectrum} holds the Fourier diagonal,
+trace, and operator norm fixed while varying only the hidden multiplicity that
+determines $\Ttwo$.

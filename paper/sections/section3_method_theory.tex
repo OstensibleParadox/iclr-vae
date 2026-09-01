@@ -1,0 +1,218 @@
+\section{Schatten-Filtered Noise}
+\label{sec:method-theory}
+
+\subsection{A noise-layer interface and ideal-aware gate}
+
+At a Gaussian noise-injection site, the raw relative covariance $K_N\succeq0$
+defines $\Delta C_N=C_N^{1/2}K_NC_N^{1/2}$. Schatten-filtered noise replaces it
+with $K_N^{(\tau)}=\Phi_\tau(K_N)$ and injects
+\begin{equation}
+  \xi_N^{(\tau)}\sim
+  \mathcal N\!\left(0,C_N^{1/2}K_N^{(\tau)}C_N^{1/2}\right),
+  \qquad z'=z+\xi_N^{(\tau)}.
+  \label{eq:noise-layer-interface}
+\end{equation}
+A basis-invariant budget gate is the radial projection
+\begin{equation}
+  \Phi_\tau^{\mathrm{budget}}(K_N)
+  =\min\!\left\{1,\frac{\tau}{\hsnorm{K_N}}\right\}K_N,
+  \label{eq:s2-budget-gate}
+\end{equation}
+with the multiplier defined as one when $K_N=0$. It enforces
+$\hsnorm{K_N^{(\tau)}}\leq\tau$ without choosing a coordinate basis.
+
+Structured operators can preserve leading physical modes more selectively.
+Let $K_N=U_N\operatorname{diag}(\lambda_{1,N},\ldots,
+\lambda_{n_N,N})U_N^\ast$ in a refinement-compatible mode basis. We use
+\begin{equation}
+  K_N^{(\tau)}
+  =\Phi_\tau(K_N)
+  :=U_N\operatorname{diag}\!\left(
+    \phi_{\tau,1}(\lambda_{1,N}),\ldots,
+    \phi_{\tau,n_N}(\lambda_{n_N,N})
+  \right)U_N^\ast.
+  \label{eq:schatten-gate}
+\end{equation}
+with a nonnegative, resolution-independent envelope
+$w=(w_j)_{j\geq1}$,
+\begin{equation}
+  \phi_{\tau,j}(\lambda)
+  =\operatorname{sign}(\lambda)\min\{|\lambda|,\tau w_j\}.
+  \label{eq:envelope-gate}
+\end{equation}
+where physical mode labels are fixed across refinements and the same cap is
+shared within symmetry or degeneracy blocks. If $w\in\ell^2$, then
+$\sup_N\hsnorm{K_N^{(\tau)}}\leq\tau\lVert w\rVert_2$; if
+$w\in\ell^1$, the same construction targets trace class. Unlike a cutoff at a
+fixed fraction of available Fourier modes, the envelope is tied to a
+summability budget that does not expand with the grid.
+
+In the Hilbert--Schmidt regime, we evaluate the covariance residue through
+\begin{equation}
+  \mathcal L_N^{\mathrm{ren}}(K_N)
+  :=-\frac12\log\det\nolimits_2(I+K_N).
+  \label{eq:renormalized-objective}
+\end{equation}
+For trace-class $K_N$, this equals the ordinary expression in
+\cref{eq:finite-gaussian-kl}; for
+$K_N\in\Schatten{2}\setminus\Schatten{1}$, it remains meaningful even when
+the trace and log determinant do not exist separately. The surrounding model
+can optimize the task loss on $z'$ together with
+$\lambda\mathcal L_N^{\mathrm{ren}}(K_N^{(\tau)})$ as an explicit
+resolution-stable noise budget. The theorem concerns this Gaussian covariance
+term; the task loss need not itself be Gaussian.
+
+\subsection{The sharp Hilbert--Schmidt threshold}
+
+\begin{theorem}[Refinement stability of Gaussian noise]
+\label{thm:s2-stability}
+Suppose $K_N=K_N^\ast\succeq0$ and
+$\sup_N\opnorm{K_N}\leq M<\infty$. Then
+\begin{equation}
+  \frac{1}{4(1+M)}\Ttwo(N)
+  \leq \mathcal L_N^{\mathrm{ren}}(K_N)
+  \leq \frac14\Ttwo(N).
+  \label{eq:kl-t2-equivalence}
+\end{equation}
+Moreover, if
+$\ell_N(X)=\log\frac{dq_N}{dp_N}(X)$ with $X\sim q_N$, then
+\begin{equation}
+  \Var_{q_N}[\ell_N(X)]=\frac12\Ttwo(N).
+  \label{eq:log-density-variance}
+\end{equation}
+Consequently, the following are equivalent:
+\begin{equation}
+  \sup_N\Ttwo(N)<\infty,
+  \qquad
+  \sup_N\mathcal L_N^{\mathrm{ren}}(K_N)<\infty,
+  \qquad
+  \sup_N\Var_{q_N}[\ell_N(X)]<\infty.
+\end{equation}
+If $\Ttwo(N)\to\infty$, both the renormalized covariance objective and the
+sample log-density variance diverge. The same equivalence holds for signed
+self-adjoint perturbations under a uniform positivity gap
+$I+K_N\succeq\delta I$ and a uniform operator-norm bound, with constants that
+depend only on $(\delta,M)$.
+\end{theorem}
+
+The result makes the slogan precise: Schatten membership at a cutoff is
+automatic, but dimension-uniform Schatten control predicts whether Gaussian
+noise objectives survive refinement.
+
+Uniform control also yields genuine cutoff consistency for compatible
+approximations. If $K_N\to K$ in $\Schatten{2}$ on a common Hilbert space and
+$I+K_N,I+K\succeq\delta I$, continuity of the regularized determinant gives
+\begin{equation}
+  \mathcal L_N^{\mathrm{ren}}(K_N)
+  \longrightarrow -\frac12\log\det\nolimits_2(I+K).
+  \label{eq:compatible-cutoff-convergence}
+\end{equation}
+Under a common isonormal Gaussian coupling, the centered log-density ratios
+converge in $L^2$, with squared distance
+$\frac12\hsnorm{K_N-K}^2$. Thus uniform $\Schatten{2}$ boundedness supplies
+the sharp no-divergence criterion, while $\Schatten{2}$ convergence supplies a
+continuum limit.
+
+\begin{corollary}[Power-law phase transition]
+\label{cor:power-law}
+Under the conditions of \cref{thm:s2-stability}, if
+$s_j(K)\asymp j^{-\alpha}$ and $K_N$ retains the first $n_N$ modes, then
+\begin{equation}
+  \Ttwo(N)\asymp
+  \begin{cases}
+    1, & \alpha>\tfrac12,\\
+    \log n_N, & \alpha=\tfrac12,\\
+    n_N^{1-2\alpha}, & \alpha<\tfrac12.
+  \end{cases}
+  \label{eq:power-law-phase-transition}
+\end{equation}
+The renormalized objective and sample log-density variance inherit the same
+bounded, logarithmic, and polynomial regimes.
+\end{corollary}
+
+\subsection{Matrix-free diagnosis and renormalization}
+
+For independent unnormalized Rademacher probes
+$v_1,\ldots,v_m\in\{-1,+1\}^{n_N}$,
+\begin{equation}
+  \widehat{\Ttwo}(N)
+  =\frac1m\sum_{r=1}^m\lVert K_Nv_r\rVert_2^2,
+  \qquad
+  \E\widehat{\Ttwo}(N)=\Ttwo(N).
+  \label{eq:matrix-free-t2}
+\end{equation}
+Thus the stability diagnostic needs only operator--vector products, not an
+eigendecomposition. When $\opnorm{K_N}<1$, the determinant term also admits
+the matrix-free expansion
+\begin{equation}
+  -\log\det\nolimits_2(I+K_N)
+  =\sum_{k=2}^{\infty}\frac{(-1)^k}{k}\operatorname{Tr}(K_N^k),
+  \label{eq:det2-series}
+\end{equation}
+whose traces can reuse the same probes~\citep{hutchinson1989stochastic}. Our
+series-based implementation caps $\opnorm{K_N}<1$; a Fourier-diagonal gate can
+instead evaluate the regularized determinant exactly mode by mode.
+
+\paragraph{What $\Ttwo$ does and does not predict.}
+\Cref{thm:s2-stability} gives an exact statement for sample log-density
+fluctuations. For a parameterized family $K_N(\theta)$, gradient fluctuations
+also depend on the sensitivity spectrum $\partial_\theta K_N$; they are not a
+function of $\Ttwo(N)$ alone. Our optimization experiments therefore report
+the source of randomness explicitly. The matrix-free test varies estimator
+probes, while the learning tests separately measure minibatch-gradient
+variance and noise-scale drift.
+
+\subsection{Encoders as a falsifiable filtering hypothesis}
+
+Let $J_N(x)$ be an encoder Jacobian, let $\Sigma_N$ be an input perturbation
+covariance, and let $C_{z,N}^{\mathrm{ref}}\succ0$ define an independently
+specified latent reference geometry. The
+whitened Jacobian and relative latent covariance update are
+\begin{equation}
+  F_N(x)=(C_{z,N}^{\mathrm{ref}})^{-1/2}J_N(x)\Sigma_N^{1/2},
+  \qquad
+  K_{E,N}(x)=F_N(x)F_N(x)^\ast.
+  \label{eq:encoder-pushforward}
+\end{equation}
+Their Schatten masses obey the exact identity
+\begin{equation}
+  \Ttwo^{(E)}(N;x)
+  :=\hsnorm{K_{E,N}(x)}^2
+  =\sum_j s_j(F_N(x))^4
+  =\lVert F_N(x)\rVert_{\Schatten{4}}^4.
+  \label{eq:encoder-s4-identity}
+\end{equation}
+Thus an encoder filters an input perturbation into a uniformly
+Hilbert--Schmidt covariance family exactly when its whitened Jacobian is
+uniformly Schatten-$4$. We test either
+$\sup_N\Ttwo^{(E)}(N;x)<\infty$ pointwise or
+$\sup_N\E_x\Ttwo^{(E)}(N;x)<\infty$ at the population level, without changing
+the reference covariance to the perturbation being audited. Compression alone
+does not establish this property: a rank-$r_N$
+partial isometry has $\Ttwo^{(E)}=r_N$, which diverges whenever the effective
+rank grows.
+
+The pushforward in \cref{eq:encoder-pushforward} is distinct from the relative
+covariance update used by a downstream diffusion step,
+\begin{equation}
+  K_{\mathrm{diff},N,t}
+  =(C_{z,N}^{\mathrm{ref}})^{-1/2}
+    \bigl(C_{z,N,t}-C_{z,N}^{\mathrm{ref}}\bigr)
+    (C_{z,N}^{\mathrm{ref}})^{-1/2}.
+  \label{eq:diffusion-relative-covariance}
+\end{equation}
+For a variance-preserving update
+$C_{z,N,t}=\alpha_t^2C_{z,N}^{\mathrm{ref}}+\sigma_t^2I$, this object becomes
+\begin{equation}
+  K_{\mathrm{diff},N,t}
+  =(\alpha_t^2-1)I+\sigma_t^2(C_{z,N}^{\mathrm{ref}})^{-1},
+  \label{eq:vp-diffusion-relative-covariance}
+\end{equation}
+which directly exposes how the latent reference spectrum changes the class in
+which an otherwise isotropic noise schedule acts.
+We audit both objects rather than assuming that attenuation of input
+perturbations automatically regularizes noise injected after encoding. This
+makes the latent-diffusion interpretation falsifiable and separates spectral
+filtering from a fixed-dimensional bottleneck. All adjoints and singular values
+use resolution-consistent Hilbert inner products, including discretization
+quadrature weights.

@@ -1,4 +1,86 @@
-\section{Additional Material}
-\label{app:additional-material}
+\section{Proof of the Stability Theorem}
+\label{app:proofs}
 
-TODO: Add proofs, implementation details, ablations, and supplementary results.
+Let $\lambda\in[0,M]$ and $g(\lambda)=\lambda-\log(1+\lambda)$. Since
+\begin{equation}
+  g(\lambda)=\int_0^\lambda\frac{t}{1+t}\,dt,
+\end{equation}
+we have
+\begin{equation}
+  \frac{\lambda^2}{2(1+M)}
+  \leq g(\lambda)
+  \leq \frac{\lambda^2}{2}.
+\end{equation}
+Summing over the eigenvalues of $K_N$ and multiplying by $1/2$ proves
+\cref{eq:kl-t2-equivalence}.
+
+In whitened coordinates, write
+$X=(I+K_N)^{1/2}\xi$ with $\xi\sim\mathcal N(0,I)$. Diagonalizing $K_N$ gives
+\begin{equation}
+  \ell_N(X)-\E_{q_N}\ell_N(X)
+  =\frac12\sum_j\lambda_{j,N}(\xi_j^2-1).
+\end{equation}
+The terms are independent and $\Var(\xi_j^2)=2$, hence
+\begin{equation}
+  \Var_{q_N}[\ell_N(X)]
+  =\frac12\sum_j\lambda_{j,N}^2
+  =\frac12\Ttwo(N).
+\end{equation}
+The signed case follows by bounding $g(\lambda)/\lambda^2$ on the compact
+interval $[-1+\delta,M]$.
+
+\section{Matrix-Free Estimators}
+\label{app:estimators}
+
+TODO: Add probe-count concentration, the $\det_2$ truncation bound, backward
+complexity, and exact-versus-Hutchinson validation.
+
+\section{Frequency-Matched Controls}
+\label{app:frequency-controls}
+
+For completeness, we verify the identities used in
+\cref{sec:exp-matched-spectrum}. A flat unitary has constant-modulus entries,
+so each diagonal entry of $U\operatorname{diag}(\lambda)U^\ast$ equals
+$d^{-1}\sum_j\lambda_j$. Both spectra in
+\cref{eq:matched-spectrum-pair} have trace $\eta m$, giving the shared
+diagonal $\eta/m$. Their largest eigenvalue is $\eta$, while direct summation
+gives
+\begin{align}
+  \sum_j\bigl(\lambda_j^{\mathrm{stable}}\bigr)^2
+  &=\eta^2\left[1+\frac{m^2-1}{(m+1)^2}\right]
+    =\eta^2\frac{2m}{m+1}, \\
+  \sum_j\bigl(\lambda_j^{\mathrm{unstable}}\bigr)^2
+  &=m\eta^2.
+\end{align}
+Thus the stable family has bounded Hilbert--Schmidt mass but diverging trace,
+whereas the unstable family leaves $\Schatten{2}$.
+
+To match spatial-frequency appearance, let
+\begin{equation}
+  G_R=\operatorname{diag}\left[
+    (1+\lVert k\rVert^2)^{-s/2}
+  \right]_{\lVert k\rVert\leq R},
+  \qquad s>1,
+\end{equation}
+and set $K_{R,d}^{(\cdot)}=G_R\otimes A_d^{(\cdot)}$. The two families have
+the same Fourier diagonal and hence the same radial power summary. For every
+spatial mask $M_R$,
+\begin{equation}
+  \hsnorm{(M_RG_RM_R)\otimes A_d^{(\cdot)}}^2
+  =\hsnorm{M_RG_RM_R}^2\hsnorm{A_d^{(\cdot)}}^2.
+\end{equation}
+Any frequency-only control that retains a nonzero low-frequency response has
+$\hsnorm{M_RG_RM_R}\geq c>0$ and therefore preserves the unstable family's
+$\sqrt d$ divergence. The comparison matches Fourier diagonal, radial power,
+trace, operator norm, bandwidth, low-frequency response, parameter count,
+probe count, and compute budget. Closed-form spectra provide the ground truth;
+Hutchinson probes only validate the matrix-free estimator.
+
+\section{Additional Experimental Details}
+\label{app:experimental-details}
+
+The final artifact records full resolution ladders, seeds and confidence
+intervals, hyperparameters, compute, estimator probe counts, discretization
+weights, encoder scaling constants, and provenance hashes. Operator-learning
+fields are generated once at the highest resolution and restricted to each
+grid, preventing task variation from being confounded with refinement.

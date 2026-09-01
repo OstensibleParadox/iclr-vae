@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 15:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 16:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -394,9 +394,29 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 84.
 )
 \Hy@SectionHShift=\skip69
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/cleveref/cleveref.sty
+Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
+Package cleveref Info: `hyperref' support loaded on input line 2370.
+LaTeX Info: Redefining \cref on input line 2370.
+LaTeX Info: Redefining \Cref on input line 2370.
+LaTeX Info: Redefining \crefrange on input line 2370.
+LaTeX Info: Redefining \Crefrange on input line 2370.
+LaTeX Info: Redefining \cpageref on input line 2370.
+LaTeX Info: Redefining \Cpageref on input line 2370.
+LaTeX Info: Redefining \cpagerefrange on input line 2370.
+LaTeX Info: Redefining \Cpagerefrange on input line 2370.
+LaTeX Info: Redefining \labelcref on input line 2370.
+LaTeX Info: Redefining \labelcpageref on input line 2370.
+Package cleveref Info: `amsthm' support loaded on input line 3026.
+Package cleveref Info: always capitalise cross-reference names on input line 78
+30.
+Package cleveref Info: always capitalise cross-reference names on input line 78
+52.
+Package cleveref Info: no abbreviation of names on input line 7852.
 )
+==> First Aid for cleveref.sty applied!
 \c@theorem=\count319
- (./symbols.tex))
+(./symbols.tex))
 (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count320
@@ -438,8 +458,16 @@ LaTeX Font Info:    ... okay on input line 3.
 \everyMPtoPDFconversion=\toks32
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
@@ -473,8 +501,8 @@ Package hyperref Info: Link coloring OFF on input line 3.
 \openout3 = `main.out'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 6--6
-\T1/ptm/m/sc/17.28 (+20) Resolution-Stable Rep-re-sen-ta-tions via
+Underfull \hbox (badness 3989) in paragraph at lines 6--6
+\T1/ptm/m/sc/17.28 (+20) Schatten Fil-ter-ing for Resolution-Stable
  []
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-cmr.cfg
@@ -497,37 +525,71 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-(./sections/section1_introduction.tex) (./sections/section2_related_work.tex)
-(./sections/section3_method.tex) (./sections/section4_experiments.tex)
-(./sections/section5_conclusion.tex) (./sections/statements.tex)
-(build/main.bbl [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pd
-ftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
+(./sections/section1_introduction.tex [1{/usr/local/texlive/2026/texmf-var/font
+s/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dv
+ips/base/8r.enc}
 
-])
-(./sections/appendix.tex) [2] (build/main.aux)
+]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 8
+6.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+))
+(./sections/section2_problem.tex [2]) (./sections/section3_method_theory.tex
+[3]
+Underfull \hbox (badness 1077) in paragraph at lines 24--27
+[]\T1/ptm/m/n/10 (+20) Structured op-er-a-tors can pre-serve lead-ing phys-i-ca
+l modes more se-lec-tively. Let $\OML/cmm/m/it/10 K[] \OT1/cmr/m/n/10 =
+ []
+
+[4]) (./sections/section4_experiments.tex [5]
+<../experiments/toy/frequency_matched_schatten.png, id=172, 842.84888pt x 587.1
+9376pt>
+File: ../experiments/toy/frequency_matched_schatten.png Graphic file (type png)
+
+<use ../experiments/toy/frequency_matched_schatten.png>
+Package pdftex.def Info: ../experiments/toy/frequency_matched_schatten.png  use
+d on input line 97.
+(pdftex.def)             Requested size: 397.48499pt x 276.91292pt.
+ [6] [7 <../experiments/toy/frequency_matched_schatten.png>]) (./sections/secti
+on5_related_work.tex)
+(./sections/section6_conclusion.tex) (./sections/statements.tex [8])
+(build/main.bbl) (./sections/appendix.tex [9]) [10] [11] (build/main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 8FC4D0D2B84EC23072578DF43130A87C;676.
+(rerunfilecheck)             Checksum: 852166E24D53CBED6D72ED67F688E192;4721.
  ) 
 Here is how much of TeX's memory you used:
- 13846 strings out of 467525
- 207449 string characters out of 5418982
- 666694 words of memory out of 5000000
- 42457 multiletter control sequences out of 15000+600000
- 666416 words of font info for 116 fonts, out of 8000000 for 9000
+ 15928 strings out of 467525
+ 253442 string characters out of 5418982
+ 738157 words of memory out of 5000000
+ 44292 multiletter control sequences out of 15000+600000
+ 673975 words of font info for 216 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,11n,93p,1001b,574s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
-/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/tex
-live/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/
-texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on build/main.pdf (2 pages, 48787 bytes).
+ 80i,17n,93p,1001b,572s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></u
+sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/loca
+l/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
+exlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texl
+ive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
+texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive
+/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texm
+f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fon
+ts/type1/urw/times/utmri8a.pfb>
+Output written on build/main.pdf (11 pages, 538730 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 60 compressed objects within 1 object stream
- 14 named destinations out of 1000 (max. 500000)
- 35889 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 350 PDF objects out of 1000 (max. 8388607)
+ 301 compressed objects within 4 object streams
+ 97 named destinations out of 1000 (max. 500000)
+ 38062 words of extra memory for PDF output out of 42996 (max. 10000000)
 

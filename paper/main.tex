@@ -5,14 +5,38 @@
 \maketitle
 
 \begin{abstract}
-TODO: Summarize the problem, method, main result, and significance in one paragraph.
+Gaussian noise injection is ubiquitous in representation learning, neural
+operators, and diffusion models. Yet a noise level that is benign at one
+resolution need not represent the same perturbation after refinement: its
+relative covariance update can accumulate spectral mass in newly resolved
+modes, causing Gaussian objectives and their gradients to be governed by the
+discretization rather than signal geometry. We formulate this failure as a
+continuum-stability problem. For a whitened covariance perturbation $K_N$, we
+show that uniform Hilbert--Schmidt control is the sharp threshold for uniform
+boundedness of Gaussian noise objectives under refinement and fixed spectral
+bounds.
+Trace-class perturbations admit ordinary trace and log-determinant formulas;
+Hilbert--Schmidt but non-trace-class perturbations require the
+Carleman--Fredholm determinant $\det_2$; beyond $\mathcal S_2$, this
+second-order-renormalized objective loses uniform cutoff control. This
+characterization yields
+\emph{Schatten-filtered noise}, a spectral gate that explicitly constrains the
+perturbation to a chosen operator-ideal regime. Synthetic power-law spectra
+recover the predicted three-phase boundary, while resolution-scaling tests
+measure objective drift, gradient variance, and noise-scale transfer. Finally,
+we ask whether latent encoders act as implicit operator-ideal filters by
+auditing both pushed-forward input perturbations and downstream diffusion
+updates across resolutions. The resulting framework turns a hidden requirement of
+high-dimensional noise injection into a falsifiable representation diagnostic
+and a controllable noise-design principle.
 \end{abstract}
 
 \input{sections/section1_introduction}
-\input{sections/section2_related_work}
-\input{sections/section3_method}
+\input{sections/section2_problem}
+\input{sections/section3_method_theory}
 \input{sections/section4_experiments}
-\input{sections/section5_conclusion}
+\input{sections/section5_related_work}
+\input{sections/section6_conclusion}
 \input{sections/statements}
 
 \bibliography{references}
