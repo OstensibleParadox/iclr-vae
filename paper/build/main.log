@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 16:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 16:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -236,6 +236,9 @@ Package graphics Info: Driver file: pdftex.def on input line 106.
 )
 \Gin@req@height=\dimen176
 \Gin@req@width=\dimen177
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
 )
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
@@ -543,19 +546,29 @@ Underfull \hbox (badness 1077) in paragraph at lines 24--27
 l modes more se-lec-tively. Let $\OML/cmm/m/it/10 K[] \OT1/cmr/m/n/10 =
  []
 
-[4]) (./sections/section4_experiments.tex [5]
-<../experiments/toy/frequency_matched_schatten.png, id=172, 842.84888pt x 587.1
+[4]
+<../experiments/toy/three_regime_phase_diagram.png, id=153, 903.375pt x 635.976
+pt>
+File: ../experiments/toy/three_regime_phase_diagram.png Graphic file (type png)
+
+<use ../experiments/toy/three_regime_phase_diagram.png>
+Package pdftex.def Info: ../experiments/toy/three_regime_phase_diagram.png  use
+d on input line 222.
+(pdftex.def)             Requested size: 397.48499pt x 279.83029pt.
+) (./sections/section4_experiments.tex [5] [6 <../experiments/toy/three_regime_
+phase_diagram.png>]
+<../experiments/toy/frequency_matched_schatten.png, id=182, 842.84888pt x 587.1
 9376pt>
 File: ../experiments/toy/frequency_matched_schatten.png Graphic file (type png)
 
 <use ../experiments/toy/frequency_matched_schatten.png>
 Package pdftex.def Info: ../experiments/toy/frequency_matched_schatten.png  use
-d on input line 97.
+d on input line 96.
 (pdftex.def)             Requested size: 397.48499pt x 276.91292pt.
- [6] [7 <../experiments/toy/frequency_matched_schatten.png>]) (./sections/secti
-on5_related_work.tex)
-(./sections/section6_conclusion.tex) (./sections/statements.tex [8])
-(build/main.bbl) (./sections/appendix.tex [9]) [10] [11] (build/main.aux)
+ [7] [8 <../experiments/toy/frequency_matched_schatten.png>]) (./sections/secti
+on5_related_work.tex) (./sections/section6_conclusion.tex) (./sections/statemen
+ts.tex [9]) (build/main.bbl) (./sections/appendix.tex
+[10] [11]) [12] (build/main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -564,10 +577,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 852166E24D53CBED6D72ED67F688E192;4721.
  ) 
 Here is how much of TeX's memory you used:
- 15928 strings out of 467525
- 253442 string characters out of 5418982
- 738157 words of memory out of 5000000
- 44292 multiletter control sequences out of 15000+600000
+ 15969 strings out of 467525
+ 254595 string characters out of 5418982
+ 737301 words of memory out of 5000000
+ 44325 multiletter control sequences out of 15000+600000
  673975 words of font info for 216 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  80i,17n,93p,1001b,572s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -586,10 +599,10 @@ texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive
 /2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texm
 f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on build/main.pdf (11 pages, 538730 bytes).
+Output written on build/main.pdf (12 pages, 873855 bytes).
 PDF statistics:
- 350 PDF objects out of 1000 (max. 8388607)
- 301 compressed objects within 4 object streams
- 97 named destinations out of 1000 (max. 500000)
- 38062 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 361 PDF objects out of 1000 (max. 8388607)
+ 309 compressed objects within 4 object streams
+ 101 named destinations out of 1000 (max. 500000)
+ 38067 words of extra memory for PDF output out of 42996 (max. 10000000)
 

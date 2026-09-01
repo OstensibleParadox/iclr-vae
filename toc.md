@@ -1,3 +1,7 @@
+> **Status:** legacy table of contents. Use
+> [`paper/notes/narrative.md`](paper/notes/narrative.md) and the current
+> [`paper/main.tex`](paper/main.tex) section order as the source of truth.
+
 # ICLR 2027：When Gaussian Learning Stops Scaling: Resolution-Stable Representations via Operator-Ideal Regularization
 
 # Part II. Table of Contents

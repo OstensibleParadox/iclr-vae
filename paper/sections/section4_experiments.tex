@@ -26,6 +26,8 @@ regimes. At every finite cutoff, with $Z\sim\mathcal N(0,I)$, we verify
 The two sides agree to numerical precision, while only the combined
 Wick--$\det_2$ expression remains uniformly controlled in the
 Hilbert--Schmidt, non-trace-class regime.
+\Cref{fig:phase-boundary} shows the complete refinement path rather than a
+single-cutoff snapshot.
 
 The same panel tests the stochastic consequence using the matrix-free
 objective. We hold the feature batch fixed and vary only its Rademacher probes.
@@ -35,21 +37,6 @@ $102.7\times$; the Schatten-filtered branch changes by $1.21\times$ and
 $1.46\times$,
 respectively. This is an estimator-mechanism test, not a claim that $\Ttwo$
 alone determines every source of SGD variance.
-
-% Figure 1: spectrum; bounded/log/power T2; objective and probe-variance collapse.
-% Replace point estimates with final multi-seed confidence intervals.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{../experiments/toy/three_regime_phase_diagram.png}
-  \caption{\textbf{The operator-ideal boundary appears only under refinement.}
-  Power-law precision spectra traverse $\Schatten{1}$,
-  $\Schatten{2}\setminus\Schatten{1}$, the critical boundary, and the
-  non-$\Schatten{2}$ regime. Ordinary trace and determinant components drift
-  separately, while the Wick--$\det_2$ finite part and its stochastic
-  fluctuation are controlled exactly when $\hsnorm{H_N}^2$ is controlled.}
-  \label{fig:phase-boundary}
-\end{figure}
 
 \subsection{Same frequency appearance, different continuum fate}
 \label{sec:exp-matched-spectrum}
@@ -116,6 +103,7 @@ budget. Exact construction and matching constraints are in
   explicit DFT matrices verify the identities at small $d$.}
   \label{fig:frequency-matched}
 \end{figure}
+\FloatBarrier
 
 \subsection{Resolution-consistent operator learning}
 \label{sec:exp-operator}
@@ -133,7 +121,8 @@ defined in physical Fourier modes,
 \end{equation}
 where $0<\rho<1$ and $\epsilon>0$ are fixed. Thus $s>1$ enforces square
 summability in two spatial dimensions and keeps the series estimator inside
-its spectral-radius domain. We freeze
+its spectral-radius domain. Here $\beta_\theta(k)$ is a relative covariance
+eigenvalue, not a noise standard deviation. We freeze
 the selected gate and evaluate zero-shot at $2\times$ and $4\times$ the
 training resolution. Architecture, optimization steps, low-frequency
 response, and base-resolution noise budget are held fixed.
@@ -159,11 +148,15 @@ actual relative diffusion update $K_{\mathrm{diff},N,t}$ in
 \cref{eq:diffusion-relative-covariance}. The controls are pixel identity, a
 same-rank partial isometry, architecture-matched random encoders, antialiased
 downsampling, a learned VAE encoder, and the learned encoder with an explicit
-Schatten gate.
+Schatten gate. The principal ladder allows latent spatial rank to grow with
+resolution; fixed-rank bottlenecks are reported separately and are not treated
+as evidence of nontrivial uniform $\Schatten{2}$ control.
 
 The audit reports full covariance spectra, raw $\Ttwo(N)$ and its growth
 exponent, effective rank, tail energy, and downstream noise-scale or gradient
-drift. Raw $\Ttwo$ under the correct discretization inner product is the
+drift. The latent reference covariance is estimated independently of the
+injected perturbation, with a fixed support regularization rule across the
+ladder. Raw $\Ttwo$ under the quadrature-weighted discretization inner product is the
 membership test; normalized effective-rank summaries are complementary
 descriptions, not substitutes. This experiment answers the representation
 question directly: which encoders change the spectral class in which noise

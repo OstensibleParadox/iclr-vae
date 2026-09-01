@@ -32,8 +32,29 @@ interval $[-1+\delta,M]$.
 \section{Matrix-Free Estimators}
 \label{app:estimators}
 
-TODO: Add probe-count concentration, the $\det_2$ truncation bound, backward
-complexity, and exact-versus-Hutchinson validation.
+Let $A_N=K_N^\ast K_N$. For an unnormalized Rademacher probe $v$,
+$\lVert K_Nv\rVert^2=v^\top A_Nv$ and
+\begin{equation}
+  \E[v^\top A_Nv]=\operatorname{Tr}A_N=\Ttwo(N),
+  \qquad
+  \Var[v^\top A_Nv]
+  =2\sum_{i\neq j}(A_N)_{ij}^2.
+\end{equation}
+The variance decreases by a factor of $m$ after averaging $m$ independent
+probes. For the series in \cref{eq:det2-series}, if
+$\opnorm{K_N}\leq\rho<1$ and terms through order $L$ are retained, then
+\begin{equation}
+  \left|
+    -\log\det\nolimits_2(I+K_N)
+    -\sum_{k=2}^{L}\frac{(-1)^k}{k}\operatorname{Tr}(K_N^k)
+  \right|
+  \leq
+  \frac{\rho^{L-1}}{(L+1)(1-\rho)}\Ttwo(N).
+\end{equation}
+The estimator requires $O(mL)$ operator--vector products and supports
+backpropagation through the same computation. All controlled-spectrum tests
+compare probe estimates against exact eigenvalue sums; the frequency-matched
+construction additionally validates the formulas with explicit DFT matrices.
 
 \section{Frequency-Matched Controls}
 \label{app:frequency-controls}

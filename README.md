@@ -1,3 +1,8 @@
+> **Status:** this is the original construction checklist. The canonical paper
+> story, claim hierarchy, four-figure plan, and language locks now live in
+> [`paper/notes/narrative.md`](paper/notes/narrative.md); the compilable draft is
+> [`paper/main.tex`](paper/main.tex).
+
 # ICLR 2027：When Gaussian Learning Stops Scaling: Resolution-Stable Representations via Operator-Ideal Regularization
 
 # Part I: 施工清单

@@ -216,3 +216,15 @@ makes the latent-diffusion interpretation falsifiable and separates spectral
 filtering from a fixed-dimensional bottleneck. All adjoints and singular values
 use resolution-consistent Hilbert inner products, including discretization
 quadrature weights.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{../experiments/toy/three_regime_phase_diagram.png}
+  \caption{\textbf{The operator-ideal boundary appears only under refinement.}
+  Power-law precision spectra traverse $\Schatten{1}$,
+  $\Schatten{2}\setminus\Schatten{1}$, the critical boundary, and the
+  non-$\Schatten{2}$ regime. Ordinary trace and determinant components drift
+  separately, while the Wick--$\det_2$ finite part and its stochastic
+  fluctuation are controlled exactly when $\hsnorm{H_N}^2$ is controlled.}
+  \label{fig:phase-boundary}
+\end{figure}
