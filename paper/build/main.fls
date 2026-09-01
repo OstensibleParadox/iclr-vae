@@ -78,8 +78,6 @@ INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/graphics/trig.sty
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
-INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/microtype/microtype.sty
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/microtype/microtype.sty
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty
