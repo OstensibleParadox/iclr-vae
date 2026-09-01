@@ -74,19 +74,25 @@ def rows_for_spectrum(spectrum: Spectrum, cutoffs: Iterable[int]) -> list[dict[s
     beta = spectrum.beta(max_cutoff)
 
     trace_cumsum = beta.cumsum(dim=0)
-    t2_cumsum = beta.square().cumsum(dim=0)
+    t2_h_cumsum = beta.square().cumsum(dim=0)
+    covariance_eigenvalues = beta / (1.0 - beta)
+    trace_k_cumsum = covariance_eigenvalues.cumsum(dim=0)
+    t2_k_cumsum = covariance_eigenvalues.square().cumsum(dim=0)
     logdet_cumsum = torch.log1p(-beta).cumsum(dim=0)
     det2_cumsum = (torch.log1p(-beta) + beta).cumsum(dim=0)
 
     rows: list[dict[str, float | int | str]] = []
     for cutoff in cutoff_values:
         idx = cutoff - 1
-        trace_p = trace_cumsum[idx].item()
-        t2_exact = t2_cumsum[idx].item()
-        ordinary_quadratic_mean = 0.5 * trace_p
+        trace_h = trace_cumsum[idx].item()
+        t2_h = t2_h_cumsum[idx].item()
+        trace_k = trace_k_cumsum[idx].item()
+        t2_k = t2_k_cumsum[idx].item()
+        ordinary_quadratic_mean = 0.5 * trace_h
         ordinary_logdet = 0.5 * logdet_cumsum[idx].item()
         det2_constant = 0.5 * det2_cumsum[idx].item()
-        wick_quadratic_sd = (0.5 * t2_exact) ** 0.5
+        wick_quadratic_sd_p = (0.5 * t2_h) ** 0.5
+        log_density_sd_q = (0.5 * t2_k) ** 0.5
 
         # At every finite cutoff, the ordinary scalar and the
         # Wick--Carleman--Fredholm scalar are the same random variable:
@@ -99,6 +105,14 @@ def rows_for_spectrum(spectrum: Spectrum, cutoffs: Iterable[int]) -> list[dict[s
         ordinary_total_mean = ordinary_quadratic_mean + ordinary_logdet
         cf_finite_part_mean = det2_constant
         finite_cutoff_identity_error = abs(ordinary_total_mean - cf_finite_part_mean)
+        kl_p_to_q = -ordinary_total_mean
+        kl_q_to_p = 0.5 * trace_k + ordinary_logdet
+        kl_p_to_q_det2 = -det2_constant
+        logdet2_i_plus_k = (
+            torch.log1p(covariance_eigenvalues[:cutoff])
+            - covariance_eigenvalues[:cutoff]
+        ).sum().item()
+        kl_q_to_p_det2 = -0.5 * logdet2_i_plus_k
 
         rows.append(
             {
@@ -109,15 +123,24 @@ def rows_for_spectrum(spectrum: Spectrum, cutoffs: Iterable[int]) -> list[dict[s
                 "boundary": str(spectrum.boundary),
                 "line_style": "dashed" if spectrum.boundary else "solid",
                 "cutoff_N": cutoff,
-                "trace_P": trace_p,
-                "T2_exact": t2_exact,
+                "trace_H": trace_h,
+                "T2_H": t2_h,
+                "trace_K": trace_k,
+                "T2_K": t2_k,
                 "ordinary_quadratic_mean": ordinary_quadratic_mean,
                 "ordinary_logdet": ordinary_logdet,
                 "ordinary_total_mean": ordinary_total_mean,
                 "det2_constant": det2_constant,
-                "wick_quadratic_sd": wick_quadratic_sd,
+                "wick_quadratic_sd_p": wick_quadratic_sd_p,
+                "log_density_sd_q": log_density_sd_q,
                 "cf_finite_part_mean": cf_finite_part_mean,
                 "finite_cutoff_identity_error": finite_cutoff_identity_error,
+                "KL_p_to_q": kl_p_to_q,
+                "KL_p_to_q_det2": kl_p_to_q_det2,
+                "KL_q_to_p": kl_q_to_p,
+                "KL_q_to_p_det2": kl_q_to_p_det2,
+                "precision_covariance_kl_p_error": abs(kl_p_to_q - kl_p_to_q_det2),
+                "precision_covariance_kl_q_error": abs(kl_q_to_p - kl_q_to_p_det2),
             }
         )
 
@@ -144,7 +167,7 @@ def run_litmus(
 def save_results(rows: list[dict[str, float | int | str]], csv_path: Path) -> None:
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -170,6 +193,16 @@ def validate_rows(rows: list[dict[str, float | int | str]]) -> None:
     if max_identity_error > 1e-10:
         raise RuntimeError(f"finite-cutoff identity error too large: {max_identity_error:.3e}")
 
+    max_bridge_error = max(
+        max(
+            float(row["precision_covariance_kl_p_error"]),
+            float(row["precision_covariance_kl_q_error"]),
+        )
+        for row in rows
+    )
+    if max_bridge_error > 1e-9:
+        raise RuntimeError(f"precision/covariance KL bridge error too large: {max_bridge_error:.3e}")
+
     s1_rows = _rows_for(rows, "trace_class_alpha_1_20")
     s2_rows = _rows_for(rows, "hs_not_trace_alpha_0_60")
     outside_rows = _rows_for(rows, "non_hs_alpha_0_40")
@@ -180,26 +213,26 @@ def validate_rows(rows: list[dict[str, float | int | str]]) -> None:
 
     s1_last = s1_rows[-1]
     s1_decade = _row_at_or_below(s1_rows, last_decade_cutoff)
-    if float(s1_last["trace_P"]) / float(s1_decade["trace_P"]) > 1.25:
+    if float(s1_last["trace_H"]) / float(s1_decade["trace_H"]) > 1.25:
         raise RuntimeError("S1 trace still grows too quickly over the final decade")
-    if float(s1_last["T2_exact"]) / float(s1_decade["T2_exact"]) > 1.05:
+    if float(s1_last["T2_K"]) / float(s1_decade["T2_K"]) > 1.05:
         raise RuntimeError("S1 T2 still grows too quickly over the final decade")
 
     s2_last = s2_rows[-1]
     s2_decade = _row_at_or_below(s2_rows, last_decade_cutoff)
-    if float(s2_last["trace_P"]) / float(s2_decade["trace_P"]) < 1.5:
+    if float(s2_last["trace_H"]) / float(s2_decade["trace_H"]) < 1.5:
         raise RuntimeError("S2\\S1 trace did not grow over the final decade")
-    if float(s2_last["T2_exact"]) / float(s2_decade["T2_exact"]) > 1.15:
+    if float(s2_last["T2_K"]) / float(s2_decade["T2_K"]) > 1.15:
         raise RuntimeError("S2\\S1 T2 did not stabilize over the final decade")
 
     outside_last = outside_rows[-1]
     outside_decade = _row_at_or_below(outside_rows, last_decade_cutoff)
-    if float(outside_last["T2_exact"]) / float(outside_decade["T2_exact"]) < 1.35:
+    if float(outside_last["T2_K"]) / float(outside_decade["T2_K"]) < 1.35:
         raise RuntimeError("outside-S2 T2 did not grow enough over the final decade")
 
     boundary_last = boundary_rows[-1]
     boundary_decade = _row_at_or_below(boundary_rows, last_decade_cutoff)
-    boundary_ratio = float(boundary_last["T2_exact"]) / float(boundary_decade["T2_exact"])
+    boundary_ratio = float(boundary_last["T2_K"]) / float(boundary_decade["T2_K"])
     if not (1.05 < boundary_ratio < 1.40):
         raise RuntimeError(f"boundary T2 growth should be slow/logarithmic; got ratio {boundary_ratio:.3f}")
 
@@ -227,37 +260,37 @@ def plot_results(rows: list[dict[str, float | int | str]], png_path: Path) -> No
         linestyle = "--" if spectrum.boundary else "-"
         color = colors[spectrum.name]
 
-        trace_p = [float(row["trace_P"]) for row in spectrum_rows]
-        t2_exact = [float(row["T2_exact"]) for row in spectrum_rows]
+        trace_h = [float(row["trace_H"]) for row in spectrum_rows]
+        t2_k = [float(row["T2_K"]) for row in spectrum_rows]
         q_mean = [float(row["ordinary_quadratic_mean"]) for row in spectrum_rows]
         ordinary_logdet = [float(row["ordinary_logdet"]) for row in spectrum_rows]
         det2_constant = [float(row["det2_constant"]) for row in spectrum_rows]
-        wick_sd = [float(row["wick_quadratic_sd"]) for row in spectrum_rows]
+        wick_sd = [float(row["wick_quadratic_sd_p"]) for row in spectrum_rows]
 
-        ax_trace.plot(cutoffs, trace_p, color=color, linestyle=linestyle, linewidth=2.0)
-        ax_t2.plot(cutoffs, t2_exact, color=color, linestyle=linestyle, linewidth=2.0)
+        ax_trace.plot(cutoffs, trace_h, color=color, linestyle=linestyle, linewidth=2.0)
+        ax_t2.plot(cutoffs, t2_k, color=color, linestyle=linestyle, linewidth=2.0)
         ax_components.plot(cutoffs, q_mean, color=color, linestyle=linestyle, linewidth=1.8)
         ax_components.plot(cutoffs, ordinary_logdet, color=color, linestyle=":" if not spectrum.boundary else "--", linewidth=1.8)
         ax_finite_part.plot(cutoffs, wick_sd, color=color, linestyle=linestyle, linewidth=1.8)
         ax_finite_part.plot(cutoffs, det2_constant, color=color, linestyle=":" if not spectrum.boundary else "--", linewidth=1.8)
 
-    ax_trace.set_title(r"Trace component $\mathrm{Tr}(P_N)$")
-    ax_trace.set_ylabel(r"$\mathrm{Tr}(P_N)$")
+    ax_trace.set_title(r"Precision trace $\mathrm{Tr}(H_N)$")
+    ax_trace.set_ylabel(r"$\mathrm{Tr}(H_N)$")
     ax_trace.set_xscale("log")
     ax_trace.set_yscale("log")
 
-    ax_t2.set_title(r"Hilbert--Schmidt diagnostic $T_2$")
-    ax_t2.set_ylabel(r"$T_2=\|P_N\|_{S_2}^2$")
+    ax_t2.set_title(r"Canonical covariance diagnostic $T_2$")
+    ax_t2.set_ylabel(r"$T_2=\|K_N\|_{S_2}^2$")
     ax_t2.set_xscale("log")
     ax_t2.set_yscale("log")
 
     ax_components.set_title("Ordinary component drift")
-    ax_components.set_ylabel(r"$\frac{1}{2}\mathrm{Tr}(P_N)$ and $\frac{1}{2}\log\det(I-P_N)$")
+    ax_components.set_ylabel(r"$\frac{1}{2}\mathrm{Tr}(H_N)$ and $\frac{1}{2}\log\det(I-H_N)$")
     ax_components.set_xscale("log")
     ax_components.set_yscale("symlog", linthresh=1e-2)
 
     ax_finite_part.set_title(r"Wick--$\det_2$ finite-part terms")
-    ax_finite_part.set_ylabel(r"Wick SD and $\frac{1}{2}\log\det_2(I-P_N)$")
+    ax_finite_part.set_ylabel(r"$p$-Wick SD and $\frac{1}{2}\log\det_2(I-H_N)$")
     ax_finite_part.set_xscale("log")
     ax_finite_part.set_yscale("symlog", linthresh=1e-2)
 
@@ -288,15 +321,15 @@ def print_table(rows: list[dict[str, float | int | str]]) -> None:
         spectrum_rows[-1]
         for spectrum_rows in (_rows_for(rows, spectrum.name) for spectrum in SPECTRA)
     ]
-    print("spectrum                    regime              N        Tr(P)        T2       det2")
+    print("spectrum                    regime              N        Tr(H)      T2(K)       det2")
     print("-" * 88)
     for row in final_rows:
         print(
             f"{str(row['spectrum']):<28}"
             f"{str(row['regime']):<18}"
             f"{int(row['cutoff_N']):>8}"
-            f"{float(row['trace_P']):>12.4f}"
-            f"{float(row['T2_exact']):>10.4f}"
+            f"{float(row['trace_H']):>12.4f}"
+            f"{float(row['T2_K']):>10.4f}"
             f"{float(row['det2_constant']):>11.4f}"
         )
 

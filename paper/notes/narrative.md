@@ -83,6 +83,9 @@ budget—not single-resolution SOTA.
 
 ## Language locks
 
+- Sampling amplitudes are (B_N); the relative covariance is always
+  (K_N=B_NB_N^ast). Gates, (det_2), and raw (T_2) are computed from
+  (K_N), so a diagonal amplitude (b_j) contributes (b_j^4) to (T_2).
 - Say **dimension-uniform Schatten control**, never finite-matrix membership.
 - Say **probe-induced gradient variance** unless minibatch/SGD randomness is
   explicitly varied.

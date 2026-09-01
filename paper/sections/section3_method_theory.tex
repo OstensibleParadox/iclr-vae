@@ -3,15 +3,28 @@
 
 \subsection{A noise-layer interface and ideal-aware gate}
 
-At a Gaussian noise-injection site, the raw relative covariance $K_N\succeq0$
-defines $\Delta C_N=C_N^{1/2}K_NC_N^{1/2}$. Schatten-filtered noise replaces it
-with $K_N^{(\tau)}=\Phi_\tau(K_N)$ and injects
+At a Gaussian noise-injection site, let $B_N$ denote the noise-amplitude
+operator in whitened coordinates and define the raw relative covariance by
 \begin{equation}
-  \xi_N^{(\tau)}\sim
-  \mathcal N\!\left(0,C_N^{1/2}K_N^{(\tau)}C_N^{1/2}\right),
+  K_N=B_NB_N^\ast,
+  \qquad
+  \Delta C_N=C_N^{1/2}K_NC_N^{1/2}.
+  \label{eq:amplitude-covariance-contract}
+\end{equation}
+Schatten-filtered noise replaces $K_N$ with
+$K_N^{(\tau)}=\Phi_\tau(K_N)$. Choosing any factor
+$B_N^{(\tau)}(B_N^{(\tau)})^\ast=K_N^{(\tau)}$, it injects
+\begin{equation}
+  \epsilon_N\sim\mathcal N(0,I),
+  \qquad
+  \xi_N^{(\tau)}=C_N^{1/2}B_N^{(\tau)}\epsilon_N,
   \qquad z'=z+\xi_N^{(\tau)}.
   \label{eq:noise-layer-interface}
 \end{equation}
+This contract separates amplitude from covariance: for diagonal amplitudes
+$b_{j,N}$, the covariance eigenvalues are $b_{j,N}^2$ and
+$\Ttwo(N)=\sum_j b_{j,N}^4$. Every gate, determinant, and diagnostic below is
+defined on $K_N$, never directly on a noise standard deviation.
 A basis-invariant budget gate is the radial projection
 \begin{equation}
   \Phi_\tau^{\mathrm{budget}}(K_N)
@@ -99,6 +112,22 @@ The result makes the slogan precise: Schatten membership at a cutoff is
 automatic, but dimension-uniform Schatten control predicts whether Gaussian
 noise objectives survive refinement.
 
+The same threshold controls the curvature seen by a scalar noise-scale
+parameter. For $K_N(\theta)=\theta A_N$ with $A_N\succeq0$ and $\theta\geq0$,
+\begin{equation}
+  \mathcal L_N'(\theta)
+  =\frac{\theta}{2}\Tr\!\left[A_N^2(I+\theta A_N)^{-1}\right],
+  \qquad
+  \mathcal L_N''(\theta)
+  =\frac12\Tr\!\left[A_N^2(I+\theta A_N)^{-2}\right].
+  \label{eq:noise-scale-curvature}
+\end{equation}
+Under a uniform spectral bound and a fixed range of $\theta$, this curvature is
+equivalent up to fixed constants to $\hsnorm{A_N}^2$. Thus tail accumulation
+changes the optimization geometry of the nominal noise-scale knob even when
+each individual mode remains small. The derivation is in
+\cref{app:noise-scale-curvature}.
+
 Uniform control also yields genuine cutoff consistency for compatible
 approximations. If $K_N\to K$ in $\Schatten{2}$ on a common Hilbert space and
 $I+K_N,I+K\succeq\delta I$, continuity of the regularized determinant gives
@@ -182,6 +211,10 @@ Their Schatten masses obey the exact identity
   =\lVert F_N(x)\rVert_{\Schatten{4}}^4.
   \label{eq:encoder-s4-identity}
 \end{equation}
+This is the local mean-map contribution for a nonlinear encoder. For a
+stochastic VAE, the reference and downstream covariance audits additionally
+include the posterior-variance term through the law of total covariance; the
+Jacobian identity is not used as a substitute for that full latent covariance.
 Thus an encoder filters an input perturbation into a uniformly
 Hilbert--Schmidt covariance family exactly when its whitened Jacobian is
 uniformly Schatten-$4$. We test either
@@ -223,8 +256,10 @@ quadrature weights.
   \caption{\textbf{The operator-ideal boundary appears only under refinement.}
   Power-law precision spectra traverse $\Schatten{1}$,
   $\Schatten{2}\setminus\Schatten{1}$, the critical boundary, and the
-  non-$\Schatten{2}$ regime. Ordinary trace and determinant components drift
-  separately, while the Wick--$\det_2$ finite part and its stochastic
-  fluctuation are controlled exactly when $\hsnorm{H_N}^2$ is controlled.}
+  non-$\Schatten{2}$ regime. The top-right panel reports the canonical
+  covariance diagnostic $\hsnorm{K_N}^2$; the precision bridge in
+  \cref{app:precision-bridge} gives the same phase boundary for $H_N$.
+  Ordinary components drift separately, while the Wick--$\det_2$ finite part
+  and its stochastic fluctuation remain controlled on the bounded side.}
   \label{fig:phase-boundary}
 \end{figure}

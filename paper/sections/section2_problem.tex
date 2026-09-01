@@ -17,6 +17,16 @@ $K_N$ from \cref{eq:relative-covariance-perturbation}, so that $q_N$ has
 relative covariance $I+K_N$. The eigenvalues of $K_N$ measure noise strength
 relative to the reference geometry rather than in raw coordinates.
 
+When a continuum limit is invoked, the active spaces are compatible Galerkin
+subspaces of one separable Hilbert space, and the reference covariance is
+positive, injective, and trace class. The lifted perturbations are uniformly
+bounded and satisfy a common positivity gap. These assumptions ensure that the
+perturbed covariance remains a Gaussian covariance; Schatten-$2$ is the
+threshold for the \emph{relative update}, not a replacement for the trace-class
+condition on a standalone covariance. Purely finite feature-space experiments
+use the same resolution-indexed diagnostic without asserting an
+$L^2$-valued white-noise limit.
+
 For finite $n_N$, the covariance contribution to the Gaussian KL divergence is
 \begin{equation}
   \KL(q_N\Vert p_N)

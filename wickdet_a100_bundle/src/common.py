@@ -19,6 +19,7 @@ except Exception:  # pragma: no cover
 
 BUNDLE_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = BUNDLE_ROOT / "configs" / "a100_final.yaml"
+SCIENTIFIC_CONTRACT_VERSION = "relative_covariance_k_v1"
 SMOKE_CONFIG = BUNDLE_ROOT / "configs" / "smoke.yaml"
 STAGE_DIRNAME = "stages"
 
@@ -85,6 +86,27 @@ def load_config(path: Path) -> dict[str, Any]:
         loaded = yaml.safe_load(handle)
     if not isinstance(loaded, dict):
         raise RuntimeError(f"Config is not a mapping: {path}")
+    contract = loaded.get("scientific_contract")
+    if not isinstance(contract, dict):
+        raise RuntimeError(f"Config is missing scientific_contract: {path}")
+    if contract.get("version") != SCIENTIFIC_CONTRACT_VERSION:
+        raise RuntimeError(
+            "Unsupported scientific contract "
+            f"{contract.get('version')!r}; expected {SCIENTIFIC_CONTRACT_VERSION!r}"
+        )
+    required = {
+        "sampling_parameter": "amplitude_B",
+        "relative_covariance": "K=B B*",
+        "t2_definition": "Tr(K* K)",
+        "primary_objective": "KL(q_K||p)",
+    }
+    mismatches = {
+        key: (contract.get(key), expected)
+        for key, expected in required.items()
+        if contract.get(key) != expected
+    }
+    if mismatches:
+        raise RuntimeError(f"Scientific contract mismatch in {path}: {mismatches}")
     return loaded
 
 
@@ -183,6 +205,7 @@ def write_stage_metadata(
         "tf32": config.get("tf32"),
         "deterministic": config.get("deterministic"),
         "seeds": config.get("seeds"),
+        "scientific_contract": config.get("scientific_contract"),
         "start_time": start_time,
         "end_time": now_iso(),
         "command_line": " ".join(sys.argv),

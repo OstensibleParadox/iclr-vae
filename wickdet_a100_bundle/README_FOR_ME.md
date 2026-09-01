@@ -1,5 +1,12 @@
 # WickDet A100 Bundle Notes
 
+> **Scientific readiness guard:** final A100 execution is intentionally blocked
+> while `scientific_contract.implementation_ready` is false.  The canonical
+> contract is amplitude $B$ for sampling, relative covariance $K=BB^*$ for all
+> gates and objectives, and $T_2=\operatorname{Tr}(K^*K)$.  Do not bypass this
+> guard: it is lifted only after the CPU contract tests, toy claim tests, and
+> FNO/SD-VAE protocol validators agree with the paper.
+
 This is the black-box A100/CUDA final-run package for the WickDet / Schatten-filtered noise experiments. It is intentionally separate from local `experiments_a100/` development scaffolding and from archived M4/MPS pilot runs.
 
 Pilot outputs are historical development records only. They must not be copied into this bundle's `outputs/<RUN_ID>/figures/`, `csv/`, or final manifests.

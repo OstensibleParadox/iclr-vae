@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 16:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 16:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -538,49 +538,51 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ))
 (./sections/section2_problem.tex [2]) (./sections/section3_method_theory.tex
 [3]
-Underfull \hbox (badness 1077) in paragraph at lines 24--27
+Underfull \hbox (badness 1077) in paragraph at lines 37--40
 []\T1/ptm/m/n/10 (+20) Structured op-er-a-tors can pre-serve lead-ing phys-i-ca
 l modes more se-lec-tively. Let $\OML/cmm/m/it/10 K[] \OT1/cmr/m/n/10 =
  []
 
-[4]
-<../experiments/toy/three_regime_phase_diagram.png, id=153, 903.375pt x 635.976
+[4] [5]
+<../experiments/toy/three_regime_phase_diagram.png, id=179, 903.375pt x 635.976
 pt>
 File: ../experiments/toy/three_regime_phase_diagram.png Graphic file (type png)
 
 <use ../experiments/toy/three_regime_phase_diagram.png>
 Package pdftex.def Info: ../experiments/toy/three_regime_phase_diagram.png  use
-d on input line 222.
+d on input line 255.
 (pdftex.def)             Requested size: 397.48499pt x 279.83029pt.
-) (./sections/section4_experiments.tex [5] [6 <../experiments/toy/three_regime_
-phase_diagram.png>]
-<../experiments/toy/frequency_matched_schatten.png, id=182, 842.84888pt x 587.1
+) (./sections/section4_experiments.tex [6]
+<../experiments/toy/frequency_matched_schatten.png, id=199, 842.84888pt x 587.1
 9376pt>
 File: ../experiments/toy/frequency_matched_schatten.png Graphic file (type png)
 
 <use ../experiments/toy/frequency_matched_schatten.png>
 Package pdftex.def Info: ../experiments/toy/frequency_matched_schatten.png  use
-d on input line 96.
+d on input line 99.
 (pdftex.def)             Requested size: 397.48499pt x 276.91292pt.
- [7]) (./sections/section5_related_work.tex [8 <../experiments/toy/frequency_ma
-tched_schatten.png>]) (./sections/section6_conclusion.tex) (./sections/statemen
-ts.tex) (build/main.bbl [9]) (./sections/appendix.tex
-[10]) [11] (build/main.aux)
+ [7 <../experiments/toy/three_regime_phase_diagram.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8 <../experiments/toy/frequency_matched_schatten.png>])
+(./sections/section5_related_work.tex) (./sections/section6_conclusion.tex)
+(./sections/statements.tex [9]) (build/main.bbl [10]) (./sections/appendix.tex
+[11] [12]) [13] (build/main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 852166E24D53CBED6D72ED67F688E192;4721.
+(rerunfilecheck)             Checksum: 613E1FF2F9701F44E6FD3FEA3490DE84;5271.
  ) 
 Here is how much of TeX's memory you used:
- 15940 strings out of 467525
- 253908 string characters out of 5418982
+ 15977 strings out of 467525
+ 254582 string characters out of 5418982
  737157 words of memory out of 5000000
- 44301 multiletter control sequences out of 15000+600000
- 673975 words of font info for 216 fonts, out of 8000000 for 9000
+ 44318 multiletter control sequences out of 15000+600000
+ 674330 words of font info for 220 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,17n,93p,1001b,577s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,17n,93p,1001b,591s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -596,10 +598,10 @@ texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive
 /2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texm
 f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on build/main.pdf (11 pages, 873505 bytes).
+Output written on build/main.pdf (13 pages, 965340 bytes).
 PDF statistics:
- 357 PDF objects out of 1000 (max. 8388607)
- 306 compressed objects within 4 object streams
- 100 named destinations out of 1000 (max. 500000)
- 38067 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 397 PDF objects out of 1000 (max. 8388607)
+ 343 compressed objects within 4 object streams
+ 114 named destinations out of 1000 (max. 500000)
+ 38091 words of extra memory for PDF output out of 42996 (max. 10000000)
 

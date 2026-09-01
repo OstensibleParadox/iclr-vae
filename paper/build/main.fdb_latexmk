@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex build/main"] 1788305021.34531 "build/main.aux" "build/main.bbl" "build/main" 1788305022.91793 0
+["bibtex build/main"] 1788306460.79942 "build/main.aux" "build/main.bbl" "build/main" 1788306462.46016 0
   "../iclr2027/iclr2027_conference.bst" 1750881547 26973 af983813ca1a1414954dbceae7baa2a1 ""
   "./references.bib" 1788304547.57301 4078 5793015f843fb57e7a10db677b17209e ""
-  "build/main.aux" 1788305022.68289 15044 71b4663c15b543501d67f35f5b826c4a "pdflatex"
+  "build/main.aux" 1788306462.22153 16942 b950470fc0bf88ae126980b64cc5d9a1 "pdflatex"
   (generated)
   "build/main.bbl"
   "build/main.blg"
   (rewritten before read)
-["pdflatex"] 1788305021.45046 "main.tex" "build/main.pdf" "main" 1788305022.9181 0
-  "../experiments/toy/frequency_matched_schatten.png" 1788304789.36785 339515 0685cb5d13447cbff2796a411fe5ff2f ""
-  "../experiments/toy/three_regime_phase_diagram.png" 1785953728.46666 352144 2ac0d4f88934de3c81c6f18db3aba8ce ""
+["pdflatex"] 1788306460.91015 "main.tex" "build/main.pdf" "main" 1788306462.46032 0
+  "../experiments/toy/frequency_matched_schatten.png" 1788306179.85115 446129 c901b550a02dae485937a68420de12da ""
+  "../experiments/toy/three_regime_phase_diagram.png" 1788306015.57663 355655 00676ebd8f2232aa9aae02abea4980d0 ""
   "../iclr2027/fancyhdr.sty" 1750881547 20521 e5d13d98d57bd53d4fed3aa61bd29c86 ""
   "../iclr2027/iclr2027_conference.sty" 1785262687 9025 1b4bb9c2e12c712c56f4eb1232b88dd6 ""
   "../iclr2027/math_commands.tex" 1750881547 12284 a71653715108dc62b66e3a0bde0307d8 ""
@@ -132,16 +132,16 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1775926411 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1775926335 3636773 cb7ca911f1162835915f325d23d4f0c0 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "build/main.aux" 1788305022.68289 15044 71b4663c15b543501d67f35f5b826c4a "pdflatex"
-  "build/main.bbl" 1788305021.44551 4046 b87b3be5275d430fa1f9ea6303e653c5 "bibtex build/main"
-  "build/main.out" 1788305022.68399 4721 852166e24d53cbed6d72ed67f688e192 "pdflatex"
+  "build/main.aux" 1788306462.22153 16942 b950470fc0bf88ae126980b64cc5d9a1 "pdflatex"
+  "build/main.bbl" 1788306460.90531 4046 b87b3be5275d430fa1f9ea6303e653c5 "bibtex build/main"
+  "build/main.out" 1788306462.22269 5271 613e1ff2f9701f44e6fd3fea3490de84 "pdflatex"
   "main.tex" 1788304575.31603 2107 cf54c105d00f30aaeb1f1ed7b322285d ""
   "preamble.tex" 1788304998.64316 1183 6e3290ce37536d6d158f924aa4f4b8a0 ""
-  "sections/appendix.tex" 1788304646.21801 4085 8aa4dd911c1f5c0b84d16bd3a82eda9e ""
+  "sections/appendix.tex" 1788305774.2867 6993 631bf87b0ae480bf61ba0285c2c95ac3 ""
   "sections/section1_introduction.tex" 1788304570.90793 5327 9512da6271039b015f1e64044eb3edc5 ""
-  "sections/section2_problem.tex" 1788304312.05744 4410 e5a971862bd94e1b23301af26004a5fe ""
-  "sections/section3_method_theory.tex" 1788304750.94215 9440 c3e9176e470c2e77c6db3a0af38b1e16 ""
-  "sections/section4_experiments.tex" 1788305016.29939 8040 b4f740dde59bba821c73231af0a25004 ""
+  "sections/section2_problem.tex" 1788305750.49749 5044 c7694d86ded67df6b57750f7d1d56cb3 ""
+  "sections/section3_method_theory.tex" 1788305968.70976 11116 11a33ff27896bd47143417bf92b7adfd ""
+  "sections/section4_experiments.tex" 1788305750.63575 8217 c463e1bca66bbe35ed6d553049afe0d3 ""
   "sections/section5_related_work.tex" 1788304547.63219 2896 96ff7eb2dd5fddb3eafe435a9b429b72 ""
   "sections/section6_conclusion.tex" 1788303834.40945 895 1df6e90df82e5f508670e7848c95a89b ""
   "sections/statements.tex" 1788304646.2775 925 770d3de9323483b6e815f8259224721d ""

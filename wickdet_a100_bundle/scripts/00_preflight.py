@@ -29,6 +29,12 @@ def main() -> None:
     apply_determinism(config)
     env = environment_snapshot()
     errors = []
+    contract = config["scientific_contract"]
+    if not bool(contract.get("implementation_ready", False)) and not args.allow_cpu:
+        errors.append(
+            "scientific_contract.implementation_ready is false; canonical K semantics "
+            "and protocol validators must pass before an A100 final run"
+        )
     machine = platform.machine().lower()
     if machine not in {"x86_64", "amd64"} and not args.allow_cpu:
         errors.append(f"expected Ubuntu x86_64/amd64 machine, got {platform.machine()!r}")
@@ -61,6 +67,7 @@ def main() -> None:
         "nvidia_smi": nvidia_smi,
         "errors": errors,
         "deterministic_backend_settings": config.get("deterministic_backend_settings", []),
+        "scientific_contract": contract,
     }
     report_path = path / "manifests" / "preflight.json"
     write_json(report_path, report)

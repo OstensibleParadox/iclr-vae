@@ -1,4 +1,11 @@
 run_group: a100_final
+scientific_contract:
+  version: relative_covariance_k_v1
+  sampling_parameter: amplitude_B
+  relative_covariance: "K=B B*"
+  t2_definition: "Tr(K* K)"
+  primary_objective: "KL(q_K||p)"
+  implementation_ready: false
 device: cuda
 hardware: A100
 dtype: float32

@@ -29,6 +29,82 @@ The terms are independent and $\Var(\xi_j^2)=2$, hence
 The signed case follows by bounding $g(\lambda)/\lambda^2$ on the compact
 interval $[-1+\delta,M]$.
 
+\section{Precision--Covariance Bridge}
+\label{app:precision-bridge}
+
+Suppose $H=H^\ast$ and $\opnorm{H}\leq\rho<1$, and set
+$K=H(I-H)^{-1}$. Functional calculus gives
+\begin{equation}
+  \frac{1}{1+\rho}\hsnorm{H}
+  \leq \hsnorm{K}
+  \leq \frac{1}{1-\rho}\hsnorm{H}.
+  \label{eq:precision-covariance-s2-bounds}
+\end{equation}
+Thus the two parameterizations have the same dimension-uniform
+$\Schatten{2}$ boundary. If
+$p=\mathcal N(0,C)$ and
+$q=\mathcal N(0,C^{1/2}(I-H)^{-1}C^{1/2})$, then
+\begin{align}
+  \KL(q\Vert p)
+  &=\frac12\left[\Tr K+\log\det(I-H)\right]
+    =-\frac12\log\det_2(I+K), \\
+  \KL(p\Vert q)
+  &=-\frac12\left[\Tr H+\log\det(I-H)\right]
+    =-\frac12\log\det_2(I-H).
+  \label{eq:precision-two-kl-directions}
+\end{align}
+For $Z\sim p$ in whitened coordinates,
+\begin{equation}
+  \log\frac{dq}{dp}(Z)-\E_p\log\frac{dq}{dp}(Z)
+  =\frac12\left(\langle Z,HZ\rangle-\Tr H\right),
+  \qquad
+  \Var_p\!\left[\log\frac{dq}{dp}(Z)\right]
+  =\frac12\hsnorm{H}^2.
+\end{equation}
+Under $q$, the corresponding centered quadratic is governed by $K$ and has
+variance $\hsnorm{K}^2/2$. This identifies the sampling measure and KL
+orientation used by every precision-space controlled experiment.
+
+\section{Noise-Scale Curvature}
+\label{app:noise-scale-curvature}
+
+For $K(\theta)=\theta A$ with $A\succeq0$,
+\begin{equation}
+  \mathcal L(\theta)
+  =\frac12\Tr\!\left[\theta A-\log(I+\theta A)\right].
+\end{equation}
+Differentiating by functional calculus yields
+\cref{eq:noise-scale-curvature}. If
+$0\leq\theta\leq\theta_{\max}$ and $\opnorm{A}\leq M$, then
+\begin{equation}
+  \frac{1}{2(1+\theta_{\max}M)^2}\hsnorm{A}^2
+  \leq \mathcal L''(\theta)
+  \leq \frac12\hsnorm{A}^2.
+\end{equation}
+Hence the same Hilbert--Schmidt mass that controls objective and log-density
+fluctuations also controls the conditioning of scalar noise-scale selection.
+
+\section{Compatible Continuum Realization}
+\label{app:continuum-realization}
+
+Let $\mathcal H$ be a separable real Hilbert space, let $C$ be positive,
+injective, and trace class, and let $K=K^\ast$ be Hilbert--Schmidt with
+$I+K\succeq\delta I$. Since $K$ is bounded,
+$C^{1/2}(I+K)C^{1/2}$ is trace class and defines a Gaussian covariance.
+The uniform positivity gap makes its Cameron--Martin norm equivalent to that
+of $C$, while the relative update is Hilbert--Schmidt; the Gaussian measures
+are therefore equivalent. If compatible finite-rank lifts satisfy
+$K_N\to K$ in $\Schatten{2}$ and the same positivity gap, continuity of
+$\det_2$ gives \cref{eq:compatible-cutoff-convergence}. Under one isonormal
+coupling, the difference of the centered second-chaos terms has variance
+\begin{equation}
+  \frac12\hsnorm{K_N-K}^2,
+\end{equation}
+which proves their $L^2$ convergence. Uniform boundedness without
+$\Schatten{2}$ convergence yields the no-divergence result of
+\cref{thm:s2-stability}, but does not assert convergence of an incompatible
+cutoff sequence.
+
 \section{Matrix-Free Estimators}
 \label{app:estimators}
 
