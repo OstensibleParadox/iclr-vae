@@ -14,7 +14,11 @@ considerations associated with machine-learning research.
 
 \subsection*{Reproducibility statement}
 
-The appendix specifies the proofs, estimators, matched controls, and
-discretization protocol. The accompanying artifact contains executable scripts,
-raw CSV outputs, figure generation, environment information, seeds, and
-provenance records for every reported result.
+The experiment protocol fixes two suites, three result figures, one result
+table, the same-source resolution ladder, primary and texture metrics, budget
+grid, go/no-go rules, and final audit probes before the main runs. For every
+reported result, the artifact will record the exact model revision, data-split
+manifest, quadrature convention, covariance reference, probe bank, training
+seed, raw output, figure-generation command, wall-clock time, backward
+equivalents, and peak memory. Final audit probes are never used for training or
+operating-point selection.

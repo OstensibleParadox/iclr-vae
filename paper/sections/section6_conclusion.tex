@@ -1,15 +1,17 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-Gaussian noise can be small in every resolved direction and still become a
-large perturbation as resolution grows. This paper identifies the missing
-criterion: dimension-uniform $\Schatten{2}$ control is the sharp threshold for
-refinement-stable Gaussian covariance objectives and their sample-level
-fluctuations. Schatten-filtered noise makes that requirement explicit, while
-the Carleman--Fredholm determinant supplies the correct objective in the
-Hilbert--Schmidt but non-trace-class regime. The resulting view explains why
-frequency attenuation and dimensionality reduction alone do not determine
-continuum stability, and turns the operator-ideal role of latent encoders into
-a measurable hypothesis. Noise injection should therefore be designed and
-audited as a resolution-indexed spectral object, not as a dimension-free scalar
-hyperparameter.
+Schatten-$2$ control tells us which Gaussian perturbation families remain in
+the asymptotic feasible region; it does not by itself choose a useful operating
+point. Task-aware Schatten budgeting turns that boundary into a decision rule
+for latent diffusion. Raw finite-resolution mass and separate maximum, path,
+and end-state budgets quantify how covariance risk accumulates over resolution
+and time, while task-weighted allocation reserves more of the available budget
+for modes assigned high task sensitivity. The resulting perspective
+is neither scalar noise tuning nor generic low-pass filtering: it treats
+stability and task utility as an explicit Pareto decision under a measurable
+spectral budget. Structured accounting and scoped matrix-free audits give that
+decision an explicit computational contract.
+
+% EXPERIMENTAL RESULT PLACEHOLDER: add one verified closing result sentence only
+% after the final Pareto and resolution-by-time experiments are frozen.

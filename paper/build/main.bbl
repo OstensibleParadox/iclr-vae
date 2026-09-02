@@ -1,9 +1,16 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Benita et~al.(2025)Benita, Elad, and Keshet]{benita2025spectral}
+Roi Benita, Miki Elad, and Joseph Keshet.
+\newblock Spectral analysis of diffusion models with application to schedule
+  design.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~38, 2025.
 
 \bibitem[Bogachev(1998)]{bogachev1998gaussian}
 Vladimir~I. Bogachev.
@@ -19,11 +26,36 @@ Tristan Cinquin and Robert Bamler.
   Artificial Intelligence}, volume 286 of \emph{Proceedings of Machine Learning
   Research}, pp.\  752--776, 2025.
 
+\bibitem[Hang et~al.(2023)Hang, Gu, Li, Bao, Chen, Hu, Geng, and
+  Guo]{hang2023minsnr}
+Tiankai Hang, Shuyang Gu, Chen Li, Jianmin Bao, Dong Chen, Han Hu, Xin Geng,
+  and Baining Guo.
+\newblock Efficient diffusion training via min-{SNR} weighting strategy.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pp.\  7441--7451, 2023.
+
+\bibitem[Heusel et~al.(2017)Heusel, Ramsauer, Unterthiner, Nessler, and
+  Hochreiter]{heusel2017gans}
+Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp
+  Hochreiter.
+\newblock {GANs} trained by a two time-scale update rule converge to a local
+  {Nash} equilibrium.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~30, 2017.
+
 \bibitem[Ho et~al.(2020)Ho, Jain, and Abbeel]{ho2020denoising}
 Jonathan Ho, Ajay Jain, and Pieter Abbeel.
 \newblock Denoising diffusion probabilistic models.
 \newblock In \emph{Advances in Neural Information Processing Systems},
   volume~33, pp.\  6840--6851, 2020.
+
+\bibitem[Hoogeboom et~al.(2023)Hoogeboom, Heek, and
+  Salimans]{hoogeboom2023simple}
+Emiel Hoogeboom, Jonathan Heek, and Tim Salimans.
+\newblock Simple diffusion: End-to-end diffusion for high resolution images.
+\newblock In \emph{Proceedings of the 40th International Conference on Machine
+  Learning}, volume 202 of \emph{Proceedings of Machine Learning Research},
+  pp.\  13213--13232, 2023.
 
 \bibitem[Hutchinson(1989)]{hutchinson1989stochastic}
 Michael~F. Hutchinson.
@@ -40,13 +72,10 @@ Gavin Kerrigan, Justin Ley, and Padhraic Smyth.
   Artificial Intelligence and Statistics}, volume 206 of \emph{Proceedings of
   Machine Learning Research}, pp.\  9538--9563, 2023.
 
-\bibitem[Li et~al.(2021)Li, Kovachki, Azizzadenesheli, Liu, Bhattacharya,
-  Stuart, and Anandkumar]{li2021fourier}
-Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, Burigede Liu, Kaushik
-  Bhattacharya, Andrew Stuart, and Anima Anandkumar.
-\newblock Fourier neural operator for parametric partial differential
-  equations.
-\newblock In \emph{International Conference on Learning Representations}, 2021.
+\bibitem[Kingma \& Welling(2014)Kingma and Welling]{kingma2014autoencoding}
+Diederik~P. Kingma and Max Welling.
+\newblock Auto-encoding variational bayes.
+\newblock In \emph{International Conference on Learning Representations}, 2014.
 
 \bibitem[Minh(2022)]{minh2022kullback}
 Ha~Quang Minh.
@@ -68,6 +97,13 @@ Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Bj{\"o}rn
 \newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
   and Pattern Recognition}, pp.\  10684--10695, 2022.
 
+\bibitem[Sahoo et~al.(2024)Sahoo, Gokaslan, De~Sa, and
+  Kuleshov]{sahoo2024adaptive}
+Subham~Sekhar Sahoo, Aaron Gokaslan, Chris De~Sa, and Volodymyr Kuleshov.
+\newblock Diffusion models with learned adaptive noise.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~37, 2024.
+
 \bibitem[Seidman et~al.(2023)Seidman, Kissas, Pappas, and
   Perdikaris]{seidman2023variational}
 Jacob~H. Seidman, Georgios Kissas, George~J. Pappas, and Paris Perdikaris.
@@ -83,5 +119,13 @@ Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan
 \newblock Dropout: A simple way to prevent neural networks from overfitting.
 \newblock \emph{Journal of Machine Learning Research}, 15\penalty0
   (56):\penalty0 1929--1958, 2014.
+
+\bibitem[Zhang et~al.(2018)Zhang, Isola, Efros, Shechtman, and
+  Wang]{zhang2018perceptual}
+Richard Zhang, Phillip Isola, Alexei~A. Efros, Eli Shechtman, and Oliver Wang.
+\newblock The unreasonable effectiveness of deep features as a perceptual
+  metric.
+\newblock In \emph{Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pp.\  586--595, 2018.
 
 \end{thebibliography}

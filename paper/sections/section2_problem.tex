@@ -1,111 +1,87 @@
 \section{Gaussian Noise Under Refinement}
 \label{sec:problem}
 
-\subsection{Resolution-indexed perturbations}
+\subsection{Relative covariance and the finite certificate}
 
-Let $n_N$ denote the number of active coordinates or modes at resolution $N$,
-with $n_N\to\infty$. We compare the centered Gaussian reference and its
-noise-perturbed counterpart
+At cutoff $N$, compare
+$p_N=\mathcal N(0,C_N)$ with
+$q_N=\mathcal N(0,C_N+\Delta C_N)$ and whiten by the positive reference:
 \begin{equation}
-  p_N = \mathcal N(0,C_N),
-  \qquad
-  q_N = \mathcal N(0,C_N+\Delta C_N).
+  K_N=C_N^{-1/2}\Delta C_NC_N^{-1/2},
+  \qquad I+K_N\succ0.
+  \label{eq:relative-covariance-cutoff}
 \end{equation}
-We assume $C_N\succ0$ and $C_N+\Delta C_N\succ0$ on the active subspace.
-Whitening by $C_N$ gives the self-adjoint relative covariance perturbation
-$K_N$ from \cref{eq:relative-covariance-perturbation}, so that $q_N$ has
-relative covariance $I+K_N$. The eigenvalues of $K_N$ measure noise strength
-relative to the reference geometry rather than in raw coordinates.
-
-When a continuum limit is invoked, the active spaces are compatible Galerkin
-subspaces of one separable Hilbert space, and the reference covariance is
-positive, injective, and trace class. The lifted perturbations are uniformly
-bounded and satisfy a common positivity gap. These assumptions ensure that the
-perturbed covariance remains a Gaussian covariance; Schatten-$2$ is the
-threshold for the \emph{relative update}, not a replacement for the trace-class
-condition on a standalone covariance. Purely finite feature-space experiments
-use the same resolution-indexed diagnostic without asserting an
-$L^2$-valued white-noise limit.
-
-For finite $n_N$, the covariance contribution to the Gaussian KL divergence is
+The covariance contribution to Gaussian KL is
 \begin{equation}
   \KL(q_N\Vert p_N)
-  = \frac12\left(\operatorname{Tr}K_N-\log\det(I+K_N)\right)
-  = \frac12\sum_{j\leq n_N}g(\lambda_{j,N}),
+  =\frac12\sum_{j\le n_N}
+    \bigl[\lambda_{j,N}-\log(1+\lambda_{j,N})\bigr].
   \label{eq:finite-gaussian-kl}
 \end{equation}
-where $g(\lambda)=\lambda-\log(1+\lambda)$. Every term in
-\cref{eq:finite-gaussian-kl} is finite at every fixed resolution. Stability is
-therefore a property of the sequence $(K_N)_N$, not of any individual matrix.
-
-Some implementations specify the same update through a relative precision
-perturbation $H_N$,
+Because the summand is quadratic near zero, define the operator functional and
+its value along the cutoff sequence by
 \begin{equation}
-  q_N=\mathcal N\!\left(
-    0,C_N^{1/2}(I-H_N)^{-1}C_N^{1/2}
-  \right),
-  \qquad
-  K_N=H_N(I-H_N)^{-1}.
-  \label{eq:precision-covariance-map}
-\end{equation}
-Conversely, $H_N=K_N(I+K_N)^{-1}$. Under a dimension-independent positivity
-gap and operator-norm bound, these spectral maps preserve uniform
-$\Schatten{2}$ membership up to fixed constants. We state the theory in the
-additive-covariance parameterization $K_N$, while using
-\cref{eq:precision-covariance-map} to evaluate precision-parameterized noise
-layers.
-
-\subsection{How nominally small noise becomes large}
-
-A scalar covariance rescaling already exhibits the issue. If
-$C_N+\Delta C_N=aC_N$ for a fixed $a\neq1$, then
-\begin{equation}
-  K_N=(a-1)I_{n_N},
-  \qquad
-  \Ttwo(N)=(a-1)^2n_N.
-  \label{eq:identity-direction}
-\end{equation}
-The perturbation is harmless at each cutoff but grows in every newly resolved
-direction. In the infinite-rank limit, the identity-direction update is not
-Hilbert--Schmidt; this is the operator-theoretic reason that scalar covariance
-changes can leave a Gaussian equivalence class~\citep{bogachev1998gaussian}.
-For learning, the immediate consequence is simpler: a nominal noise scale can
-become a resolution-dependent intervention.
-
-The same accumulation appears for decaying spectra. If
-$s_j(K)\asymp j^{-\alpha}$, then the pointwise perturbation vanishes at high
-frequency for every $\alpha>0$, but its cumulative squared mass may still
-diverge. Thus ``low amplitude in every tail mode'' and ``stable under
-refinement'' are different statements.
-
-\subsection{The correct stability object}
-
-We call a family of Gaussian perturbations \emph{uniformly refinement stable}
-when its renormalized covariance objective and the $L^2$ norm of its centered
-sample log-density ratio remain bounded uniformly over $N$. This notion is
-uniform control, not by itself convergence of an arbitrary sequence of
-cutoffs. The diagnostic is
-\begin{equation}
-  \Ttwo(N)=\operatorname{Tr}(K_N^\ast K_N)
-  =\sum_{j\leq n_N}s_j(K_N)^2.
+  \Ttwo(K):=\hsnorm{K}^{2},\qquad
+  \Ttwo(N):=\Ttwo(K_N)
+  =\Tr(K_N^\ast K_N)
+  =\sum_{j\le n_N}s_j(K_N)^2.
   \label{eq:t2-definition}
 \end{equation}
-This definition does not ask whether a finite matrix is Schatten: it asks
-whether the Schatten mass stays bounded along the entire refinement path.
-
-When $K_N\in\Schatten{1}$ uniformly, the trace and log determinant in
-\cref{eq:finite-gaussian-kl} are separately uniformly controlled. For
-compatible Galerkin cutoffs of a fixed trace-class operator, they also converge
-separately. The larger
-$\Schatten{2}$ regime requires their combined finite part,
+We report the finite certificate
 \begin{equation}
-  -\log\det\nolimits_2(I+K_N)
-  = \operatorname{Tr}K_N-\log\det(I+K_N),
-  \label{eq:det2-finite-cutoff}
+  \begin{aligned}
+    \mathfrak C_N&=(\Ttwo(N),M_N,\delta_N^{\mathrm{cert}}),
+    &M_N&=\opnorm{K_N},\\
+    \delta_N^{\mathrm{act}}&=\lambda_{\min}(I+K_N)>0,
+    &\delta_N^{\mathrm{cert}}&=\min\{1,\delta_N^{\mathrm{act}}\}.
+  \end{aligned}
+  \label{eq:finite-certificate}
 \end{equation}
-which is an exact identity at every finite cutoff. The distinction becomes
-visible only as $N$ grows: $\Schatten{1}$ controls the two ordinary components,
-whereas $\Schatten{2}$ controls their renormalized combination. In infinite
-dimensions, $\det_2(I+K)$ is defined directly for $K\in\Schatten{2}$ with
-$I+K\succ0$; \cref{eq:det2-finite-cutoff} must not be read as subtracting two
-separately infinite quantities.
+Raw $\Ttwo$ sets the exact log-density variance scale, $M_N$ controls the
+non-Gaussian tail, and $\delta_N^{\mathrm{cert}}$ supplies the theorem's
+positivity constant; we also report the actual geometric margin
+$\delta_N^{\mathrm{act}}$. All are dimensionless after whitening. A confidence
+level completes the finite-risk statement in \cref{thm:finite-certificate}.
+
+Every fixed matrix belongs to every finite-dimensional Schatten class; only a
+sequence can reveal refinement instability. For example,
+$C_N+\Delta C_N=aC_N$ gives
+\begin{equation}
+  K_N=(a-1)I_{n_N},
+  \qquad \Ttwo(N)=(a-1)^2n_N,
+  \label{eq:identity-direction}
+\end{equation}
+so an update that is legal at each cutoff accumulates in every new direction.
+Likewise, $s_j(K)\asymp j^{-\alpha}$ has bounded squared mass only for
+$\alpha>1/2$.
+
+\subsection{Shell diagnostics}
+
+A fitted decay exponent can hide alternating blocks, sparse spikes, or growing
+multiplicity. We therefore report dyadic rank-shell mass
+\begin{equation}
+  \mathcal B^{\mathrm{rank}}_{N,\ell}
+  :=\sum_{2^\ell\le j<\min\{2^{\ell+1},n_N+1\}}s_j(K_N)^2.
+  \label{eq:rank-shell-mass}
+\end{equation}
+When a refinement-compatible physical decomposition exists, with
+$P_{N,\ell}$ projecting onto
+$2^\ell\le\lVert k\rVert<2^{\ell+1}$, we separately use
+\begin{equation}
+  \mathcal B^{\mathrm{phys}}_{N,\ell}
+  :=\lVert K_NP_{N,\ell}\rVert_{\Schatten{2}}^2,
+  \qquad
+  \Ttwo(N)=\sum_\ell\mathcal B^{\mathrm{phys}}_{N,\ell}.
+  \label{eq:physical-shell-mass}
+\end{equation}
+Rank is not spatial frequency: the first diagnostic is basis invariant, while
+the second asks where physical modes enter. Growth slopes are always labeled by
+their independent variable ($\log n_N$ or $\log R$).
+
+If a continuum interpretation is claimed, the cutoffs must be compatible
+subspaces of one Hilbert space, the reference covariance must itself be
+positive, injective, and trace class, and the lifted updates must share a
+positivity gap. These conditions, the precision--covariance conversion, and the
+difference between boundedness and convergence are collected in
+\cref{app:continuum-realization,app:precision-bridge}. Finite neural-feature
+experiments use the diagnostics without asserting a white-noise continuum law.

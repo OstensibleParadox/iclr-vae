@@ -1,43 +1,180 @@
-\section{Proof of the Stability Theorem}
-\label{app:proofs}
+\section{Carleman--Fredholm Finite Part}
+\label{app:det2}
 
-Let $\lambda\in[0,M]$ and $g(\lambda)=\lambda-\log(1+\lambda)$. Since
+For a finite self-adjoint matrix $K$ with $I+K\succ0$, define
+\begin{equation}
+  \det\nolimits_2(I+K):=\det(I+K)e^{-\Tr K}.
+\end{equation}
+The finite covariance objective in \cref{eq:renormalized-objective} is exactly
+\begin{equation}
+  \mathcal L^{\mathrm{ren}}(K)
+  =-\frac12\log\det\nolimits_2(I+K)
+  =\frac12\sum_j\bigl[\lambda_j-\log(1+\lambda_j)\bigr].
+  \label{eq:det2-finite-cutoff}
+\end{equation}
+This identity removes the first-order trace term; it does not alter any
+finite-dimensional probability law. Its role becomes substantive under
+refinement. If $K\in\Schatten{2}$ and $I+K\succeq\delta I$, the canonical
+product
+\begin{equation}
+  \det\nolimits_2(I+K)
+  =\prod_j(1+\lambda_j)e^{-\lambda_j}
+\end{equation}
+converges even when $K\notin\Schatten{1}$. Thus the ordinary trace and
+log-determinant need not exist separately, whereas their finite part does.
+If $K\in\Schatten{1}$, \cref{eq:det2-finite-cutoff} agrees with their usual
+difference.
+
+When $\opnorm{K}<1$, the logarithm has the absolutely convergent expansion
+\begin{equation}
+  -\log\det\nolimits_2(I+K)
+  =\sum_{k=2}^{\infty}\frac{(-1)^k}{k}\Tr(K^k).
+  \label{eq:det2-series}
+\end{equation}
+If $\opnorm{K}\le\rho<1$, truncation after order $L\ge2$ obeys
+\begin{equation}
+  \left|
+    -\log\det\nolimits_2(I+K)
+    -\sum_{k=2}^{L}\frac{(-1)^k}{k}\Tr(K^k)
+  \right|
+  \le
+  \frac{\rho^{L-1}}{(L+1)(1-\rho)}\hsnorm{K}^{2}.
+  \label{eq:det2-truncation}
+\end{equation}
+Indeed, $|\Tr(K^k)|\le\rho^{k-2}\hsnorm{K}^2$ and summing the geometric
+tail proves the claim. The main text uses the raw certificate
+$\bigl(\hsnorm{K}^2,\opnorm{K},
+\min\{1,\lambda_{\min}(I+K)\}\bigr)$ and reports the unclipped geometric
+margin separately; it does not require numerically evaluating
+\cref{eq:det2-series}.
+
+
+\section{Proofs for the Finite Certificate}
+\label{app:finite-certificate-proof}
+
+Let $g(\lambda)=\lambda-\log(1+\lambda)$. Taylor's theorem in integral form
+gives, for every $\lambda>-1$,
+\begin{equation}
+  g(\lambda)
+  =\lambda^2\int_0^1
+    \frac{1-s}{(1+s\lambda)^2}\,ds.
+  \label{eq:g-integral-representation}
+\end{equation}
+Under the assumptions of \cref{thm:finite-certificate}, every eigenvalue lies
+in $[-1+\delta,M]$, so
+\begin{equation}
+  \frac{\lambda^2}{2(1+M)^2}
+  \le g(\lambda)
+  \le \frac{\lambda^2}{2\delta^2}.
+\end{equation}
+Summing and multiplying by $1/2$ proves
+\cref{eq:kl-t2-equivalence}. If $K\succeq0$, then
 \begin{equation}
   g(\lambda)=\int_0^\lambda\frac{t}{1+t}\,dt,
-\end{equation}
-we have
-\begin{equation}
+  \qquad
   \frac{\lambda^2}{2(1+M)}
-  \leq g(\lambda)
-  \leq \frac{\lambda^2}{2}.
+  \le g(\lambda)\le\frac{\lambda^2}{2},
 \end{equation}
-Summing over the eigenvalues of $K_N$ and multiplying by $1/2$ proves
-\cref{eq:kl-t2-equivalence}.
+which gives the sharpened constants.
 
-In whitened coordinates, write
-$X=(I+K_N)^{1/2}\xi$ with $\xi\sim\mathcal N(0,I)$. Diagonalizing $K_N$ gives
+We next prove the exact fluctuation and its high-probability version. Work in
+whitened coordinates and diagonalize $K$. For
+$X=(I+K)^{1/2}\xi$ with $\xi\sim\mathcal N(0,I)$,
 \begin{equation}
-  \ell_N(X)-\E_{q_N}\ell_N(X)
-  =\frac12\sum_j\lambda_{j,N}(\xi_j^2-1).
+  Y:=\log\frac{dq}{dp}(X)
+    -\E_q\log\frac{dq}{dp}(X)
+  =\frac12\sum_j\lambda_j(\xi_j^2-1).
+  \label{eq:centered-log-rn-chaos}
 \end{equation}
-The terms are independent and $\Var(\xi_j^2)=2$, hence
+Independence and $\Var(\xi_j^2)=2$ give
+$\Var(Y)=\hsnorm{K}^2/2$. Moreover, for $|t|<1/M$,
+\begin{align}
+  \log\E e^{tY}
+  &=\frac12\sum_j\bigl[-\log(1-t\lambda_j)-t\lambda_j\bigr] \\
+  &\le
+    \frac{t^2\hsnorm{K}^2}{4(1-|t|M)}.
+  \label{eq:centered-log-rn-mgf}
+\end{align}
+The inequality follows by expanding each term and using
+$|\lambda_j|^k\le M^{k-2}\lambda_j^2$ for $k\ge2$. Applying the same bound
+to $Y$ and $-Y$, followed by the Chernoff bound for a sub-gamma variable with
+variance factor $\hsnorm{K}^2/2$ and scale $M$, yields
 \begin{equation}
-  \Var_{q_N}[\ell_N(X)]
-  =\frac12\sum_j\lambda_{j,N}^2
-  =\frac12\Ttwo(N).
+  \Pr\!\left(
+    |Y|\ge\sqrt{\hsnorm{K}^2x}+Mx
+  \right)\le2e^{-x}.
 \end{equation}
-The signed case follows by bounding $g(\lambda)/\lambda^2$ on the compact
-interval $[-1+\delta,M]$.
+Substituting $x=\log(2/\eta)$ proves
+the explicit radius
+\begin{equation}
+  |Y|
+  \le
+  \sqrt{\hsnorm{K}^2\log\frac{2}{\eta}}
+  +M\log\frac{2}{\eta}
+  \qquad\text{with probability at least }1-\eta.
+  \label{eq:finite-certificate-radius}
+\end{equation}
+
+The equivalences in \cref{thm:s2-stability} now follow immediately from the
+two-sided objective bound and the exact variance identity, with the constants
+uniform in $N$. The divergence statement follows from the corresponding
+lower bounds. Finally, \cref{cor:power-law} is the integral-test asymptotic
+for $\sum_{j\le n_N}j^{-2\alpha}$. These results establish boundedness under
+refinement; they do not identify a continuum limit without compatibility.
+
+
+\section{Compatible Continuum Realization}
+\label{app:continuum-realization}
+
+Let $\mathcal H$ be a separable real Hilbert space, let $C$ be positive,
+injective, and trace class, and let $K=K^\ast\in\Schatten{2}$ satisfy
+$I+K\succeq\delta I$. Since $K$ is bounded,
+$C^{1/2}(I+K)C^{1/2}$ is trace class and defines a Gaussian covariance. The
+uniform positivity gap makes its Cameron--Martin norm equivalent to that of
+$C$, while the relative covariance update is Hilbert--Schmidt; the two
+Gaussian measures are therefore equivalent.
+
+Suppose compatible finite-rank lifts satisfy $K_N\to K$ in $\Schatten{2}$
+and share the positivity gap. Continuity of $\det_2$ and an isonormal
+coupling give
+\begin{equation}
+  \mathcal L_N^{\mathrm{ren}}\to
+  -\frac12\log\det\nolimits_2(I+K),
+  \qquad
+  \E|Y_N-Y|^2=\frac12\hsnorm{K_N-K}^2\to0.
+  \label{eq:compatible-cutoff-convergence}
+\end{equation}
+Uniform boundedness of $\hsnorm{K_N}$ without $\Schatten{2}$ convergence
+gives the no-divergence statement of \cref{thm:s2-stability}, but it does not
+assert convergence of an incompatible cutoff sequence.
+
+\begin{corollary}[Power-law phase transition]
+\label{cor:power-law}
+If $s_j(K)\asymp j^{-\alpha}$ and $K_N$ retains the first $n_N$ singular
+directions under the uniform conditions of \cref{thm:s2-stability}, then
+\begin{equation}
+  \Ttwo(N)\asymp
+  \begin{cases}
+    1, & \alpha>\tfrac12,\\
+    \log n_N, & \alpha=\tfrac12,\\
+    n_N^{1-2\alpha}, & \alpha<\tfrac12.
+  \end{cases}
+  \label{eq:power-law-phase-transition}
+\end{equation}
+This is an integral-test asymptotic; finite audits still report
+$\Ttwo(N_{\max})$ and the independent variable used for any fitted slope.
+\end{corollary}
+
 
 \section{Precision--Covariance Bridge}
 \label{app:precision-bridge}
 
-Suppose $H=H^\ast$ and $\opnorm{H}\leq\rho<1$, and set
+Suppose $H=H^\ast$, $\opnorm{H}\le\rho<1$, and
 $K=H(I-H)^{-1}$. Functional calculus gives
 \begin{equation}
   \frac{1}{1+\rho}\hsnorm{H}
-  \leq \hsnorm{K}
-  \leq \frac{1}{1-\rho}\hsnorm{H}.
+  \le \hsnorm{K}
+  \le \frac{1}{1-\rho}\hsnorm{H}.
   \label{eq:precision-covariance-s2-bounds}
 \end{equation}
 Thus the two parameterizations have the same dimension-uniform
@@ -47,10 +184,10 @@ $q=\mathcal N(0,C^{1/2}(I-H)^{-1}C^{1/2})$, then
 \begin{align}
   \KL(q\Vert p)
   &=\frac12\left[\Tr K+\log\det(I-H)\right]
-    =-\frac12\log\det_2(I+K), \\
+    =-\frac12\log\det\nolimits_2(I+K), \\
   \KL(p\Vert q)
   &=-\frac12\left[\Tr H+\log\det(I-H)\right]
-    =-\frac12\log\det_2(I-H).
+    =-\frac12\log\det\nolimits_2(I-H).
   \label{eq:precision-two-kl-directions}
 \end{align}
 For $Z\sim p$ in whitened coordinates,
@@ -61,85 +198,219 @@ For $Z\sim p$ in whitened coordinates,
   \Var_p\!\left[\log\frac{dq}{dp}(Z)\right]
   =\frac12\hsnorm{H}^2.
 \end{equation}
-Under $q$, the corresponding centered quadratic is governed by $K$ and has
-variance $\hsnorm{K}^2/2$. This identifies the sampling measure and KL
-orientation used by every precision-space controlled experiment.
+Under $q$, the centered quadratic is instead governed by $K$ and has variance
+$\hsnorm{K}^2/2$. This specifies both the sampling measure and the KL
+orientation for precision-space implementations.
 
-\section{Noise-Scale Curvature}
-\label{app:noise-scale-curvature}
 
-For $K(\theta)=\theta A$ with $A\succeq0$,
+\section{Task-Aware Projection}
+\label{app:task-aware-kkt}
+
+The program in \cref{eq:task-aware-projection} is a convex quadratic program.
+With multiplier $\mu/2\ge0$ for the squared Hilbert--Schmidt budget, its
+separable Lagrangian (before imposing the box) is
 \begin{equation}
-  \mathcal L(\theta)
-  =\frac12\Tr\!\left[\theta A-\log(I+\theta A)\right].
+  \frac12\sum_j q_j(\widetilde\lambda_j-\lambda_j)^2
+  +\frac\mu2\left(\sum_j\widetilde\lambda_j^2-\tau\right).
 \end{equation}
-Differentiating by functional calculus yields
-\cref{eq:noise-scale-curvature}. If
-$0\leq\theta\leq\theta_{\max}$ and $\opnorm{A}\leq M$, then
+Stationarity gives
+$(q_j+\mu)\widetilde\lambda_j=q_j\lambda_j$. Since
+$q_j,\lambda_j\ge0$, projection onto $[0,\rho_{\mathrm{cap}}]$ therefore yields
 \begin{equation}
-  \frac{1}{2(1+\theta_{\max}M)^2}\hsnorm{A}^2
-  \leq \mathcal L''(\theta)
-  \leq \frac12\hsnorm{A}^2.
+  \widetilde\lambda_j(\mu)
+  =\min\!\left\{\rho_{\mathrm{cap}},
+    \frac{q_j}{q_j+\mu}\lambda_j
+  \right\}.
 \end{equation}
-Hence the same Hilbert--Schmidt mass that controls objective and log-density
-fluctuations also controls the conditioning of scalar noise-scale selection.
+At $q_j=\mu=0$ the objective is flat in that coordinate; choosing zero gives
+a deterministic minimum-budget solution. If the $\mu=0$ solution is
+feasible, complementary slackness selects it. Otherwise
+$S(\mu)=\sum_j\widetilde\lambda_j(\mu)^2$ is continuous and decreases from a
+value above $\tau$ to zero, so one-dimensional bisection finds the unique
+budget-active solution (with the $\tau=0$ case understood as the limit
+$\mu\to\infty$). This derivation relies on the fixed commuting basis and a
+positive-semidefinite quadratic task metric; it does not apply unchanged to
+a learned basis or to an indefinite first-order score.
 
-\section{Compatible Continuum Realization}
-\label{app:continuum-realization}
-
-Let $\mathcal H$ be a separable real Hilbert space, let $C$ be positive,
-injective, and trace class, and let $K=K^\ast$ be Hilbert--Schmidt with
-$I+K\succeq\delta I$. Since $K$ is bounded,
-$C^{1/2}(I+K)C^{1/2}$ is trace class and defines a Gaussian covariance.
-The uniform positivity gap makes its Cameron--Martin norm equivalent to that
-of $C$, while the relative update is Hilbert--Schmidt; the Gaussian measures
-are therefore equivalent. If compatible finite-rank lifts satisfy
-$K_N\to K$ in $\Schatten{2}$ and the same positivity gap, continuity of
-$\det_2$ gives \cref{eq:compatible-cutoff-convergence}. Under one isonormal
-coupling, the difference of the centered second-chaos terms has variance
+For a fixed compatible basis, a nonnegative envelope $w_j$ satisfying
+$\sum_jw_j^2\le1$ gives the task-agnostic modewise alternative
 \begin{equation}
-  \frac12\hsnorm{K_N-K}^2,
+  \phi_{\tau,j}(\lambda)
+  =\min\{\lambda,\sqrt\tau\,w_j\},
+  \qquad \lambda\ge0,
+  \label{eq:envelope-gate}
 \end{equation}
-which proves their $L^2$ convergence. Uniform boundedness without
-$\Schatten{2}$ convergence yields the no-divergence result of
-\cref{thm:s2-stability}, but does not assert convergence of an incompatible
-cutoff sequence.
+which also enforces squared Hilbert--Schmidt mass at most $\tau$. After any
+covariance gate, sampling uses a factor
+$B^{(\tau)}(B^{(\tau)})^\ast=K^{(\tau)}$:
+\begin{equation}
+  \epsilon\sim\mathcal N(0,I)\text{ independently of }z,\qquad
+  \xi^{(\tau)}=C^{1/2}B^{(\tau)}\epsilon,\qquad
+  z'=z+\xi^{(\tau)}.
+  \label{eq:noise-layer-interface}
+\end{equation}
 
-\section{Matrix-Free Estimators}
+
+\section{Temporal Budget Identities}
+\label{app:temporal-budgets}
+
+For Markov laws with the required absolute continuity, factorization of their
+joint densities and iterated expectation give
+\begin{equation}
+  \log\frac{dq_{0:T}}{dp_{0:T}}
+  =\log\frac{dq_0}{dp_0}
+   +\sum_{t=1}^T
+    \log\frac{dq_t(\,\cdot\mid X_{t-1})}
+             {dp_t(\,\cdot\mid X_{t-1})},
+  \label{eq:path-kl-chain-rule}
+\end{equation}
+which proves \cref{eq:path-kl-chain-rule}. Conditional on
+$\mathcal F_{t-1}$, equal-mean Gaussian transitions have covariance KL
+$\mathcal L^{\mathrm{ren}}(K_t)$. Applying
+\cref{thm:finite-certificate} conditionally and then taking expectation
+proves the two-sided path-KL bound by fixed multiples of
+$\mathcal B_{\mathrm{path}}$. If the transition means differ, the additional
+term is
+\begin{equation}
+  \frac12(m_t^q-m_t^p)^\ast(C_t^p)^{-1}(m_t^q-m_t^p),
+\end{equation}
+and is outside the covariance certificate.
+
+Let $\ell_t$ denote the conditional covariance log-ratio and
+\begin{equation}
+  d_t=\ell_t-\E_q[\ell_t\mid\mathcal F_{t-1}].
+\end{equation}
+Then $(d_t)$ is a martingale-difference sequence. Conditional application of
+\cref{eq:centered-log-rn-chaos} yields
+\begin{equation}
+  \E_q[d_t^2\mid\mathcal F_{t-1}]
+  =\frac12\Ttwo(K_t).
+\end{equation}
+Orthogonality of martingale differences proves
+\begin{equation}
+  \Var_q\!\left(\sum_{t=1}^Td_t\right)
+  =\frac12\sum_{t=1}^T\E_q\Ttwo(K_t)
+  =\frac12\mathcal B_{\mathrm{path}}.
+\end{equation}
+For deterministic weights, the corresponding variance is
+$\frac12\sum_t w_t^2\E_q\Ttwo(K_t)$. This square on $w_t$ is distinct from
+the linear weighting in a training loss. Raw increments $\ell_t$ are not in
+general martingale differences, and state-dependent or data-dependent weights
+require the corresponding predictable-weight formulation.
+
+The endpoint budget is different again. For a linear Gaussian recursion
+$X_t=A_tX_{t-1}+\epsilon_t$ with innovation covariance $Q_t$, for example,
+\begin{equation}
+  C_t=A_tC_{t-1}A_t^\ast+Q_t.
+\end{equation}
+One must run this recursion under both laws and whiten their final covariance
+difference as in \cref{eq:endpoint-t2-budget}. Neither the path chain rule nor
+the martingale variance identity turns this endpoint covariance into a sum or
+product of stepwise relative updates.
+
+
+\section{Encoder Audit and Coordinate Invariance}
+\label{app:encoder-audit}
+
+For $F$ of finite rank with singular values $s_j(F)$,
+\begin{equation}
+  \hsnorm{FF^\ast}^{2}
+  =\Tr\bigl((FF^\ast)^2\bigr)
+  =\Tr\bigl((F^\ast F)^2\bigr)
+  =\sum_j s_j(F)^4.
+\end{equation}
+This proves \cref{eq:encoder-s4-identity}. It also explains why an
+operator-norm cap alone is insufficient: if $r=\operatorname{rank}(F)$, then
+\begin{equation}
+  \lVert F\rVert_{\Schatten{4}}^4
+  \le r\opnorm{F}^4,
+\end{equation}
+so growing effective rank can consume the squared Hilbert--Schmidt budget even
+when the largest singular value is controlled.
+
+For an invertible raw-coordinate adapter $A$, let
+\begin{equation}
+  C'=ACA^\ast,\qquad
+  F'=(C')^{-1/2}AJ\Sigma^{1/2}
+     =QF,\qquad
+  Q=(C')^{-1/2}AC^{1/2}.
+  \label{eq:encoder-coordinate-change}
+\end{equation}
+Direct multiplication gives
+\begin{equation}
+  QQ^\ast=(C')^{-1/2}ACA^\ast(C')^{-1/2}=I.
+\end{equation}
+In equal finite dimensions with invertible $A$, $Q$ is unitary; hence $QF$ and
+$F$ have identical singular values. A genuine repair must therefore modify
+the noise covariance in one declared whitening geometry, as in
+\cref{eq:fixed-whitened-latent-gate}, or change the represented support. If
+the reference is re-estimated after fitting the gate, the intervention and
+audit geometry change together and the certificate must be recomputed.
+
+
+\section{Matrix-Free Estimators and Probe Cost}
 \label{app:estimators}
 
-Let $A_N=K_N^\ast K_N$. For an unnormalized Rademacher probe $v$,
-$\lVert K_Nv\rVert^2=v^\top A_Nv$ and
+Let $A=K^\ast K$. For an unnormalized real Rademacher probe $v$,
+$\lVert Kv\rVert^2=v^\top Av$ and
 \begin{equation}
-  \E[v^\top A_Nv]=\operatorname{Tr}A_N=\Ttwo(N),
+  \E[v^\top Av]=\Tr A=\hsnorm{K}^2,
   \qquad
-  \Var[v^\top A_Nv]
-  =2\sum_{i\neq j}(A_N)_{ij}^2.
+  \Var(v^\top Av)=2\sum_{i\ne j}A_{ij}^2.
+  \label{eq:hutchinson-exact-variance}
 \end{equation}
-The variance decreases by a factor of $m$ after averaging $m$ independent
-probes. For the series in \cref{eq:det2-series}, if
-$\opnorm{K_N}\leq\rho<1$ and terms through order $L$ are retained, then
-\begin{equation}
-  \left|
-    -\log\det\nolimits_2(I+K_N)
-    -\sum_{k=2}^{L}\frac{(-1)^k}{k}\operatorname{Tr}(K_N^k)
-  \right|
-  \leq
-  \frac{\rho^{L-1}}{(L+1)(1-\rho)}\Ttwo(N).
-\end{equation}
-The estimator requires $O(mL)$ operator--vector products and supports
-backpropagation through the same computation. All controlled-spectrum tests
-compare probe estimates against exact eigenvalue sums; the frequency-matched
-construction additionally validates the formulas with explicit DFT matrices.
+Averaging $m$ independent probes divides this variance by $m$. Consequently
+probe count is governed by off-diagonal mass in the probe basis and the desired
+confidence width, not directly by model parameter count. For complex Fourier
+operators, one may either use independent unit-circle probes with
+$\E[vv^\ast]=I$ or realify the operator; the probe law and multiplicities must
+be recorded.
+
+Structured diagonal and low-rank updates should be summed exactly. For an
+implicit encoder update $K=FF^\ast$, one application of $Kv$ requires one
+application each of $F^\ast$ and $F$, which corresponds to a VJP and a JVP
+together with the whitening and input-covariance maps. Differentiating this
+quantity through encoder parameters may require second-order autodiff. A
+truncated regularized determinant estimator uses $O(mL)$ operator--vector
+products and has deterministic truncation error
+\cref{eq:det2-truncation}; it is not required for the raw-$\Ttwo$ audit.
+
+An online one-probe value is a stochastic training surrogate, not a finite
+certificate. A final audit uses probes drawn independently of training and
+fixed across paired methods. Across resolutions, a common bank is valid only
+after specifying a coupling of compatible nested spaces. Optional stopping
+requires a sequentially valid confidence procedure or a predeclared probe
+batch schedule; repeatedly inspecting a fixed-$m$ confidence interval does
+not preserve its nominal coverage. Common random numbers often improve a
+paired difference empirically, but this is not guaranteed without controlling
+the covariance of the two estimators. Finally, a blockwise or localized
+surrogate certifies only that block; it does not inherit the global theorem.
+
 
 \section{Frequency-Matched Controls}
 \label{app:frequency-controls}
 
-For completeness, we verify the identities used in
-\cref{sec:exp-matched-spectrum}. A flat unitary has constant-modulus entries,
-so each diagonal entry of $U\operatorname{diag}(\lambda)U^\ast$ equals
-$d^{-1}\sum_j\lambda_j$. Both spectra in
-\cref{eq:matched-spectrum-pair} have trace $\eta m$, giving the shared
+For completeness, let $d=m^2$ and define two nonnegative spectra by
+\begin{equation}
+  \lambda_j^{\mathrm{stable}}
+  =\begin{cases}
+    \eta, & j=1,\\
+    \eta/(m+1), & 2\le j\le d,
+  \end{cases}
+  \qquad
+  \lambda_j^{\mathrm{unstable}}
+  =\begin{cases}
+    \eta, & 1\le j\le m,\\
+    0, & m<j\le d.
+  \end{cases}
+  \label{eq:appendix-matched-spectrum-pair}
+\end{equation}
+Let $U_d$ be a fixed flat unitary and set
+$A_d^{(a)}=U_d\operatorname{diag}(\lambda^{(a)})U_d^\ast$ for
+$a\in\{\mathrm{stable},\mathrm{unstable}\}$. A flat unitary has
+constant-modulus entries, so each diagonal entry of
+$U_d\operatorname{diag}(\lambda)U_d^\ast$ equals
+$d^{-1}\sum_j\lambda_j$. Both spectra have trace $\eta m$, giving the shared
 diagonal $\eta/m$. Their largest eigenvalue is $\eta$, while direct summation
 gives
 \begin{align}
@@ -156,7 +427,7 @@ To match spatial-frequency appearance, let
 \begin{equation}
   G_R=\operatorname{diag}\left[
     (1+\lVert k\rVert^2)^{-s/2}
-  \right]_{\lVert k\rVert\leq R},
+  \right]_{\lVert k\rVert\le R},
   \qquad s>1,
 \end{equation}
 and set $K_{R,d}^{(\cdot)}=G_R\otimes A_d^{(\cdot)}$. The two families have
@@ -167,17 +438,163 @@ spatial mask $M_R$,
   =\hsnorm{M_RG_RM_R}^2\hsnorm{A_d^{(\cdot)}}^2.
 \end{equation}
 Any frequency-only control that retains a nonzero low-frequency response has
-$\hsnorm{M_RG_RM_R}\geq c>0$ and therefore preserves the unstable family's
+$\hsnorm{M_RG_RM_R}\ge c>0$ and therefore preserves the unstable family's
 $\sqrt d$ divergence. The comparison matches Fourier diagonal, radial power,
 trace, operator norm, bandwidth, low-frequency response, parameter count,
 probe count, and compute budget. Closed-form spectra provide the ground truth;
 Hutchinson probes only validate the matrix-free estimator.
 
+
 \section{Additional Experimental Details}
 \label{app:experimental-details}
 
-The final artifact records full resolution ladders, seeds and confidence
-intervals, hyperparameters, compute, estimator probe counts, discretization
-weights, encoder scaling constants, and provenance hashes. Operator-learning
-fields are generated once at the highest resolution and restricted to each
-grid, preventing task variation from being confounded with refinement.
+\paragraph{Resolution and covariance contract.}
+Each natural image and controlled sample is formed once at the highest
+resolution and restricted with one fixed antialiasing operator. Split
+membership, augmentations, mode labels, and random seeds are shared across the
+ladder. Adjoint operators use the quadrature-weighted inner product of their
+discretization. At every intervention, $B_R$ denotes a noise amplitude and
+$K_R=B_RB_R^\ast$ the whitened relative covariance. We report
+$\Ttwo(R)=\Tr(K_R^\ast K_R)$ without division by pixels, channels, latent
+dimension, or effective rank; a diagonal amplitude $b_j$ therefore contributes
+$b_j^4$. Rank shells and physical-frequency shells are never conflated.
+
+\paragraph{Final probes and paired comparisons.}
+Diagonal and explicitly low-rank operators are summed exactly. For an implicit
+operator, a disjoint calibration split selects the final probe count from a
+predeclared grid using absolute and relative precision targets. The selected
+count, support regularization, whitening, and estimator hyperparameters are
+then frozen. A public seed manifest generates one audit bank; compatible nested
+spaces share probe signs on common modes, and every baseline, budget, seed, and
+time uses the same bank. Training uses a separate fresh one-probe stream and
+never observes final probes. We will validate the estimator against exact
+materialization at the smallest feasible cutoff and report probe uncertainty
+separately from image and adaptation-seed variation.
+
+For an implicit Gaussian comparison, we set
+$\eta_{\mathrm{est}}=0.025$ for the probe upper-confidence bound and
+$\eta_{\mathrm{tail}}=0.025$ for the conditional log-density tail, giving
+total failure probability at most $0.05$ by a union bound. Structured exact
+comparisons use the same $\eta_{\mathrm{tail}}$ and have no probe error.
+These probabilities are per audited operator. Any simultaneous statement over
+the full resolution--time--arm grid uses a predeclared Bonferroni allocation
+and displays the adjusted radii.
+Positive injected-covariance operators have actual margin at least one, hence
+$\delta^{\mathrm{cert}}=1$; when no tighter certified cap is available, the tail radius uses
+$M\le\hsnorm K=\sqrt{\Ttwo(K)}$ with the upper confidence bound substituted.
+A signed operator receives a tail certificate only when a valid lower
+positivity bound is available; otherwise $(M,\delta^{\mathrm{act}})$ is explicitly labeled a
+numerical diagnostic.
+
+All learned comparisons match data, update count, optimizer, adapter parameter
+count, and three adaptation seeds. Confidence intervals use paired examples and
+common random numbers. Primary quality, texture quality, raw $\Ttwo$, and cost
+remain separate axes rather than being collapsed into a single score. The
+quality non-inferiority margins and maximum audit-cost multiplier are stored in
+the locked configuration before the main seeds. Every audit reports
+operator--vector products, backward equivalents, wall-clock time, and peak
+accelerator memory.
+
+\paragraph{Controlled mechanism test.}
+The controlled families include alternating dyadic blocks with decay exponents
+$0.4$ and $0.6$, a front-heavy spectrum with a light tail, a rapidly decaying
+tail with sparse spikes, and the multiplicity construction in
+\cref{app:frequency-controls}. Exact cumulative mass is the membership
+decision; no fitted exponent replaces it. Conditional samples are generated on
+the finest Fourier grid. The binary label changes the covariance on a fixed
+sparse set of high modes below the Nyquist frequency of every reported cutoff;
+low modes have the same nuisance law in both classes. A four-layer convolutional
+classifier with global pooling is trained on samples from the unmodified
+base-resolution generator and frozen. Squared sensitivities of conditional loss
+to covariance-eigenvalue deviations are estimated on the training split,
+averaged within symmetry blocks, and frozen. All covariance gates are converted
+back to amplitude factors before sampling. The same validation-locked $\tau$
+grid is used for no intervention, scalar scaling, hard and smooth low-pass
+filters, an operator-norm cap, radial projection, and task-aware projection.
+
+\paragraph{Pinned latent-diffusion system.}
+The real suite pins a Stable Diffusion v1.x-compatible pipeline with the
+\texttt{stabilityai/sd-vae-ft-mse} encoder/decoder and its matching frozen
+denoiser. Exact model revisions, scheduler configuration, preprocessing, latent
+scaling, and data-manifest hashes are artifact inputs. The full stochastic VAE
+pushforward includes both the encoder-mean Jacobian term and posterior
+covariance from the law of total covariance. The clean encoder-mean covariance
+is the latent reference and is estimated on the training split. One
+sample-independent Fourier--channel basis is fixed at the largest resolution
+and restricted to lower cutoffs. The task-aware KKT rule acts on the population
+operator's diagonal structured component; a final radial factor enforces the
+full-population budget on the finite adapter-training manifest at every $R$.
+The empirical $\overline K_{E,R}^{\mathrm{full}}$, basis, reference, and radial
+factor are then frozen. Held-out audit and test manifests estimate their own
+population covariance only for evaluation; they never update or rescale the
+gate. A held-out budget violation is reported as such. Per-image Schatten-$4$
+values remain a separate distributional diagnostic.
+
+For a finite empirical population
+$\overline K=n^{-1}\sum_iK(x_i)$, a population Hutchinson probe first forms
+$\overline u=n^{-1}\sum_iK(x_i)v$ and then records
+$\lVert\overline u\rVert^2$. Averaging
+$\lVert K(x_i)v\rVert^2$ over examples estimates a different pointwise
+quantity and is used only when that quantity is explicitly requested.
+
+For the real suite, define
+\begin{equation}
+  \mathcal L_{\mathrm{task}}
+  =\frac{\mathcal L_{\mathrm{LPIPS}}}
+         {\overline{\mathcal L}_{\mathrm{LPIPS}}^{0}}
+   +\frac{\mathcal L_{\mathrm{denoise}}}
+         {\overline{\mathcal L}_{\mathrm{denoise}}^{0}},
+  \label{eq:real-task-loss}
+\end{equation}
+where the denominators are unfiltered means on the adapter-training split.
+For every mode, $q_j$ is the training-split average of the squared derivative
+of \cref{eq:real-task-loss} with respect to its covariance eigenvalue. The
+average uses a predeclared uniform draw over reported resolutions and the
+pipeline's frozen training-time timestep law; a mode is averaged only over
+resolutions where it exists. Values are averaged within conjugacy and channel
+symmetry blocks and frozen before validation. Texture metrics are evaluation
+guardrails and do not enter $q_j$.
+
+In the adapted protocol only the covariance gate is updated; the encoder,
+decoder, denoiser, basis, and reference remain fixed, so
+all arms stay in the whitening geometry of
+\cref{eq:fixed-whitened-latent-gate}. Any encoder-unfreezing ablation must
+re-estimate its reference and is not used for the main claim.
+
+Per-image $K_{E,R}^{\mathrm{full}}(x)$ values receive only the local
+covariance-matched Gaussian proxy certificate defined in the main text. The
+population mixture receives raw covariance diagnostics and no density-ratio
+tail claim.
+
+The texture-rich reconstruction subset is selected before training using
+source-image high-band energy alone. The corresponding generation subset is
+selected from prompts by a predeclared rule independent of generated images.
+Operating points are selected on validation data as: best quality under a raw
+$\Ttwo$ ceiling, best raw $\Ttwo$ within the quality margin, and the frontier
+knee. No test metric participates in selection. For the temporal audit, one
+fixed positive reference schedule $p$ is chosen before evaluation. Every gate
+defines $q^g$ by adding its PSD innovation covariance to the same reference and
+shares $q^g_0=p_0$ and the conditional mean map. Conditional $K^g_{R,t}$
+defines maximum and path budgets. For the nonlinear denoiser,
+$C^p_{R,T}$ and $C^{q^g}_{R,T}$ are estimated from paired endpoint samples
+under the two full path laws, using the law of total covariance when
+within-sample stochasticity is present. Their whitened difference gives the
+endpoint covariance diagnostic. Analytic scheduler covariance recurrence is
+used only for linear-Gaussian calibration, including constant and idealized
+variance-preserving schedules.
+
+\paragraph{Claim gates and artifact record.}
+The controlled claim requires agreement between exact and stochastic raw
+$\Ttwo$, separation of the frequency-matched pair, and a nondominated
+task-aware frontier segment that retains the high-frequency signal. The encoder
+claim requires a nondominated segment under both main and texture-quality
+margins. The temporal claim additionally requires paired
+$\mathcal B_{\mathrm{path}}$ and $\mathcal B_{\mathrm{end}}$ improvement at
+matched generation quality; a single-step reduction is insufficient. A cost
+claim additionally requires the locked time and memory caps. A failed gate
+removes that claim without changing the test protocol.
+
+The final artifact will record all resolution ladders, splits, seeds, confidence
+intervals, hyperparameters, discretization weights, covariance references,
+probe banks, scheduler recurrences, raw outputs, figure commands, and compute
+measurements.

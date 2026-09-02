@@ -1,167 +1,115 @@
-\section{Experiments as Claim Tests}
+\section{Experiments}
 \label{sec:experiments}
 
-Each experiment has one inferential role: verify the sharp boundary, show why
-ideal membership is not a frequency heuristic, connect the diagnostic to a
-learning-relevant instability, or test the representation hypothesis. The
-primary axis is refinement at matched task and noise budgets, not isolated
-single-resolution accuracy.
+We test one claim: at matched task utility, a finite raw-$\Ttwo$ budget allocated
+by task sensitivity controls refinement and diffusion-time accumulation more
+effectively than scalar, frequency-only, or operator-norm controls. A controlled
+suite isolates the mechanism; one pinned latent-diffusion system tests whether
+the same criterion yields a useful quality--stability--cost frontier.
 
-\subsection{The threshold predicts objective and estimator fluctuations}
-\label{sec:exp-threshold}
+\paragraph{Shared protocol.}
+Each sample is formed once at the highest resolution and antialiased to lower
+cutoffs. Every conditional Gaussian comparison reports raw $\Ttwo$,
+$M=\opnorm K$, actual and certified positivity margins, and a per-operator tail radius at
+$\eta_{\mathrm{tail}}=0.025$; an implicit audit reserves another $0.025$ for
+estimation error. Population mixtures and non-Gaussian endpoints are labeled as
+covariance diagnostics. Structured sums are exact and implicit comparisons use
+one frozen final probe bank. Matched training, validation selection, shell
+diagnostics, and compute accounting are detailed in
+\cref{app:experimental-details}.
 
-We first use relative precision perturbations
-$\lambda_j(H_N)=0.45j^{-\alpha}$ and increase the cutoff from $10$ to
-$10^6$. The setting $\alpha=1.20$ exposes ordinary trace-class behavior;
-$\alpha=0.60,0.50,0.40$ isolate the bounded, logarithmic, and polynomial
-$\Schatten{2}$ regimes in \cref{cor:power-law}. The covariance map
-$K_N=H_N(I-H_N)^{-1}$ from \cref{eq:precision-covariance-map} preserves these
-regimes. At every finite cutoff, with $Z\sim\mathcal N(0,I)$, we verify
-\begin{equation}
-  \frac12\langle Z,H_NZ\rangle+\frac12\log\det(I-H_N)
-  =\frac12\bigl(\langle Z,H_NZ\rangle-\operatorname{Tr}H_N\bigr)
-   +\frac12\log\det\nolimits_2(I-H_N).
-  \label{eq:finite-wick-identity}
-\end{equation}
-The two sides agree to numerical precision, while only the combined
-Wick--$\det_2$ expression remains uniformly controlled in the
-Hilbert--Schmidt, non-trace-class regime.
-This is the $p_N$-sampled precision form of the log density ratio; the exact
-$H_N\leftrightarrow K_N$ bridge and both KL orientations are stated in
-\cref{app:precision-bridge}.
-\Cref{fig:phase-boundary} shows the complete refinement path rather than a
-single-cutoff snapshot.
+\subsection{Controlled mixed spectra and a high-frequency task}
+\label{sec:exp-controlled}
 
-The same panel tests the stochastic consequence using the matrix-free
-objective. We hold the feature batch fixed and vary only its Rademacher probes.
-Across a $64\times$ increase in dimension, the unfiltered branch increases
-$\hsnorm{H_N}^2$ by $42.5\times$ and probe-induced gradient variance by
-$102.7\times$; the Schatten-filtered branch changes by $1.21\times$ and
-$1.46\times$,
-respectively. This is an estimator-mechanism test, not a claim that $\Ttwo$
-alone determines every source of SGD variance.
+This suite is designed to falsify the explanation that Schatten budgeting is
+just low-pass filtering. It combines alternating dyadic decay, sparse spectral
+spikes, growing multiplicity, and the frequency-matched construction in
+\cref{app:frequency-controls}. The latter holds its Fourier power summary,
+trace, and operator norm fixed while changing raw $\Ttwo$; exact cumulative
+mass supplies ground truth.
 
-\subsection{Same frequency appearance, different continuum fate}
-\label{sec:exp-matched-spectrum}
+A conditional Gaussian generator carries its class label through a fixed sparse
+set of high-frequency covariance modes; low modes are label-independent
+nuisance. A classifier trained on samples from the unmodified target generator
+is then frozen. Gates act on the generator covariance before sampling, and the
+nonnegative $q_j$ are squared sensitivities of conditional loss to
+covariance-mode deviations, estimated on the training split. Comparisons include
+no intervention, scalar rescaling, hard and smooth physical low-pass gates, an
+operator-norm cap, and the unweighted radial Schatten projection. Every method
+sweeps the same locked $\tau$ grid. Here $p$ is one fixed isotropic Gaussian
+reference shared by all families and $q$ is the corresponding gated conditional
+law. Conditional negative log likelihood is the
+primary task metric; label accuracy, raw $\Ttwo$, and the exact fluctuation
+scale $\sqrt{\Ttwo/2}$ of the centered $\log(dq/dp)$ under $X\sim q$ are
+secondary axes.
 
-The decisive control constructs two perturbations that a spatial-frequency
-heuristic cannot distinguish. Let $d=m^2$, let $0<\eta<1$, and let $U_d$ be a
-flat DFT unitary in complex Fourier coordinates, so
-$|(U_d)_{ij}|^2=1/d$ (a Walsh--Hadamard transform gives a real construction at
-compatible $d$). Define
-\begin{align}
-  A_d^{\mathrm{stable}}
-  &=U_d\operatorname{diag}\!\left(
-    \eta,\underbrace{\tfrac{\eta}{m+1},\ldots,
-    \tfrac{\eta}{m+1}}_{d-1}
-  \right)U_d^\ast, \\
-  A_d^{\mathrm{unstable}}
-  &=U_d\operatorname{diag}\!\left(
-    \underbrace{\eta,\ldots,\eta}_{m},
-    \underbrace{0,\ldots,0}_{d-m}
-  \right)U_d^\ast.
-  \label{eq:matched-spectrum-pair}
-\end{align}
-They have exactly the same coordinatewise noise power, total noise power, and
-leading-mode gain:
-\begin{equation}
-  \operatorname{diag}A_d^{\mathrm{stable}}
-  =\operatorname{diag}A_d^{\mathrm{unstable}}
-  =\frac{\eta}{m}\mathbf 1,
-  \quad
-  \operatorname{Tr}A_d^{(\cdot)}=\eta m,
-  \quad
-  \opnorm{A_d^{(\cdot)}}=\eta.
-  \label{eq:matched-spectrum-observables}
-\end{equation}
-Their operator-ideal behavior is nevertheless opposite:
-\begin{equation}
-  \hsnorm{A_d^{\mathrm{stable}}}^2
-  =\eta^2\frac{2m}{m+1}\longrightarrow2\eta^2,
-  \qquad
-  \hsnorm{A_d^{\mathrm{unstable}}}^2
-  =\eta^2m=\eta^2\sqrt d\longrightarrow\infty.
-  \label{eq:matched-spectrum-t2}
-\end{equation}
-We attach the same physical Fourier envelope to both families. Their radial
-power spectrum, bandwidth, trace, operator norm, and low-frequency response
-then remain matched, but their raw $\Ttwo$ and Gaussian objective fluctuations
-separate with the rates in \cref{eq:matched-spectrum-t2}. A frequency-only
-mask acts on the common envelope and cannot remove the unstable channel factor
-without also sending the retained low-frequency response to zero. The main
-comparison includes hard and smooth Fourier cutoffs, an unconstrained spectral
-decay gate, and the ideal-aware gate at matched task distortion and noise
-budget. Exact construction and matching constraints are in
-\cref{app:frequency-controls}.
+The first result figure will report shell mass, cumulative raw $\Ttwo$ under
+refinement, and the complete task-quality--stability frontier. Its decisive
+comparison will test whether task-aware allocation retains the high-frequency
+label at a budget where frequency-only controls remove it.
 
-\begin{figure}[!t]
-  \centering
-  \includegraphics[width=\linewidth]{../experiments/toy/frequency_matched_schatten.png}
-  \caption{\textbf{Frequency matching does not control operator-ideal
-  accumulation.} The two families have identical radial Fourier diagonals,
-  trace, and operator norm, but different hidden eigenvalue multiplicities. At
-  $d=1{,}048{,}576$, the stable family has $\Ttwo=0.7193$, while the unstable
-  family reaches $368.64$, a $512.5\times$ separation inherited by the exact
-  Gaussian residue and centered quadratic variance. All curves are closed-form;
-  explicit DFT matrices verify the identities at small $d$.}
-  \label{fig:frequency-matched}
-\end{figure}
+% RESULT FIGURE 1 SLOT: controlled_mixed_high_frequency_pareto.pdf
+% Panels: shell mass; raw T2 versus cutoff; held-out utility versus raw T2.
 
-\subsection{Resolution-consistent operator learning}
-\label{sec:exp-operator}
+\subsection{Latent diffusion over resolution and time}
+\label{sec:exp-real-suite}
 
-We discretize the same underlying continuous random fields on a resolution
-ladder and train a neural operator at a base grid. The ideal-aware gate is
-defined in physical Fourier modes,
-\begin{equation}
-  \beta_\theta(k)
-  =\rho\operatorname{sigmoid}(a_\theta(k))
-   (1+\lVert k\rVert^2)^{-s/2},
-  \qquad
-  s=1+\epsilon+\operatorname{softplus}(\gamma),
-  \label{eq:physical-s2-gate}
-\end{equation}
-where $0<\rho<1$ and $\epsilon>0$ are fixed. Thus $s>1$ enforces square
-summability in two spatial dimensions and keeps the series estimator inside
-its spectral-radius domain. Here $\beta_\theta(k)$ is a relative covariance
-eigenvalue, not a noise standard deviation. We freeze
-the selected gate and evaluate zero-shot at $2\times$ and $4\times$ the
-training resolution. Architecture, optimization steps, low-frequency
-response, and base-resolution noise budget are held fixed.
+We use one revision-pinned latent-diffusion pipeline and one fixed
+image--caption manifest with disjoint adapter-training, validation, audit, and
+test splits. The resolution ladder is $R\in\{256,512,1024\}$; nested image and
+noise realizations share their resolved physical modes.
 
-Baselines comprise ordinary Gaussian noise, renormalization without filtering,
-relative and fixed physical Fourier cutoffs, and an architecture-matched
-smooth decay gate without the $s>1$ constraint. The primary outputs are raw
-canonical $\Ttwo(R)$, minibatch-gradient variance, the drift of the independently
-selected noise scale, zero-shot relative error, and the discretization defect
-$\lVert D_R f_{2R}(U_Rx)-f_R(x)\rVert$. This experiment asks whether crossing
-the theoretical threshold predicts a stable training intervention and
-resolution transfer, beyond matched base-grid accuracy.
+\paragraph{Encoder intervention.}
+We audit the population full stochastic VAE covariance
+$\Ttwo^{(E,\mathrm{full})}$ from \cref{eq:full-encoder-covariance}, including
+posterior covariance. We separately report pointwise local Gaussian-proxy
+certificates for $K_{E,R}^{\mathrm{full}}(x)$ and the mean-map diagnostic
+$\Ttwo^{(E)}(R;x)=\lVert F_R(x)\rVert_{\Schatten{4}}^4$. The proposed
+adapter is one sample-independent gate in a nested Fourier--channel basis, with
+a constraint on the finite adapter-training population at every resolution.
+The reference, basis, empirical $\overline K_{E,R}^{\mathrm{full}}$, and final
+radial factor are fit on that split and frozen; held-out audits never refit or
+rescale the gate. The real-suite $q_j$ are training-split squared derivatives of
+a normalized sum of reconstruction LPIPS and the frozen denoising objective,
+averaged across the predeclared resolution--time sampling law and symmetry
+blocks, then frozen.
+Baselines are scalar rescaling, a smooth frequency gate, spectral
+normalization, a matched Jacobian/Frobenius penalty, and the unweighted Schatten
+projection. Frozen and adapted protocols change only covariance-gate
+parameters; the encoder, decoder, denoiser, and whitening reference remain
+fixed.
 
-% Figure 3 and main table: raw-T2 growth, noise-scale drift, zero-shot transfer.
+Reconstruction LPIPS~\citep{zhang2018perceptual} is primary, with PSNR,
+reconstruction FID~\citep{heusel2017gans}, and texture-subset patch LPIPS as
+guardrails. The second figure will overlay frozen and adapted Pareto frontiers.
+The main table will report full-population raw $\Ttwo$ and growth, pointwise
+certificate and mean-map summaries, quality, audit time, backward equivalents,
+and peak memory.
 
-\subsection{Latent encoders expose an implicit filtering requirement}
-\label{sec:exp-encoder}
+% RESULT FIGURE 2 SLOT: real_frozen_adapted_pareto.pdf
+% RESULT TABLE 1 SLOT: encoder_budget_quality_cost.tex
 
-We do not assume that compression automatically supplies operator-ideal
-regularity. On an antialiased image-resolution ladder, we separately estimate
-the encoder pushforward $K_{E,N}$ in \cref{eq:encoder-pushforward} and the
-actual relative diffusion update $K_{\mathrm{diff},N,t}$ in
-\cref{eq:diffusion-relative-covariance}. The controls are pixel identity, a
-same-rank partial isometry, architecture-matched random encoders, antialiased
-downsampling, a learned VAE encoder, and the learned encoder with an explicit
-Schatten gate. The principal ladder allows latent spatial rank to grow with
-resolution; fixed-rank bottlenecks are reported separately and are not treated
-as evidence of nontrivial uniform $\Schatten{2}$ control.
+\paragraph{Diffusion-time accumulation.}
+Let $p_{0:T}$ be one fixed positive-definite reference schedule and
+$q^g_{0:T}$ the law for gate $g$, obtained by adding its designed PSD covariance
+to that reference; the unfiltered target is one arm rather than the reference.
+All arms use $q^g_0=p_0$ and the same conditional mean maps. Using the same
+checkpoint, data, and validation-selected operating points, we compute the
+conditional update $K^g_{R,t}(X_{t-1})$ between
+$q^g_t(\cdot\mid X_{t-1})$ and $p_t(\cdot\mid X_{t-1})$ for
+$T\in\{10,50,100,250,1000\}$. These conditionals define
+$\mathcal B_{\max}$ and $\mathcal B_{\mathrm{path}}$ for each arm; the
+weighted training diagnostic remains separate. For the nonlinear denoiser,
+paired path samples estimate $C^p_{R,T}$ and $C^{q^g}_{R,T}$ separately to
+obtain $\mathcal B_{\mathrm{end}}$; analytic covariance recursion is reserved
+for linear-Gaussian calibration. The marginal
+$K^{\mathrm{marg}}_{\mathrm{diff},R,t}$ is never summed as path risk. If an
+ablation changes the initial law or conditional means, its initial KL and
+mean-shift terms are reported separately. For a non-Gaussian endpoint,
+$\mathcal B_{\mathrm{end}}$ is reported as a covariance diagnostic. Generation
+FID~\citep{heusel2017gans} is primary; semantic alignment and high-band error
+on a locked texture-prompt subset are guardrails. The third figure will show the
+resolution--time budget map together with quality at selected operating points.
 
-The audit reports full covariance spectra, raw $\Ttwo(N)$ and its growth
-exponent, effective rank, tail energy, and downstream noise-scale or gradient
-drift. The latent reference covariance is estimated independently of the
-injected perturbation, with a fixed support regularization rule across the
-ladder. Raw $\Ttwo$ under the quadrature-weighted discretization inner product is the
-membership test; normalized effective-rank summaries are complementary
-descriptions, not substitutes. This experiment answers the representation
-question directly: which encoders change the spectral class in which noise
-acts, and when explicit filtering supplies what compression alone does not.
-
-% Figure 4: encoder and diffusion-update spectra, raw-T2 growth, training consequence.
+% RESULT FIGURE 3 SLOT: real_resolution_time_budgets.pdf
+% Panels: B_max, B_path, B_end over R x T; quality at selected points.

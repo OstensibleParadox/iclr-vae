@@ -5,30 +5,30 @@
 \maketitle
 
 \begin{abstract}
-Gaussian noise injection is ubiquitous in representation learning, neural
-operators, and diffusion models. Yet a noise level that is benign at one
-resolution need not represent the same perturbation after refinement: its
-relative covariance update can accumulate spectral mass in newly resolved
-modes, causing Gaussian objectives and their gradients to be governed by the
-discretization rather than signal geometry. We formulate this failure as a
-continuum-stability problem. For a whitened covariance perturbation $K_N$, we
-show that uniform Hilbert--Schmidt control is the sharp threshold for uniform
-boundedness of Gaussian noise objectives under refinement and fixed spectral
-bounds.
-Trace-class perturbations admit ordinary trace and log-determinant formulas;
-Hilbert--Schmidt but non-trace-class perturbations require the
-Carleman--Fredholm determinant $\det_2$; beyond $\mathcal S_2$, this
-second-order-renormalized objective loses uniform cutoff control. This
-characterization yields
-\emph{Schatten-filtered noise}, a spectral gate that explicitly constrains the
-perturbation to a chosen operator-ideal regime. Synthetic power-law spectra
-recover the predicted three-phase boundary, while resolution-scaling tests
-measure objective drift, gradient variance, and noise-scale transfer. Finally,
-we ask whether latent encoders act as implicit operator-ideal filters by
-auditing both pushed-forward input perturbations and downstream diffusion
-updates across resolutions. The resulting framework turns a hidden requirement of
-high-dimensional noise injection into a falsifiable representation diagnostic
-and a controllable noise-design principle.
+Latent diffusion repeatedly applies Gaussian perturbations while representation
+resolution and diffusion time determine how many spectral directions can
+accumulate noise. A dimension-uniform Schatten-$2$ condition identifies the
+asymptotic feasible region, but it does not decide whether a finite model has
+already exceeded an acceptable risk level, nor which modes should receive a
+limited perturbation budget. We turn this threshold into a finite decision
+problem. For the whitened relative covariance $K_{R,t}$, raw
+$T_2=\lVert K_{R,t}\rVert_{\mathcal S_2}^2$ gives the exact single-step
+log-density variance and, together with an operator-norm cap and confidence
+level, a finite tail certificate; maximum, path, and end-state budgets
+separate the distinct ways perturbations accumulate over a diffusion schedule.
+We then propose \emph{task-aware Schatten budgeting}: allocate a prescribed
+$T_2$ budget by minimizing task-weighted spectral distortion under positivity
+and operator-norm constraints. The resulting shrinkage departs least from the
+target perturbation on modes with high task sensitivity---including
+task-critical high frequencies---while
+controlling cumulative covariance mass rather than frequency alone. A structured
+latent gate implements the allocation, with exact accounting for structured
+covariances and cost-accounted stochastic audits for implicit ones.
+This framework turns the theorem's feasible region into an actionable design
+constraint and makes quality--stability tradeoffs explicit operating choices
+for latent diffusion.
+% EXPERIMENTAL RESULT PLACEHOLDER: insert only verified finite-R/T certificate
+% calibration and held-out Pareto results here; never expose pending protocols.
 \end{abstract}
 
 \input{sections/section1_introduction}

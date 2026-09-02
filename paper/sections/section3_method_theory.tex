@@ -1,265 +1,241 @@
-\section{Schatten-Filtered Noise}
+\section{Certificates and Task-Aware Budgeting}
 \label{sec:method-theory}
 
-\subsection{A noise-layer interface and ideal-aware gate}
+\subsection{The finite and asymptotic guarantees}
 
-At a Gaussian noise-injection site, let $B_N$ denote the noise-amplitude
-operator in whitened coordinates and define the raw relative covariance by
+Write the covariance residue as
 \begin{equation}
-  K_N=B_NB_N^\ast,
-  \qquad
+  \mathcal L_N^{\mathrm{ren}}(K_N)
+  :=\frac12\sum_{j\le n_N}
+    [\lambda_{j,N}-\log(1+\lambda_{j,N})].
+  \label{eq:renormalized-objective}
+\end{equation}
+Its finite part is represented by $-\frac12\log\det_2(I+K_N)$
+(\cref{app:det2}). The following result turns
+$\mathfrak C_N=(\Ttwo(N),M_N,\delta_N^{\mathrm{cert}})$ into a decision
+certificate.
+
+\begin{theorem}[Finite raw-$\Ttwo$ certificate]
+\label{thm:finite-certificate}
+Let $K_N=K_N^\ast$, $I+K_N\succeq\delta I$ for $0<\delta\le1$, and
+$\opnorm{K_N}\le M$. Then
+\begin{equation}
+  \frac{\Ttwo(N)}{4(1+M)^2}
+  \le \mathcal L_N^{\mathrm{ren}}(K_N)
+  \le \frac{\Ttwo(N)}{4\delta^2}.
+  \label{eq:kl-t2-equivalence}
+\end{equation}
+If $X\sim q_N$ and
+$Y_N=\log\frac{dq_N}{dp_N}(X)
+-\E_{q_N}\log\frac{dq_N}{dp_N}(X)$, then
+\begin{equation}
+  \Var(Y_N)=\frac12\Ttwo(N),\qquad
+  \Pr\!\left(
+    |Y_N|\ge\sqrt{\Ttwo(N)x}+Mx
+  \right)\le2e^{-x}.
+  \label{eq:log-density-variance}
+\end{equation}
+For $K_N\succeq0$, the objective constants sharpen to
+$[4(1+M)]^{-1}$ and $1/4$.
+\end{theorem}
+
+Thus $\Ttwo$ is an exact variance budget but not, by itself, a complete tail
+certificate: $M$ and a chosen failure probability control rare fluctuations,
+while $\delta$ controls proximity to the covariance boundary. Proofs and the
+explicit confidence-radius form are in
+\cref{app:finite-certificate-proof}.
+
+\begin{theorem}[Uniform refinement threshold]
+\label{thm:s2-stability}
+For a refinement family with common $(\delta,M)$,
+\begin{equation}
+  \sup_N\Ttwo(N)<\infty
+  \quad\Longleftrightarrow\quad
+  \sup_N\mathcal L_N^{\mathrm{ren}}(K_N)<\infty
+  \quad\Longleftrightarrow\quad
+  \sup_N\Var(Y_N)<\infty.
+  \label{eq:s2-threshold}
+\end{equation}
+If $\Ttwo(N)\to\infty$, the other two quantities diverge.
+\end{theorem}
+Uniform boundedness is a no-divergence statement, not convergence by itself.
+Compatible $\Schatten{2}$ convergence and the familiar
+$s_j\asymp j^{-\alpha}$ transition at $\alpha=1/2$ are stated precisely in
+\cref{app:continuum-realization}.
+
+\subsection{Allocate the covariance budget}
+\label{sec:task-aware-budget}
+
+Let $B_N$ be a noise-amplitude operator in whitened coordinates. Its relative
+covariance is
+\begin{equation}
+  K_N=B_NB_N^\ast,\qquad
   \Delta C_N=C_N^{1/2}K_NC_N^{1/2}.
   \label{eq:amplitude-covariance-contract}
 \end{equation}
-Schatten-filtered noise replaces $K_N$ with
-$K_N^{(\tau)}=\Phi_\tau(K_N)$. Choosing any factor
-$B_N^{(\tau)}(B_N^{(\tau)})^\ast=K_N^{(\tau)}$, it injects
+Hence a diagonal amplitude $b_j$ contributes $b_j^4$ to raw $\Ttwo$. Throughout,
+$\tau$ denotes the \emph{squared} budget $\hsnorm{K_N}^2\le\tau$.
+The basis-invariant unweighted baseline is radial projection,
 \begin{equation}
-  \epsilon_N\sim\mathcal N(0,I),
-  \qquad
-  \xi_N^{(\tau)}=C_N^{1/2}B_N^{(\tau)}\epsilon_N,
-  \qquad z'=z+\xi_N^{(\tau)}.
-  \label{eq:noise-layer-interface}
-\end{equation}
-This contract separates amplitude from covariance: for diagonal amplitudes
-$b_{j,N}$, the covariance eigenvalues are $b_{j,N}^2$ and
-$\Ttwo(N)=\sum_j b_{j,N}^4$. Every gate, determinant, and diagnostic below is
-defined on $K_N$, never directly on a noise standard deviation.
-A basis-invariant budget gate is the radial projection
-\begin{equation}
-  \Phi_\tau^{\mathrm{budget}}(K_N)
-  =\min\!\left\{1,\frac{\tau}{\hsnorm{K_N}}\right\}K_N,
+  \Phi_\tau^{\mathrm{rad}}(K_N)
+  =\gamma_NK_N,\qquad
+  \gamma_N=\min\!\left\{1,\sqrt{\frac{\tau}{\Ttwo(N)}}\right\},
   \label{eq:s2-budget-gate}
 \end{equation}
-with the multiplier defined as one when $K_N=0$. It enforces
-$\hsnorm{K_N^{(\tau)}}\leq\tau$ without choosing a coordinate basis.
 
-Structured operators can preserve leading physical modes more selectively.
-Let $K_N=U_N\operatorname{diag}(\lambda_{1,N},\ldots,
-\lambda_{n_N,N})U_N^\ast$ in a refinement-compatible mode basis. We use
+with the convention $\gamma_N=1$ when $K_N=0$. Our task-aware rule fixes a
+refinement-compatible basis, assumes the positive
+injected covariance is diagonal in that basis, and uses nonnegative entries
+$q_{j,N}$ from a local PSD task model (e.g., squared sensitivities or a
+Gauss--Newton diagonal):
 \begin{equation}
-  K_N^{(\tau)}
-  =\Phi_\tau(K_N)
-  :=U_N\operatorname{diag}\!\left(
-    \phi_{\tau,1}(\lambda_{1,N}),\ldots,
-    \phi_{\tau,n_N}(\lambda_{n_N,N})
-  \right)U_N^\ast.
-  \label{eq:schatten-gate}
+  \min_{0\le\widetilde\lambda_{j,N}\le\rho_{\mathrm{cap}}}
+  \frac12\sum_jq_{j,N}
+    (\widetilde\lambda_{j,N}-\lambda_{j,N})^2
+  \quad\text{s.t.}\quad
+  \sum_j\widetilde\lambda_{j,N}^2\le\tau.
+  \label{eq:task-aware-projection}
 \end{equation}
-with a nonnegative, resolution-independent envelope
-$w=(w_j)_{j\geq1}$,
+Its KKT solution is
 \begin{equation}
-  \phi_{\tau,j}(\lambda)
-  =\operatorname{sign}(\lambda)\min\{|\lambda|,\tau w_j\}.
-  \label{eq:envelope-gate}
+  \widetilde\lambda_{j,N}
+  =\min\!\left\{\rho_{\mathrm{cap}},
+    \frac{q_{j,N}}{q_{j,N}+\mu}\lambda_{j,N}\right\},
+  \qquad \mu\ge0,
+  \label{eq:task-aware-kkt}
 \end{equation}
-where physical mode labels are fixed across refinements and the same cap is
-shared within symmetry or degeneracy blocks. If $w\in\ell^2$, then
-$\sup_N\hsnorm{K_N^{(\tau)}}\leq\tau\lVert w\rVert_2$; if
-$w\in\ell^1$, the same construction targets trace class. Unlike a cutoff at a
-fixed fraction of available Fourier modes, the envelope is tied to a
-summability budget that does not expand with the grid.
+where $\rho_{\mathrm{cap}}>0$, bisection chooses $\mu$ when the budget is
+active, and the canonical value is zero if $q_{j,N}=\mu=0$. Larger task weight
+means less departure from the target perturbation, independent of physical
+frequency. This is a closed-form commuting approximation, not a solution to
+general nonconvex task distortion; raw signed gradients are not valid weights.
+The derivation and modewise envelope variant are in
+\cref{app:task-aware-kkt}.
 
-In the Hilbert--Schmidt regime, we evaluate the covariance residue through
+To implement the covariance solution with an amplitude factor, let
+$K_N=U_N\operatorname{diag}(\lambda_{j,N})U_N^\ast$ and set
 \begin{equation}
-  \mathcal L_N^{\mathrm{ren}}(K_N)
-  :=-\frac12\log\det\nolimits_2(I+K_N).
-  \label{eq:renormalized-objective}
-\end{equation}
-For trace-class $K_N$, this equals the ordinary expression in
-\cref{eq:finite-gaussian-kl}; for
-$K_N\in\Schatten{2}\setminus\Schatten{1}$, it remains meaningful even when
-the trace and log determinant do not exist separately. The surrounding model
-can optimize the task loss on $z'$ together with
-$\lambda\mathcal L_N^{\mathrm{ren}}(K_N^{(\tau)})$ as an explicit
-resolution-stable noise budget. The theorem concerns this Gaussian covariance
-term; the task loss need not itself be Gaussian.
-
-\subsection{The sharp Hilbert--Schmidt threshold}
-
-\begin{theorem}[Refinement stability of Gaussian noise]
-\label{thm:s2-stability}
-Suppose $K_N=K_N^\ast\succeq0$ and
-$\sup_N\opnorm{K_N}\leq M<\infty$. Then
-\begin{equation}
-  \frac{1}{4(1+M)}\Ttwo(N)
-  \leq \mathcal L_N^{\mathrm{ren}}(K_N)
-  \leq \frac14\Ttwo(N).
-  \label{eq:kl-t2-equivalence}
-\end{equation}
-Moreover, if
-$\ell_N(X)=\log\frac{dq_N}{dp_N}(X)$ with $X\sim q_N$, then
-\begin{equation}
-  \Var_{q_N}[\ell_N(X)]=\frac12\Ttwo(N).
-  \label{eq:log-density-variance}
-\end{equation}
-Consequently, the following are equivalent:
-\begin{equation}
-  \sup_N\Ttwo(N)<\infty,
+  g_{j,N}
+  =\sqrt{\frac{\widetilde\lambda_{j,N}}{\lambda_{j,N}}},
   \qquad
-  \sup_N\mathcal L_N^{\mathrm{ren}}(K_N)<\infty,
-  \qquad
-  \sup_N\Var_{q_N}[\ell_N(X)]<\infty.
+  \widetilde B_N
+  =U_N\operatorname{diag}(g_{j,N})U_N^\ast B_N,
+  \label{eq:covariance-to-amplitude-gate}
 \end{equation}
-If $\Ttwo(N)\to\infty$, both the renormalized covariance objective and the
-sample log-density variance diverge. The same equivalence holds for signed
-self-adjoint perturbations under a uniform positivity gap
-$I+K_N\succeq\delta I$ and a uniform operator-norm bound, with constants that
-depend only on $(\delta,M)$.
-\end{theorem}
+with $g_{j,N}=1$ when both eigenvalues are zero. Then
+$\widetilde B_N\widetilde B_N^\ast
+=U_N\operatorname{diag}(\widetilde\lambda_{j,N})U_N^\ast$; using covariance
+ratios directly as amplitude gains would square the intended shrinkage.
 
-The result makes the slogan precise: Schatten membership at a cutoff is
-automatic, but dimension-uniform Schatten control predicts whether Gaussian
-noise objectives survive refinement.
+\subsection{Resolution and diffusion time}
+\label{sec:temporal-budgets}
 
-The same threshold controls the curvature seen by a scalar noise-scale
-parameter. For $K_N(\theta)=\theta A_N$ with $A_N\succeq0$ and $\theta\geq0$,
-\begin{equation}
-  \mathcal L_N'(\theta)
-  =\frac{\theta}{2}\Tr\!\left[A_N^2(I+\theta A_N)^{-1}\right],
-  \qquad
-  \mathcal L_N''(\theta)
-  =\frac12\Tr\!\left[A_N^2(I+\theta A_N)^{-2}\right].
-  \label{eq:noise-scale-curvature}
-\end{equation}
-Under a uniform spectral bound and a fixed range of $\theta$, this curvature is
-equivalent up to fixed constants to $\hsnorm{A_N}^2$. Thus tail accumulation
-changes the optimization geometry of the nominal noise-scale knob even when
-each individual mode remains small. The derivation is in
-\cref{app:noise-scale-curvature}.
+Let $K_{N,t}(X_{t-1})$ be the conditional relative covariance update between two
+Markov transitions, whitened by the conditional reference. We keep four
+quantities distinct:
+\begin{align}
+  \mathcal B_{\max}(N,T)
+    &:=\max_{1\le t\le T}\E_q\Ttwo(K_{N,t}),\label{eq:max-t2-budget}\\
+  \mathcal B_{\mathrm{path}}(N,T)
+    &:=\sum_{t=1}^T\E_q\Ttwo(K_{N,t}),\label{eq:path-t2-budget}\\
+  \mathcal B_{\mathrm{train}}(N,T)
+    &:=\sum_{t=1}^Tw_t\E_{\pi_t}\Ttwo(K_{N,t}),\label{eq:training-t2-budget}\\
+  \mathcal B_{\mathrm{end}}(N,T)
+    &:=\hsnorm{
+      (C^p_{N,T})^{-1/2}(C^q_{N,T}-C^p_{N,T})(C^p_{N,T})^{-1/2}
+    }^2.\label{eq:endpoint-t2-budget}
+\end{align}
+Under common certificate constants and $q_0=p_0$,
+$\mathcal B_{\mathrm{path}}$ controls the conditional-transition covariance
+part of path KL and equals twice the variance of the centered covariance
+log-ratio martingale. An initial KL and conditional mean shifts, when present,
+are added separately. The weighted
+training quantity uses the estimator distribution $\pi_t$ and is not path KL
+unless $w_t=1$ and $\pi_t$ is the path marginal. The endpoint follows the
+actual covariance recursion and is generally neither a sum nor a product of
+stepwise updates. Derivations and the weighted variance identity are in
+\cref{app:temporal-budgets}.
 
-Uniform control also yields genuine cutoff consistency for compatible
-approximations. If $K_N\to K$ in $\Schatten{2}$ on a common Hilbert space and
-$I+K_N,I+K\succeq\delta I$, continuity of the regularized determinant gives
-\begin{equation}
-  \mathcal L_N^{\mathrm{ren}}(K_N)
-  \longrightarrow -\frac12\log\det\nolimits_2(I+K).
-  \label{eq:compatible-cutoff-convergence}
-\end{equation}
-Under a common isonormal Gaussian coupling, the centered log-density ratios
-converge in $L^2$, with squared distance
-$\frac12\hsnorm{K_N-K}^2$. Thus uniform $\Schatten{2}$ boundedness supplies
-the sharp no-divergence criterion, while $\Schatten{2}$ convergence supplies a
-continuum limit.
+\subsection{Latent implementation and audit}
 
-\begin{corollary}[Power-law phase transition]
-\label{cor:power-law}
-Under the conditions of \cref{thm:s2-stability}, if
-$s_j(K)\asymp j^{-\alpha}$ and $K_N$ retains the first $n_N$ modes, then
-\begin{equation}
-  \Ttwo(N)\asymp
-  \begin{cases}
-    1, & \alpha>\tfrac12,\\
-    \log n_N, & \alpha=\tfrac12,\\
-    n_N^{1-2\alpha}, & \alpha<\tfrac12.
-  \end{cases}
-  \label{eq:power-law-phase-transition}
-\end{equation}
-The renormalized objective and sample log-density variance inherit the same
-bounded, logarithmic, and polynomial regimes.
-\end{corollary}
-
-\subsection{Matrix-free diagnosis and renormalization}
-
-For independent unnormalized Rademacher probes
-$v_1,\ldots,v_m\in\{-1,+1\}^{n_N}$,
-\begin{equation}
-  \widehat{\Ttwo}(N)
-  =\frac1m\sum_{r=1}^m\lVert K_Nv_r\rVert_2^2,
-  \qquad
-  \E\widehat{\Ttwo}(N)=\Ttwo(N).
-  \label{eq:matrix-free-t2}
-\end{equation}
-Thus the stability diagnostic needs only operator--vector products, not an
-eigendecomposition. When $\opnorm{K_N}<1$, the determinant term also admits
-the matrix-free expansion
-\begin{equation}
-  -\log\det\nolimits_2(I+K_N)
-  =\sum_{k=2}^{\infty}\frac{(-1)^k}{k}\operatorname{Tr}(K_N^k),
-  \label{eq:det2-series}
-\end{equation}
-whose traces can reuse the same probes~\citep{hutchinson1989stochastic}. Our
-series-based implementation caps $\opnorm{K_N}<1$; a Fourier-diagonal gate can
-instead evaluate the regularized determinant exactly mode by mode.
-
-\paragraph{What $\Ttwo$ does and does not predict.}
-\Cref{thm:s2-stability} gives an exact statement for sample log-density
-fluctuations. For a parameterized family $K_N(\theta)$, gradient fluctuations
-also depend on the sensitivity spectrum $\partial_\theta K_N$; they are not a
-function of $\Ttwo(N)$ alone. Our optimization experiments therefore report
-the source of randomness explicitly. The matrix-free test varies estimator
-probes, while the learning tests separately measure minibatch-gradient
-variance and noise-scale drift.
-
-\subsection{Encoders as a falsifiable filtering hypothesis}
-
-Let $J_N(x)$ be an encoder Jacobian, let $\Sigma_N$ be an input perturbation
-covariance, and let $C_{z,N}^{\mathrm{ref}}\succ0$ define an independently
-specified latent reference geometry. The
-whitened Jacobian and relative latent covariance update are
+For encoder Jacobian $J_N(x)$, input perturbation covariance $\Sigma_N$, and a
+fixed latent reference $C_{z,N}^{\mathrm{ref}}$, define
 \begin{equation}
   F_N(x)=(C_{z,N}^{\mathrm{ref}})^{-1/2}J_N(x)\Sigma_N^{1/2},
-  \qquad
-  K_{E,N}(x)=F_N(x)F_N(x)^\ast.
+  \qquad K_{E,N}(x)=F_N(x)F_N(x)^\ast.
   \label{eq:encoder-pushforward}
 \end{equation}
-Their Schatten masses obey the exact identity
+The mean-map component has the exact identity
 \begin{equation}
   \Ttwo^{(E)}(N;x)
-  :=\hsnorm{K_{E,N}(x)}^2
-  =\sum_j s_j(F_N(x))^4
+  =\hsnorm{K_{E,N}(x)}^2
+  =\sum_js_j(F_N(x))^4
   =\lVert F_N(x)\rVert_{\Schatten{4}}^4.
   \label{eq:encoder-s4-identity}
 \end{equation}
-This is the local mean-map contribution for a nonlinear encoder. For a
-stochastic VAE, the reference and downstream covariance audits additionally
-include the posterior-variance term through the law of total covariance; the
-Jacobian identity is not used as a substitute for that full latent covariance.
-Thus an encoder filters an input perturbation into a uniformly
-Hilbert--Schmidt covariance family exactly when its whitened Jacobian is
-uniformly Schatten-$4$. We test either
-$\sup_N\Ttwo^{(E)}(N;x)<\infty$ pointwise or
-$\sup_N\E_x\Ttwo^{(E)}(N;x)<\infty$ at the population level, without changing
-the reference covariance to the perturbation being audited. Compression alone
-does not establish this property: a rank-$r_N$
-partial isometry has $\Ttwo^{(E)}=r_N$, which diverges whenever the effective
-rank grows.
-
-The pushforward in \cref{eq:encoder-pushforward} is distinct from the relative
-covariance update used by a downstream diffusion step,
+For a stochastic VAE, let $S_{\mathrm{post},N}(x)$ be its conditional latent
+posterior covariance and take $C_{z,N}^{\mathrm{ref}}$ to be the clean
+encoder-mean covariance. Under the local, independent, zero-mean input
+perturbation model, write $W_N=(C_{z,N}^{\mathrm{ref}})^{-1/2}$. The local and
+population injected covariances are
 \begin{equation}
-  K_{\mathrm{diff},N,t}
+  \begin{aligned}
+    K_{E,N}^{\mathrm{full}}(x)
+      &:=K_{E,N}(x)+W_NS_{\mathrm{post},N}(x)W_N^\ast,\\
+    \overline K_{E,N}^{\mathrm{full}}
+      &:=\E_x K_{E,N}^{\mathrm{full}}(x),&
+    \Ttwo^{(E,\mathrm{full})}(N)
+      &:=\hsnorm{\overline K_{E,N}^{\mathrm{full}}}^2.
+  \end{aligned}
+  \label{eq:full-encoder-covariance}
+\end{equation}
+The pointwise $K_{E,N}^{\mathrm{full}}(x)$ defines a local
+covariance-matched Gaussian proxy certificate. Its population average is generally a
+non-Gaussian mixture: $\Ttwo^{(E,\mathrm{full})}$ is then a covariance budget,
+not a log-density tail certificate. We report it separately from the
+mean-map-only $\Ttwo^{(E)}(N;x)$.
+
+The implementable adapter is sample independent. We freeze one nested
+Fourier--channel basis across resolutions, apply the task-aware KKT rule to the
+diagonal structured component of $\overline K_{E,N}^{\mathrm{full}}$, and use
+the square-root amplitude gains in
+\cref{eq:covariance-to-amplitude-gate}. Because the implicit full operator need
+not commute with this basis, a final radial rescaling certifies
+\begin{equation}
+  \widetilde K_{E,N}^{\mathrm{full}}
+  =G_{\psi,N}\overline K_{E,N}^{\mathrm{full}}G_{\psi,N}^\ast,
+  \qquad
+  \hsnorm{\widetilde K_{E,N}^{\mathrm{full}}}^2\le\tau_E
+  \quad\text{for every audited }N.
+  \label{eq:fixed-whitened-latent-gate}
+\end{equation}
+The guarantee is for the declared population covariance, not every input
+pointwise. The gate changes only stochastic residual amplitudes in the fixed
+whitening geometry. An invertible adapter that transforms both representation
+and reference would instead preserve the singular values of $F_N$
+(\cref{app:encoder-audit}).
+
+We audit the encoder pushforward separately from the downstream
+\emph{marginal} diffusion diagnostic
+\begin{equation}
+  K^{\mathrm{marg}}_{\mathrm{diff},N,t}
   =(C_{z,N}^{\mathrm{ref}})^{-1/2}
-    \bigl(C_{z,N,t}-C_{z,N}^{\mathrm{ref}}\bigr)
-    (C_{z,N}^{\mathrm{ref}})^{-1/2}.
+    (C_{z,N,t}-C_{z,N}^{\mathrm{ref}})
+   (C_{z,N}^{\mathrm{ref}})^{-1/2}.
   \label{eq:diffusion-relative-covariance}
 \end{equation}
-For a variance-preserving update
-$C_{z,N,t}=\alpha_t^2C_{z,N}^{\mathrm{ref}}+\sigma_t^2I$, this object becomes
+This object compares time-$t$ marginal covariances; it is not the conditional
+transition update used in $\mathcal B_{\mathrm{path}}$.
+Structured operators are summed exactly. For an implicit real operator, fixed
+independent Rademacher probes~\citep{hutchinson1989stochastic} give
 \begin{equation}
-  K_{\mathrm{diff},N,t}
-  =(\alpha_t^2-1)I+\sigma_t^2(C_{z,N}^{\mathrm{ref}})^{-1},
-  \label{eq:vp-diffusion-relative-covariance}
+  \widehat\Ttwo_m(N)
+  =\frac1m\sum_{r=1}^m\lVert K_Nv_r\rVert_2^2,
+  \qquad \E\widehat\Ttwo_m(N)=\Ttwo(N).
+  \label{eq:matrix-free-t2}
 \end{equation}
-which directly exposes how the latent reference spectrum changes the class in
-which an otherwise isotropic noise schedule acts.
-We audit both objects rather than assuming that attenuation of input
-perturbations automatically regularizes noise injected after encoding. This
-makes the latent-diffusion interpretation falsifiable and separates spectral
-filtering from a fixed-dimensional bottleneck. All adjoints and singular values
-use resolution-consistent Hilbert inner products, including discretization
-quadrature weights.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{../experiments/toy/three_regime_phase_diagram.png}
-  \caption{\textbf{The operator-ideal boundary appears only under refinement.}
-  Power-law precision spectra traverse $\Schatten{1}$,
-  $\Schatten{2}\setminus\Schatten{1}$, the critical boundary, and the
-  non-$\Schatten{2}$ regime. The top-right panel reports the canonical
-  covariance diagnostic $\hsnorm{K_N}^2$; the precision bridge in
-  \cref{app:precision-bridge} gives the same phase boundary for $H_N$.
-  Ordinary components drift separately, while the Wick--$\det_2$ finite part
-  and its stochastic fluctuation remain controlled on the bounded side.}
-  \label{fig:phase-boundary}
-\end{figure}
+Training uses a separate cheap surrogate; final probes are independent of
+training, fixed across paired comparisons, and reported with operator calls,
+time, and memory. Probe variance, stopping rules, complex operators, and the
+difference between global certificates and blockwise diagnostics are detailed
+in \cref{app:estimators}.

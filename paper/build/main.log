@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 16:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  1 SEP 2026 17:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -501,10 +501,6 @@ Package hyperref Info: Link coloring OFF on input line 3.
 \openout3 = `main.out'.
 
 
-Underfull \hbox (badness 3989) in paragraph at lines 6--6
-\T1/ptm/m/sc/17.28 (+20) Schatten Fil-ter-ing for Resolution-Stable
- []
-
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
@@ -530,78 +526,79 @@ s/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dv
 ips/base/8r.enc}
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 8
-6.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 7
+4.
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ))
-(./sections/section2_problem.tex [2]) (./sections/section3_method_theory.tex
-[3]
-Underfull \hbox (badness 1077) in paragraph at lines 37--40
-[]\T1/ptm/m/n/10 (+20) Structured op-er-a-tors can pre-serve lead-ing phys-i-ca
-l modes more se-lec-tively. Let $\OML/cmm/m/it/10 K[] \OT1/cmr/m/n/10 =
- []
+(./sections/section2_problem.tex
+LaTeX Font Info:    Trying to load font information for U+euf on input line 33.
 
-[4] [5]
-<../experiments/toy/three_regime_phase_diagram.png, id=179, 903.375pt x 635.976
-pt>
-File: ../experiments/toy/three_regime_phase_diagram.png Graphic file (type png)
 
-<use ../experiments/toy/three_regime_phase_diagram.png>
-Package pdftex.def Info: ../experiments/toy/three_regime_phase_diagram.png  use
-d on input line 255.
-(pdftex.def)             Requested size: 397.48499pt x 279.83029pt.
-) (./sections/section4_experiments.tex [6]
-<../experiments/toy/frequency_matched_schatten.png, id=199, 842.84888pt x 587.1
-9376pt>
-File: ../experiments/toy/frequency_matched_schatten.png Graphic file (type png)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/ueuf.fd
+File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-euf.cfg
+File: mt-euf.cfg 2006/07/03 v1.1 microtype config. file: AMS Euler Fraktur (RS)
 
-<use ../experiments/toy/frequency_matched_schatten.png>
-Package pdftex.def Info: ../experiments/toy/frequency_matched_schatten.png  use
-d on input line 99.
-(pdftex.def)             Requested size: 397.48499pt x 276.91292pt.
- [7 <../experiments/toy/three_regime_phase_diagram.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8 <../experiments/toy/frequency_matched_schatten.png>])
+) [2])
+(./sections/section3_method_theory.tex [3] [4])
+(./sections/section4_experiments.tex [5] [6])
 (./sections/section5_related_work.tex) (./sections/section6_conclusion.tex)
-(./sections/statements.tex [9]) (build/main.bbl [10]) (./sections/appendix.tex
-[11] [12]) [13] (build/main.aux)
+(./sections/statements.tex)
+Underfull \vbox (badness 1590) has occurred while \output is active []
+
+ [7]
+(build/main.bbl [8]) (./sections/appendix.tex [9] [10] [11] [12] [13]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 51
+7.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `pcr' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [14]) [15]
+(build/main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 613E1FF2F9701F44E6FD3FEA3490DE84;5271.
+(rerunfilecheck)             Checksum: 4A347915CD216662B40E3632079DC4B2;4825.
  ) 
 Here is how much of TeX's memory you used:
- 15977 strings out of 467525
- 254582 string characters out of 5418982
- 737157 words of memory out of 5000000
- 44318 multiletter control sequences out of 15000+600000
- 674330 words of font info for 220 fonts, out of 8000000 for 9000
+ 16129 strings out of 467525
+ 256884 string characters out of 5418982
+ 739157 words of memory out of 5000000
+ 44410 multiletter control sequences out of 15000+600000
+ 679424 words of font info for 236 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,17n,93p,1001b,591s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
-/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></u
-sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
-/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
-ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/loca
-l/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
-exlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
-xlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texl
-ive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
-texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive
-/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texm
-f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fon
-ts/type1/urw/times/utmri8a.pfb>
-Output written on build/main.pdf (13 pages, 965340 bytes).
+ 80i,12n,93p,1001b,603s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.
+pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb
+></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
+/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
+sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/
+local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/loc
+al/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loca
+l/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/
+texlive/2026/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/loca
+l/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/
+local/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/te
+xlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2
+026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts
+/type1/urw/times/utmri8a.pfb>
+Output written on build/main.pdf (15 pages, 286176 bytes).
 PDF statistics:
- 397 PDF objects out of 1000 (max. 8388607)
- 343 compressed objects within 4 object streams
- 114 named destinations out of 1000 (max. 500000)
- 38091 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 460 PDF objects out of 1000 (max. 8388607)
+ 404 compressed objects within 5 object streams
+ 143 named destinations out of 1000 (max. 500000)
+ 42689 words of extra memory for PDF output out of 42996 (max. 10000000)
 

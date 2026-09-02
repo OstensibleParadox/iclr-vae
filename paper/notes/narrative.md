@@ -1,96 +1,141 @@
 # Paper narrative lock
 
+## Title
+
+> **Task-Aware Schatten Budgeting for Resolution- and Time-Stable Latent Diffusion**
+
 ## North star
 
-> A continuum-stability theory of noise injection in high-dimensional
-> learning, with Schatten filtering as the algorithmic consequence.
+> The Schatten-\(2\) theorem defines the feasible region; task-aware finite
+> resolution--time budgeting chooses the useful operating point.
 
-全篇只服务一个中心：
+The paper has one claim:
 
-\[
-\mathcal S_2\text{ is the stability threshold for refinement-consistent
-Gaussian perturbations.}
-\]
+> At finite resolution and diffusion time, raw \(T_2\) is an actionable
+> Gaussian risk budget, and allocating it by task sensitivity is the right way
+> to preserve useful latent modes while controlling covariance accumulation.
 
-Diffusion 是最吸睛的实例，neural operator 是最干净的 resolution-scaling
-test bed，Gaussian measure theory 是骨架，\(\det_2\) 是 renormalization
-machinery。
+The paper is about a decision layer, not another proof that divergence can
+occur. The asymptotic theorem supplies the boundary. The method allocates a
+finite budget. The quality--stability frontier determines whether an operating
+point is worthwhile.
 
-## Four-layer launch
+## Launch sequence
 
-1. **病：resolution-dependent noise instability。** 固定维度上的合法性不等于
-   refinement stability。相同 nominal noise scale 会在新增模式上积累 spectral
-   mass，使 penalty 和 gradient 被 cutoff/high-frequency multiplicity 主导。
-2. **药：Schatten-filtered noise。** 对 whitened relative covariance
-   \(K_N\) 施加 ideal-aware spectral gate。\(\mathcal S_1\) 使用普通
-   trace/log-det；\(\mathcal S_2\setminus\mathcal S_1\) 使用
-   Wick--Carleman/\(\det_2\)；\(\mathcal S_2\) 外由 gate 改变谱尾。
-3. **知识：sharp \(\mathcal S_2\) threshold。** 定理同时控制 renormalized
-   objective、sample log-density fluctuation 与 power-law 三相边界。
-4. **ML 世界：synthetic → operator learning → latent diffusion。** 每层证据只
-   承担一个职责，不做结果仓库。
+1. **Finite risk.** A scalar noise schedule does not specify aggregate risk
+   when resolution changes or when perturbations repeat over diffusion time.
+2. **Feasible region.** Dimension-uniform Schatten-\(2\) control is the sharp
+   asymptotic boundary under the stated spectral assumptions.
+3. **Finite certificate.** Report raw \(T_2(R)\), refinement growth, shell
+   mass, and distinct \(B_{\max}\), \(B_{\mathrm{path}}\), and
+   \(B_{\mathrm{end}}\) budgets.
+4. **Decision rule.** Allocate a prescribed budget by task sensitivity rather
+   than by frequency alone.
+5. **Operating curve.** Compare methods over the full quality--stability
+   frontier, including the unfiltered endpoint.
 
-## Claim hierarchy
+## Contribution lock
 
-1. **Headline theorem:** dimension-uniform \(\mathcal S_2\) control is
-   equivalent to cutoff stability under explicit uniform spectral conditions.
-2. **Algorithmic consequence:** an ideal-aware gate enforces this property;
-   \(\det_2\) supplies the correct finite part on
-   \(\mathcal S_2\setminus\mathcal S_1\).
-3. **Optimization consequence:** \(T_2\) predicts the resolution scaling of
-   Gaussian objective fluctuations and probe-induced gradient variance.
-4. **Representation thesis:** latent encoders may act as implicit
-   operator-ideal filters; the paper tests this rather than assuming it.
+Use at most two contribution bullets.
 
-## Main figures
+1. **Finite resolution--time certificate.** The theorem is the feasible
+   region; finite raw-\(T_2\), shell, path, and end-state accounting make it
+   actionable for latent diffusion.
+2. **Task-aware Schatten budgeting.** A task-weighted projection and latent
+   adapter allocate covariance mass under \(T_2\) and operator-norm constraints.
 
-- **Figure 1 — The disease and the boundary.** Matched-amplitude power-law
-  spectra around \(\alpha=1/2\); show bounded/logarithmic/polynomial \(T_2(N)\),
-  the \(\det_2\) residue, and probe-induced optimization fluctuations.
-- **Figure 2 — Ideal-aware gate, not generic low-pass.** Frequency-matched
-  perturbations with identical diagonal, trace, operator norm, radial PSD, and
-  low-frequency response but different cumulative \(\mathcal S_2\) behavior.
-- **Figure 3 — Operator-learning consequence.** Raw \(T_2(N)\), noise-scale
-  drift, discretization defect, and zero-shot transfer across unseen grids.
-- **Figure 4 — Representation audit.** Pixel, isometric, random, and learned
-  encoders; distinguish input-noise pushforward from the actual diffusion
-  covariance update, and report canonical raw \(T_2\) rather than only normalized
-  effective-rank summaries.
+Adaptive probes, determinant machinery, and encoder Jacobian identities are
+supporting tools, not separate contributions.
+
+## Scope lock
+
+- The only main application is latent diffusion.
+- A structured latent adapter is the main implementation.
+- Exact accounting is used whenever the covariance is structured.
+- Matrix-free estimates are used only for implicit operators and must declare
+  whether they are global certificates, blockwise diagnostics, or local
+  training surrogates.
+- The paper does not claim that one universal numerical budget is optimal for
+  every task. It exposes the frontier from which an operating point is chosen.
+
+## Main evidence shape
+
+There are two experiment suites and at most three main figures plus one table.
+
+1. **Controlled task-bearing counterexample.** Mixed spectra and sparse
+   high-frequency task signal distinguish task-aware budgeting from low-pass,
+   uniform shrinkage, and operator-norm control.
+2. **One real latent-diffusion suite.** The same images, model, gates, and
+   adapters produce:
+   - a resolution-by-time view of \(B_{\max}\), \(B_{\mathrm{path}}\), and
+     \(B_{\mathrm{end}}\);
+   - frozen and adapted quality--stability frontiers;
+   - a compact encoder/adapter table with raw \(T_2^E\), growth, task quality,
+     and measured cost.
+
+Constant schedules, extended mixed-spectrum families, estimator convergence,
+full spectra, and secondary models belong in the appendix.
+
+## Evidence admission rule
+
+An item enters the main paper only if it does one of these jobs:
+
+1. calibrates a finite \(T_2\) or temporal certificate;
+2. proves that task-aware allocation is not generic low-pass filtering;
+3. locates a quality--stability operating point on real latent diffusion;
+4. reports the cost required to certify that point.
+
+No experiment is admitted merely because it already exists.
+
+## Retired evidence
+
+- Ignore all old FNO results, figures, tables, and claims.
+- Ignore all old synthetic VAE-filter results.
+- Ignore all old SD-VAE Jacobian numbers and conclusions; only low-level model
+  loading or JVP/VJP plumbing may be reused in a new protocol.
+- Ignore old ELBO-training and diffusion-prior toy results.
+- Pure power-law, determinant-identity, frequency-multiplicity, and probe
+  experiments may be rebuilt only as theory or estimator sanity checks. Their
+  old numbers are never presented as ML evidence.
 
 ## Nine-page budget
 
-- Abstract: 0.25 page
-- Introduction: 1.25 pages
-- Problem and finite-resolution blind spot: 1.25 pages
-- Method and sharp theorem: 2.25 pages
-- Experiments: 3.25 pages
-- Related work and conclusion: 0.75 page
+- Introduction: 0.75 page
+- Finite certificate and theorem: 1.50 pages
+- Task-aware method: 1.50 pages
+- Experimental protocol: 0.50 page
+- Results: 3.50 pages
+- Related work and scope: 0.75 page
+- Conclusion: 0.50 page
 
-Proofs, estimator derivations, full spectra, secondary domains, hyperparameters,
-and provenance go to the appendix.
-
-## Experiment admission rule
-
-An experiment enters the main paper only if it does one of four jobs:
-
-1. verifies the sharp threshold;
-2. identifies why ideal membership matters beyond frequency appearance;
-3. connects \(T_2\) to a training-relevant instability;
-4. demonstrates value under resolution transfer or diagnoses an encoder.
-
-The principal comparison is refinement consistency at matched task/noise
-budget—not single-resolution SOTA.
+Proofs, full determinant derivations, secondary schedules, hyperparameters,
+probe convergence, and provenance go to the appendix.
 
 ## Language locks
 
-- Sampling amplitudes are (B_N); the relative covariance is always
-  (K_N=B_NB_N^ast). Gates, (det_2), and raw (T_2) are computed from
-  (K_N), so a diagonal amplitude (b_j) contributes (b_j^4) to (T_2).
-- Say **dimension-uniform Schatten control**, never finite-matrix membership.
-- Say **probe-induced gradient variance** unless minibatch/SGD randomness is
-  explicitly varied.
-- Say **controlled linear encoder** for synthetic encoder studies.
-- Present Feldman--Hajek and Carleman--Fredholm as explanatory machinery; the
-  protagonist is resolution-dependent training instability.
-- Describe latent diffusion with **we ask whether** until the encoder audit has
-  supplied the answer.
+- Sampling uses an amplitude \(B\); relative covariance is \(K=BB^\ast\).
+  Gates and raw \(T_2\) act on \(K\), so a diagonal amplitude \(b_j\)
+  contributes \(b_j^4\) to \(T_2\).
+- Say **dimension-uniform Schatten control**, not finite-matrix membership.
+- Say **asymptotic feasible region**, not a universal finite failure threshold.
+- Keep \(B_{\max}\), \(B_{\mathrm{path}}\), and \(B_{\mathrm{end}}\) distinct.
+- Say **task-critical high-frequency modes**; never equate Schatten budgeting
+  with low-pass filtering.
+- Say **probe-induced gradient variance** unless minibatch or SGD randomness is
+  actually varied.
+- A blockwise diagnostic or localized surrogate is not a global certificate.
+- Never use a normalized effective-rank quantity as a substitute for raw
+  \(T_2\).
+
+## Experimental-result insertion policy
+
+Until final outputs are frozen, pending results appear only as LaTeX comments,
+for example:
+
+```tex
+% EXPERIMENTAL RESULT PLACEHOLDER: insert verified Pareto result here.
+```
+
+Visible draft prose must not mention missing experiments, anticipated wins,
+empty tables, future runs, or provisional numbers. Once results are verified,
+replace the comment with one precise claim whose scope matches the evidence.

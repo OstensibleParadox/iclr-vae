@@ -1,50 +1,28 @@
 \section{Related Work}
 \label{sec:related-work}
 
-\paragraph{Noise injection and diffusion.}
-Dropout established stochastic feature perturbation as a general-purpose
-regularizer~\citep{srivastava2014dropout}, while diffusion models make repeated
-Gaussian perturbation the central learning mechanism~\citep{ho2020denoising}.
-Latent diffusion moves this process into an autoencoded representation to
-reduce computation while retaining perceptually important information
-\citep{rombach2022high}. Our question is orthogonal to the nominal noise
-schedule: whether its \emph{relative covariance family} remains uniformly
-controlled as representation resolution grows, and whether the encoder or an
-explicit gate supplies that control.
+\paragraph{Noise and spectral control.}
+Dropout uses stochastic feature perturbations~\citep{srivastava2014dropout},
+while spectral normalization bounds the largest singular value of a learned
+map~\citep{miyato2018spectral}. Diffusion work has adjusted schedules for high
+resolution~\citep{hoogeboom2023simple}, learned multivariate noise
+\citep{sahoo2024adaptive}, reweighted timesteps by signal-to-noise ratio
+\citep{hang2023minsnr}, and designed schedules from frequency response
+\citep{benita2025spectral}. These approaches change complementary parts of the
+pipeline. Our constraint instead targets cumulative squared mass of a
+\emph{whitened relative covariance} under resolution and time, and its
+task-aware allocation need not favor low frequency.
 
-\paragraph{Function-space probabilistic learning.}
-Function-space diffusion and variational neural operators formulate generative
-learning directly on infinite-dimensional spaces
-\citep{kerrigan2023diffusion,seidman2023variational}; recent work also develops
-well-defined regularized variational objectives for function-space Bayesian
-inference~\citep{cinquin2025well}. We study a complementary object: the
-resolution trajectory of finite noise-injection objectives, and a computable
-criterion that determines whether a nominal perturbation remains the same
-geometric intervention under refinement.
-
-\paragraph{Neural operators and discretization.}
-Fourier neural operators are designed to share parameters across
-discretizations~\citep{li2021fourier}. That property does not by itself make a
-stochastic training intervention discretization independent: a normalized
-Fourier mask may add new noise mass whenever the grid exposes new modes. We use
-operator learning as the controlled test bed in which the underlying function,
-physical modes, and task remain fixed while only the cutoff changes.
-
-\paragraph{Gaussian operator geometry.}
-Gaussian equivalence theory and Hilbert--Carleman determinants identify
-Hilbert--Schmidt perturbations as the natural domain for comparing
-infinite-dimensional Gaussian measures
-\citep{bogachev1998gaussian,minh2022kullback}. We use this machinery as an
-explanation and turn it into a learning-facing theorem, matrix-free diagnostic,
-and spectral gate. The protagonist is resolution-dependent training
-instability rather than measure theory itself.
-
-\paragraph{Spectral regularization.}
-Spectral normalization controls a largest singular value
-\citep{miyato2018spectral}; low-pass and low-rank methods constrain coordinate
-frequency or finite rank. None of these summaries alone determines cumulative
-square summability of a whitened relative covariance. Schatten-filtered noise
-targets that quantity uniformly across discretizations. The matched-frequency
-construction in \cref{sec:exp-matched-spectrum} holds the Fourier diagonal,
-trace, and operator norm fixed while varying only the hidden multiplicity that
-determines $\Ttwo$.
+\paragraph{Latent and function-space diffusion.}
+Latent diffusion~\citep{rombach2022high} applies Gaussian updates in an
+autoencoded representation~\citep{kingma2014autoencoding}, reducing the cost of
+pixel-space diffusion~\citep{ho2020denoising}. We treat the encoder's spectral
+effect as measurable rather than automatic: low finite dimension and good
+reconstruction do not imply uniform control along refinement. Function-space
+diffusion and neural operators study resolution-compatible laws
+\citep{kerrigan2023diffusion,seidman2023variational}, while regularized
+function-space objectives address well-posedness
+\citep{cinquin2025well}. Gaussian equivalence and the Hilbert--Carleman
+determinant identify Hilbert--Schmidt relative updates as the asymptotic domain
+\citep{bogachev1998gaussian,minh2022kullback}; our focus is the finite budget
+and the task decision inside that domain.
